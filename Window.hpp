@@ -2,6 +2,8 @@
 
 #include <SDL.h>
 
+#include <string>
+
 enum WindowDisplayType
 {
 	FULLSCREEN = SDL_WINDOW_FULLSCREEN,
@@ -12,12 +14,12 @@ enum WindowDisplayType
 class Window
 {
 public:
-	char title[256];
+	std::string title;
 	int x;
 	int y;
 	int w;
 	int h;
 	WindowDisplayType window_display_type;
 	
-	Window(char title[], int x, int y, int w, int h, WindowDisplayType window_display_type);
+	Window(const char *title, int x, int y, int w, int h, WindowDisplayType window_display_type);
 };
