@@ -3,7 +3,7 @@
 #include "Window.hpp"
 #include "Engine.hpp"
 
-int main()
+int WinMain()
 {
 	SDL_DisplayMode sdl_display_mode;
 	

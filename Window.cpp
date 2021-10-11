@@ -1,21 +1,13 @@
+#include <cstring>
+
 #include "Window.hpp"
 
-class Window
+Window::Window(char title[], int x, int y, int w, int h, WindowDisplayType window_display_type)
 {
-	const char title[];
-	int x;
-	int y;
-	int w;
-	int h;
-	Type type;
-	
-	Window()
-	{
-		this.title = title;
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
-		this.type = type;
-	}
-};
+	strcpy(this->title, title);
+	this->x = x;
+	this->y = y;
+	this->w = w;
+	this->h = h;
+	this->window_display_type = window_display_type;
+}
