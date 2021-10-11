@@ -12,7 +12,7 @@ int main()
 		exit(EXIT_FAILURE);
 	}
 	
-	Window window("Engine", 0, 0, sdl_display_mode.w, sdl_display_mode.h, Window::FULLSCREEN);
+	Window window("Engine", 0, 0, sdl_display_mode.w, sdl_display_mode.h, FULLSCREEN);
 	
 	Engine engine(window);
 	
