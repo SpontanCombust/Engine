@@ -8,16 +8,16 @@
 class Engine
 {
 public:
+	static void create( const Window& window );
 
-	void create( const Window& window );
+	static void start();
 
-	void start();
-
-	void exit();
+	static void exit();
 
 	static Engine *getInstance();
 
 private:
+	static Window window;
 	static Engine *instance;
-	bool is_running;
+	static bool is_running;
 };
