@@ -1,8 +1,4 @@
-enum Type
-{
-	FULLSCREEN = SDL_WINDOW_FULLSCREEN,
-	EXCLUSIVE_FULLSCREEN = SDL_WINDOW_DESKTOP
-};
+#include "Window.hpp"
 
 class Window
 {
