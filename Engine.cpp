@@ -2,14 +2,28 @@
 
 #include "Engine.hpp"
 
-Engine::Engine(const Window& window)
+Engine *Engine::instance = nullptr;
+
+void Engine::create( const Window& window ) 
 {
-	
-	
-	sdl_window = SDL_CreateWindow(window.title.c_str(), window.x, window.y, window.w, window.h, window.window_display_type);
+	is_running = false;
 }
-	
-Engine::~Engine()
+
+void Engine::start() 
 {
-	SDL_Quit();
+	is_running = true;
+	while( is_running )
+	{
+		
+	}
+}
+
+void Engine::exit() 
+{
+	is_running = false;
+}
+
+Engine *Engine::getInstance() 
+{
+	return instance;
 }

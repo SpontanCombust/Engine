@@ -1,15 +1,23 @@
 #pragma once
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_timer.h>
 
 #include "Window.hpp"
 
 class Engine
 {
 public:
-	SDL_Window *sdl_window;
 
-	Engine(const Window& window);
-	
-	~Engine();
+	void create( const Window& window );
+
+	void start();
+
+	void exit();
+
+	static Engine *getInstance();
+
+private:
+	static Engine *instance;
+	bool is_running;
 };
