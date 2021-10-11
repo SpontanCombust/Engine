@@ -19,12 +19,12 @@ int main()
 		exit(EXIT_FAILURE);
 	}
 	
-	Window window("Engine", 0, 0, sdl_display_mode.w, sdl_display_mode.h, FULLSCREEN);
+	 Window window("Engine", 0, 0, sdl_display_mode.w, sdl_display_mode.h, WINDOWED);
 	
-	Engine engine(window);
+	Engine::create( window );
 
-	SDL_Delay(2000);
-	
+	Engine *engine = Engine::getInstance();
+	engine->start();
 	
 	SDL_Quit();
 	

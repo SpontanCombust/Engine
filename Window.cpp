@@ -1,6 +1,11 @@
 #include "Window.hpp"
 
 
+Window::Window() 
+{
+	sdl_window = nullptr;
+	sdl_renderer = nullptr;
+}
 
 Window::Window(const char *title, int x, int y, int w, int h, WindowDisplayType window_display_type)
 {
@@ -24,7 +29,7 @@ vec2i Window::get_size() const
 
 WindowDisplayType Window::get_display_type() const
 {
-	//TODO
+	return WINDOWED; //TODO
 }
 
 void Window::clear() 

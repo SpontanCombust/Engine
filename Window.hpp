@@ -19,6 +19,7 @@ public:
 	SDL_Window *sdl_window;
 	SDL_Renderer *sdl_renderer;
 	
+	Window();
 	Window( const char *title, int x, int y, int w, int h, WindowDisplayType window_display_type );
 
 	vec2i get_position() const;
