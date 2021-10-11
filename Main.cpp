@@ -26,6 +26,7 @@ int main()
 	SDL_Delay(2000);
 	
 	
+	SDL_Quit();
 	
 	return EXIT_SUCCESS;
 }
