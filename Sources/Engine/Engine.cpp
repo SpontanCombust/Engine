@@ -1,4 +1,4 @@
-#include "Engine.hpp"
+#include "Engine/Engine.hpp"
 
 #include <SDL2/SDL.h>
 
@@ -18,7 +18,7 @@ void Engine::process_events()
 {
 	while (SDL_PollEvent(&sdl_event))
 	{
-		switch (sdl_event.type)
+		switch (sdl_event.window.event)
 		{
 			case SDL_WINDOWEVENT_CLOSE:
 				Engine::is_running = false;
