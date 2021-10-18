@@ -1,10 +1,7 @@
 #pragma once
 
-#include "Utilities/Vector2.hpp"
-
+#include <SDL2/SDL_video.h>
 #include <SDL2/SDL_render.h>
-
-#include <string>
 
 enum WindowMode
 {
@@ -16,14 +13,20 @@ enum WindowMode
 class Window
 {
 public:
-	static Window & create(WindowMode window_mode, Vec2i resolution);
-	~Window();
 	SDL_Window *sdl_window;
+	SDL_Renderer *sdl_renderer;
+
+public:
 	Window();
+	Window( const char *title, int w, int h, WindowMode window_mode );
+	~Window();
+
+	Window& operator=( const Window& other );
+	Window& operator=( Window&& other );
+
+	void clear();
+	void flip_buffer();
 
 private:
-	SDL_Renderer *sdl_renderer;
-	static bool has_instance;
-	
-	Window(WindowMode window_mode, Vec2i resolution);
+	void destroy_if_valid();
 };

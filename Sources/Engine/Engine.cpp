@@ -2,49 +2,79 @@
 
 #include <SDL2/SDL.h>
 
-#include "Logging/Logging.hpp"
+// #include "Logging/Logging.hpp" //TODO
 
-bool Engine::has_instance = false;
 
-Engine & Engine::create(WindowMode window_mode, Vec2i resolution, unsigned frame_rate, bool use_mouse, bool use_keyboard, bool log_to_console, bool log_to_file, std::string log_file_name)
+Engine *Engine::instance = nullptr;
+
+Engine* Engine::get_instance() 
 {
-	static Engine engine(window_mode, resolution, frame_rate, use_mouse, use_keyboard, log_to_console, log_to_file, log_file_name);
-	Engine::has_instance = true;
-
-	return engine;
-}
-
-void Engine::process_events()
-{
-	while (SDL_PollEvent(&sdl_event))
+	if( instance == nullptr )
 	{
-		switch (sdl_event.window.event)
-		{
-			case SDL_WINDOWEVENT_CLOSE:
-				Engine::is_running = false;
-		}
+		instance = new Engine();
 	}
+
+	return instance;
 }
 
-Engine::Engine(WindowMode window_mode, Vec2i resolution, unsigned frame_rate, bool use_mouse, bool use_keyboard, bool log_to_console, bool log_to_file, std::string log_file_name)
+Engine::Engine() 
 {
-	if (!has_instance)
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{
-		Logging logging = Logging::create(log_to_console, log_to_file, log_file_name);
-
-		if (SDL_Init(SDL_INIT_EVERYTHING))
-		{
-			logging.log(std::string("Unable to initialize SDL: ") + std::string(SDL_GetError()));
-			exit(EXIT_FAILURE);
-		}
-
-		window = Window::create(window_mode, resolution);
-
-		primitive_renderer = PrimitiveRenderer::create(window);
+		exit(EXIT_FAILURE);
 	}
+
+	is_running = false;
 }
 
-Engine::~Engine()
+Engine::~Engine() 
 {
 	SDL_Quit();
+}
+
+Window& Engine::create_window( const char *title, int w, int h, WindowMode window_mode ) 
+{
+	window = std::move( Window( title, w, h, window_mode ) );
+	return window;
+}
+
+Window& Engine::get_window() 
+{
+	return window;
+}
+
+void Engine::process_events() 
+{
+	SDL_Event e;
+
+	while(SDL_PollEvent(&e) != 0)
+	{
+		switch (e.type)
+		{
+			case SDL_QUIT:
+				is_running = false;
+				break;
+			default:
+				break;
+		}
+	}
+}
+
+void Engine::start() 
+{
+	is_running = true;
+
+	while(is_running)
+	{
+		window.clear();
+
+		process_events();
+
+		window.flip_buffer();
+	}
+}
+
+void Engine::stop() 
+{
+	is_running = false;
 }

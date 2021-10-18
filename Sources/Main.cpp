@@ -1,17 +1,11 @@
-
-#define SDL_MAIN_HANDLED
-#include <cstdlib>
-
 #include "Engine/Engine.hpp"
 
 int main()
 {
-	Engine engine = Engine::create();
+	Engine *engine = Engine::get_instance();
 
-	while (engine.is_running)
-	{
-		engine.process_events();
-	}
+	engine->create_window( "Test", 800, 600, WINDOWED );
+	engine->start();
 
 	return EXIT_SUCCESS;
 }

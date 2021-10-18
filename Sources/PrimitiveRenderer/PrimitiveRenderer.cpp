@@ -2,32 +2,15 @@
 
 #include <SDL2/SDL2_gfxPrimitives.h>
 
-PrimitiveRenderer::PrimitiveRenderer()
+
+PrimitiveRenderer::PrimitiveRenderer( SDL_Renderer *renderer ) 
 {
-    
+    sdl_renderer = renderer;
 }
 
-bool PrimitiveRenderer::has_instance = false;
-
-PrimitiveRenderer PrimitiveRenderer::create(const Window& window)
+PrimitiveRenderer::~PrimitiveRenderer() 
 {
-    static PrimitiveRenderer primitive_renderer = PrimitiveRenderer(window);
-    has_instance = true;
 
-    return primitive_renderer;
-}
-
-PrimitiveRenderer::PrimitiveRenderer(const Window& window) 
-{
-    if (!has_instance)
-    {
-        sdl_renderer = SDL_CreateRenderer(window.sdl_window, -1, 0);
-    }
-}
-
-PrimitiveRenderer::~PrimitiveRenderer()
-{
-    SDL_DestroyRenderer(sdl_renderer);
 }
 
 void PrimitiveRenderer::drawTriangle( Vec2i p1, Vec2i p2, Vec2i p3, Color color, bool fill ) 
