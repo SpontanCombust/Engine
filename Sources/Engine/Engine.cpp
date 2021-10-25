@@ -46,7 +46,7 @@ Engine * Engine::get_instance(const char * title, int x, int y, int w, int h, Wi
 		engine = new Engine(title, x, y, w, h, window_mode, 60);
 	}
 
-	return instance;
+	return engine;
 }
 
 void Engine::schedule()
@@ -89,41 +89,8 @@ void Engine::process_events()
 				break;
 		}
 	}
-
-	is_running = false;
 }
 
-<<<<<<< HEAD
-Engine::~Engine() 
-{
-	SDL_Quit();
-}
-
-Window& Engine::create_window( const char *title, int w, int h, WindowMode window_mode ) 
-{
-	window = std::move( Window( title, w, h, window_mode ) );
-	return window;
-}
-
-Window& Engine::get_window() 
-{
-	return window;
-}
-
-void Engine::process_events() 
-{
-	SDL_Event e;
-
-	while(SDL_PollEvent(&e) != 0)
-	{
-		switch (e.type)
-		{
-			case SDL_QUIT:
-				is_running = false;
-				break;
-			default:
-				break;
-=======
 void Engine::update()
 {
 
@@ -156,45 +123,29 @@ void Engine::draw()
 
 	SDL_RenderClear(sdl_renderer);
 
-switch (background_color)
-		{
-			case BLACK_BACKGROUND_COLOR:
-				SDL_SetRenderDrawColor(sdl_renderer, 128, 128, 128, 255);
-			break;
-
-			case RED_BACKGROUND_COLOR:
-				SDL_SetRenderDrawColor(sdl_renderer, 0, 128, 128, 255);
-			break;
-
-			case GREEN_BACKGROUND_COLOR:
-				SDL_SetRenderDrawColor(sdl_renderer, 128, 0, 128, 255);
-			break;
-
-			case BLUE_BACKGROUND_COLOR:
-				SDL_SetRenderDrawColor(sdl_renderer, 128, 128, 0, 255);
-			break;
-
-			case WHITE_BACKGROUND_COLOR:
-				SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
-			break;
->>>>>>> 7a3aa07ecc9514bf055df0b973a4a09525d5c824
-		}
-	}
-}
-
-void Engine::start() 
-{
-	is_running = true;
-
-<<<<<<< HEAD
-	while(is_running)
+	switch (background_color)
 	{
-		window.clear();
+		case BLACK_BACKGROUND_COLOR:
+			SDL_SetRenderDrawColor(sdl_renderer, 128, 128, 128, 255);
+		break;
 
-		process_events();
+		case RED_BACKGROUND_COLOR:
+			SDL_SetRenderDrawColor(sdl_renderer, 0, 128, 128, 255);
+		break;
 
-		window.flip_buffer();
-=======
+		case GREEN_BACKGROUND_COLOR:
+			SDL_SetRenderDrawColor(sdl_renderer, 128, 0, 128, 255);
+		break;
+
+		case BLUE_BACKGROUND_COLOR:
+			SDL_SetRenderDrawColor(sdl_renderer, 128, 128, 0, 255);
+		break;
+
+		case WHITE_BACKGROUND_COLOR:
+			SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
+		break;
+	}
+
 	switch (primitive_type)
 	{
 		case POINT_PRIMITIVE_TYPE:
@@ -216,21 +167,16 @@ void Engine::start()
 		case FILLED_RECTANGLE_PRIMITIVE_TYPE:
 			primitive_renderer->draw_rectangle(true, 0, 0, 256, 256);
 		break;
->>>>>>> 7a3aa07ecc9514bf055df0b973a4a09525d5c824
 	}
 
 	SDL_RenderPresent(sdl_renderer);
 }
 
-void Engine::stop() 
+Engine::~Engine()
 {
-<<<<<<< HEAD
-	is_running = false;
-=======
 	SDL_DestroyWindow(sdl_window);
 	SDL_DestroyRenderer(sdl_renderer);
 	delete primitive_renderer;
 	
 	SDL_Quit();
->>>>>>> 7a3aa07ecc9514bf055df0b973a4a09525d5c824
 }
