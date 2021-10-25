@@ -156,16 +156,20 @@ void Engine::draw()
 			primitive_renderer->draw_line(0, 0, 511, 511);
 		break;
 
-		case NAIVE_LINE_PRIMITIVE_TYPE:
-			primitive_renderer->naively_draw_line(0, 0, 511, 511);
-		break;
-
 		case RECTANGLE_PRIMITIVE_TYPE:
 			primitive_renderer->draw_rectangle(false, 0, 0, 256, 256);
 		break;
 
 		case FILLED_RECTANGLE_PRIMITIVE_TYPE:
 			primitive_renderer->draw_rectangle(true, 0, 0, 256, 256);
+		break;
+
+		case NAIVE_LINE_PRIMITIVE_TYPE:
+			primitive_renderer->naively_draw_line(0, 0, 511, 511);
+		break;
+
+		case CIRCLE_PRIMITIVE_TYPE:
+			primitive_renderer->draw_circle(256, 256, 64);
 		break;
 	}
 

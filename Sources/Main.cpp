@@ -2,6 +2,8 @@
 
 #include "Engine/Engine.hpp"
 
+#undef main
+
 int main()
 {
 	Engine * engine = Engine::get_instance("Tech Demo", 0, 0, 512, 512, WINDOWED_MODE, 60);

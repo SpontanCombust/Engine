@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include "Utility/Log.hpp"
 #include "PrimitiveRenderer/PrimitiveRenderer.hpp"
@@ -27,9 +27,10 @@ enum PrimitiveType
 	NO_PRIMITIVE_TYPE,
 	POINT_PRIMITIVE_TYPE,
 	LINE_PRIMITIVE_TYPE,
-	NAIVE_LINE_PRIMITIVE_TYPE,
 	RECTANGLE_PRIMITIVE_TYPE,
 	FILLED_RECTANGLE_PRIMITIVE_TYPE,
+	NAIVE_LINE_PRIMITIVE_TYPE,
+	CIRCLE_PRIMITIVE_TYPE,
 	PRIMITIVE_TYPE_COUNT
 };
 

@@ -1,4 +1,4 @@
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 class PrimitiveRenderer
 {
@@ -10,6 +10,7 @@ public:
     static void draw_rectangle(bool filled, int x, int y, int w, int h);
 
     static void naively_draw_line(int x0, int y0, int x1, int y1);
+    static void draw_circle(int x0, int y0, int R);
 
 private:
     static SDL_Renderer * sdl_renderer;

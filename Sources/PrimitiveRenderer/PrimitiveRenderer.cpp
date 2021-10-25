@@ -36,7 +36,7 @@ void PrimitiveRenderer::naively_draw_line(int x0, int y0, int x1, int y1)
 {
     float m = (float)(y1 - y0) / (float)(x1 - x0);
 
-    if (abs(m) <= 1)
+    if (fabs(m) <= 1)
     {
         float yi = y0;
 
@@ -57,5 +57,17 @@ void PrimitiveRenderer::naively_draw_line(int x0, int y0, int x1, int y1)
             draw_point(xi + 0.5, yi);
             xi += m;
         }
+    }
+}
+
+void PrimitiveRenderer::draw_circle(int x0, int y0, int R)
+{
+    float step = 1.0f / R;
+
+    for (float a = 0.0f; a < 2.0f * M_PI; a += step)
+    {
+        float x = x0 + R * cos(a) + 0.5f;
+        float y = y0 + R * sin(a) + 0.5f;
+        PrimitiveRenderer::draw_point(x, y);
     }
 }
