@@ -146,6 +146,15 @@ void Engine::draw()
 		break;
 	}
 
+	std::vector<Point2D> multiline_example_points;
+	multiline_example_points.push_back( Point2D{ 150, 400 } );
+	multiline_example_points.push_back( Point2D{ 150, 200 } );
+	multiline_example_points.push_back( Point2D{ 200, 300 } );
+	multiline_example_points.push_back( Point2D{ 250, 200 } );
+	multiline_example_points.push_back( Point2D{ 300, 300 } );
+	multiline_example_points.push_back( Point2D{ 350, 200 } );
+	multiline_example_points.push_back( Point2D{ 350, 400 } );
+
 	switch (primitive_type)
 	{
 		case POINT_PRIMITIVE_TYPE:
@@ -170,6 +179,14 @@ void Engine::draw()
 
 		case CIRCLE_PRIMITIVE_TYPE:
 			primitive_renderer->draw_circle(256, 256, 64);
+		break;
+
+		case MULTILINE_OPEN_PRIMITIVE_TYPE:
+			primitive_renderer->draw_multiline_open( multiline_example_points, DrawAlgorithmType::SDL );
+		break;
+
+		case MULTILINE_CLOSED_PRIMITIVE_TYPE:
+			primitive_renderer->draw_multiline_closed( multiline_example_points, DrawAlgorithmType::SDL );
 		break;
 	}
 
