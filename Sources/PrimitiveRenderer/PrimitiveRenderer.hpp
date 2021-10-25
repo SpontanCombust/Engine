@@ -1,4 +1,11 @@
+#pragma once
+
+#include "Point2D/Point2D.hpp"
+#include "LineSegment/LineSegment.hpp"
+
 #include <SDL.h>
+
+#include <vector>
 
 class PrimitiveRenderer
 {
@@ -11,6 +18,9 @@ public:
 
     static void naively_draw_line(int x0, int y0, int x1, int y1);
     static void draw_circle(int x0, int y0, int R);
+
+    static void draw_multiline_open( const std::vector<Point2D>& points, DrawAlgorithmType algorithm_type );
+    static void draw_multiline_closed( const std::vector<Point2D>& points, DrawAlgorithmType algorithm_type );
 
 private:
     static SDL_Renderer * sdl_renderer;

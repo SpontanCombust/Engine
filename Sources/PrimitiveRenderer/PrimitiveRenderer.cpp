@@ -35,7 +35,7 @@ void PrimitiveRenderer::draw_rectangle(bool filled, int x, int y, int w, int h)
         SDL_RenderFillRect(sdl_renderer, &sdl_rectangle);
     }
 }
-
+//FIXME fails to draw in all possible scenarios
 void PrimitiveRenderer::naively_draw_line(int x0, int y0, int x1, int y1)
 {
     float m = (float)(y1 - y0) / (float)(x1 - x0);
@@ -80,5 +80,55 @@ void PrimitiveRenderer::draw_circle(int x0, int y0, int R)
         PrimitiveRenderer::draw_point((unsigned)y, (unsigned)w - x);
         PrimitiveRenderer::draw_point((unsigned)h - y, (unsigned)x);
         PrimitiveRenderer::draw_point((unsigned)h - y, (unsigned)w - x);
+    }
+}
+
+
+void PrimitiveRenderer::draw_multiline_open(const std::vector<Point2D>& points, DrawAlgorithmType algorithm_type) 
+{
+    if(points.size() > 1)
+    {
+        // create a drawing function pointer
+        // this way we check for drawing type only once instead of every time we draw each line
+        void (*line_drawing_func)(int,int,int,int);
+        if(algorithm_type == DrawAlgorithmType::NAIVE)
+        {
+            line_drawing_func = naively_draw_line;
+        }
+        else
+        {
+            line_drawing_func = draw_line;
+        }
+
+        for (size_t i = 0; i < points.size() - 1; i++)
+        {
+            line_drawing_func( points[i].get_x(), points[i].get_y(), points[i+1].get_x(), points[i+1].get_y() );
+        }
+    }
+}
+
+void PrimitiveRenderer::draw_multiline_closed(const std::vector<Point2D>& points, DrawAlgorithmType algorithm_type) 
+{
+    if(points.size() > 1)
+    {
+        // create a drawing function pointer
+        // this way we check for drawing type only once instead of every time we draw each line
+        void (*line_drawing_func)(int,int,int,int);
+        if(algorithm_type == DrawAlgorithmType::NAIVE)
+        {
+            line_drawing_func = naively_draw_line;
+        }
+        else
+        {
+            line_drawing_func = draw_line;
+        }
+
+        for (size_t i = 0; i < points.size() - 1; i++)
+        {
+            line_drawing_func( points[i].get_x(), points[i].get_y(), points[i+1].get_x(), points[i+1].get_y() );
+        }
+
+        // draw a line going from the first to last point, successfully closing the shape
+        line_drawing_func( points[0].get_x(), points[0].get_y(), points[points.size() - 1].get_x(), points[points.size() - 1].get_y() );
     }
 }
