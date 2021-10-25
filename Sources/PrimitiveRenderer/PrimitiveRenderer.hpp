@@ -1,29 +1,16 @@
-#ifndef __PRIMITIVERENDERER_H__
-#define __PRIMITIVERENDERER_H__
-
-#include "Window/Window.hpp"
-
-#include <SDL2/SDL_render.h>
-
-#include "Utilities/Color.hpp"
+#include <SDL2/SDL.h>
 
 class PrimitiveRenderer
 {
-private:
-    SDL_Renderer * sdl_renderer;
-    static bool has_instance;
-    PrimitiveRenderer(const Window& window);
-
 public:
-    static PrimitiveRenderer create(const Window& window);
-    PrimitiveRenderer();
-    ~PrimitiveRenderer();
+    PrimitiveRenderer(SDL_Renderer * sdl_renderer);
 
-    void drawTriangle( Vec2i p1, Vec2i p2, Vec2i p3, Color color, bool fill = true );
-    void drawRectangle( Vec2i p1, Vec2i p2, Color color, bool fill = true );
-    void drawRectangle( Vec2i p, int w, int h, Color color, bool fill = true );
-    void drawSquare( Vec2i p, int a, Color color, bool fill = true );
-    void drawCircle( Vec2i p, int r, Color color, bool fill = true );
+    static void draw_point(int x, int y);
+    static void draw_line(int x0, int y0, int x1, int y1);
+    static void draw_rectangle(bool filled, int x, int y, int w, int h);
+
+    static void naively_draw_line(int x0, int y0, int x1, int y1);
+
+private:
+    static SDL_Renderer * sdl_renderer;
 };
-
-#endif // __PRIMITIVERENDERER_H__

@@ -22,5 +22,5 @@ void Point2D::set_y(unsigned y)
 
 void Point2D::draw()
 {
-    
+    PrimitiveRenderer::draw_point(this->x, this->y);
 }

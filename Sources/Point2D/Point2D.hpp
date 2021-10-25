@@ -1,3 +1,7 @@
+#pragma once
+
+#include "PrimitiveRenderer/PrimitiveRenderer.hpp"
+
 class Point2D
 {
 public:
