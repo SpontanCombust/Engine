@@ -27,7 +27,7 @@ Engine::Engine(const char * title, int x, int y, int w, int h, WindowMode window
 		exit(EXIT_FAILURE);
 	}
 
-	primitive_renderer = new PrimitiveRenderer(sdl_renderer);
+	primitive_renderer = new PrimitiveRenderer(sdl_renderer, w, h);
 
 	latency_time = 0;
 	target_time = 1000 / frame_rate;
@@ -123,28 +123,37 @@ void Engine::draw()
 
 	SDL_RenderClear(sdl_renderer);
 
-switch (background_color)
-		{
-			case BLACK_BACKGROUND_COLOR:
-				SDL_SetRenderDrawColor(sdl_renderer, 128, 128, 128, 255);
-			break;
+	switch (background_color)
+	{
+		case BLACK_BACKGROUND_COLOR:
+			SDL_SetRenderDrawColor(sdl_renderer, 128, 128, 128, 255);
+		break;
 
-			case RED_BACKGROUND_COLOR:
-				SDL_SetRenderDrawColor(sdl_renderer, 0, 128, 128, 255);
-			break;
+		case RED_BACKGROUND_COLOR:
+			SDL_SetRenderDrawColor(sdl_renderer, 0, 128, 128, 255);
+		break;
 
-			case GREEN_BACKGROUND_COLOR:
-				SDL_SetRenderDrawColor(sdl_renderer, 128, 0, 128, 255);
-			break;
+		case GREEN_BACKGROUND_COLOR:
+			SDL_SetRenderDrawColor(sdl_renderer, 128, 0, 128, 255);
+		break;
 
-			case BLUE_BACKGROUND_COLOR:
-				SDL_SetRenderDrawColor(sdl_renderer, 128, 128, 0, 255);
-			break;
+		case BLUE_BACKGROUND_COLOR:
+			SDL_SetRenderDrawColor(sdl_renderer, 128, 128, 0, 255);
+		break;
 
-			case WHITE_BACKGROUND_COLOR:
-				SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
-			break;
-		}
+		case WHITE_BACKGROUND_COLOR:
+			SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
+		break;
+	}
+
+	std::vector<Point2D> multiline_example_points;
+	multiline_example_points.push_back( Point2D{ 150, 400 } );
+	multiline_example_points.push_back( Point2D{ 150, 200 } );
+	multiline_example_points.push_back( Point2D{ 200, 300 } );
+	multiline_example_points.push_back( Point2D{ 250, 200 } );
+	multiline_example_points.push_back( Point2D{ 300, 300 } );
+	multiline_example_points.push_back( Point2D{ 350, 200 } );
+	multiline_example_points.push_back( Point2D{ 350, 400 } );
 
 	switch (primitive_type)
 	{
@@ -156,16 +165,28 @@ switch (background_color)
 			primitive_renderer->draw_line(0, 0, 511, 511);
 		break;
 
-		case NAIVE_LINE_PRIMITIVE_TYPE:
-			primitive_renderer->naively_draw_line(0, 0, 511, 511);
-		break;
-
 		case RECTANGLE_PRIMITIVE_TYPE:
 			primitive_renderer->draw_rectangle(false, 0, 0, 256, 256);
 		break;
 
 		case FILLED_RECTANGLE_PRIMITIVE_TYPE:
 			primitive_renderer->draw_rectangle(true, 0, 0, 256, 256);
+		break;
+
+		case NAIVE_LINE_PRIMITIVE_TYPE:
+			primitive_renderer->naively_draw_line(0, 0, 511, 511);
+		break;
+
+		case CIRCLE_PRIMITIVE_TYPE:
+			primitive_renderer->draw_circle(256, 256, 64);
+		break;
+
+		case MULTILINE_OPEN_PRIMITIVE_TYPE:
+			primitive_renderer->draw_multiline_open( multiline_example_points, DrawAlgorithmType::SDL );
+		break;
+
+		case MULTILINE_CLOSED_PRIMITIVE_TYPE:
+			primitive_renderer->draw_multiline_closed( multiline_example_points, DrawAlgorithmType::SDL );
 		break;
 	}
 
