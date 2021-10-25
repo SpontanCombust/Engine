@@ -27,7 +27,7 @@ Engine::Engine(const char * title, int x, int y, int w, int h, WindowMode window
 		exit(EXIT_FAILURE);
 	}
 
-	primitive_renderer = new PrimitiveRenderer(sdl_renderer);
+	primitive_renderer = new PrimitiveRenderer(sdl_renderer, w, h);
 
 	latency_time = 0;
 	target_time = 1000 / frame_rate;

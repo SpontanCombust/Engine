@@ -3,7 +3,7 @@
 class PrimitiveRenderer
 {
 public:
-    PrimitiveRenderer(SDL_Renderer * sdl_renderer);
+    PrimitiveRenderer(SDL_Renderer * sdl_renderer, int w, int h);
 
     static void draw_point(int x, int y);
     static void draw_line(int x0, int y0, int x1, int y1);
@@ -14,4 +14,6 @@ public:
 
 private:
     static SDL_Renderer * sdl_renderer;
+    static int w;
+    static int h;
 };
