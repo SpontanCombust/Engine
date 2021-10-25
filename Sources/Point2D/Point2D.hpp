@@ -1,19 +1,20 @@
 #pragma once
 
-#include "PrimitiveRenderer/PrimitiveRenderer.hpp"
-
 class Point2D
 {
 public:
-	unsigned get_x();
-	unsigned get_y();
+	Point2D();
+	Point2D( unsigned int x, unsigned int y );
+
+	unsigned int get_x() const;
+	unsigned int get_y() const;
 	
-	void set_x(unsigned x);
-	void set_y(unsigned y);
+	void set_x(unsigned int x);
+	void set_y(unsigned int y);
 	
-	void draw();
+	void draw() const;
 	
 private:
-	unsigned x;
-	unsigned y;
+	unsigned int x;
+	unsigned int y;
 };
