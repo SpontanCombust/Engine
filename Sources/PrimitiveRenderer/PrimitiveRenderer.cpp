@@ -1,67 +1,61 @@
 #include "PrimitiveRenderer.hpp"
 
-#include <SDL2/SDL2_gfxPrimitives.h>
+SDL_Renderer * PrimitiveRenderer::sdl_renderer = nullptr;
 
-
-PrimitiveRenderer::PrimitiveRenderer( SDL_Renderer *renderer ) 
+PrimitiveRenderer::PrimitiveRenderer(SDL_Renderer * sdl_renderer)
 {
-    sdl_renderer = renderer;
+    this->sdl_renderer = sdl_renderer;
 }
 
-PrimitiveRenderer::~PrimitiveRenderer() 
+void PrimitiveRenderer::draw_point(int x, int y)
 {
-
+    SDL_RenderDrawPoint(sdl_renderer, x, y);
 }
 
-void PrimitiveRenderer::drawTriangle( Vec2i p1, Vec2i p2, Vec2i p3, Color color, bool fill ) 
+void PrimitiveRenderer::draw_line(int x0, int y0, int x1, int y1)
 {
-    if( fill )
+    SDL_RenderDrawLine(sdl_renderer, x0, y0, x1, y1);
+}
+
+void PrimitiveRenderer::draw_rectangle(bool filled, int x, int y, int w, int h)
+{
+    SDL_Rect sdl_rectangle = {x, y, w, h};
+
+    if (!filled)
     {
-        trigonRGBA( sdl_renderer, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, color.r, color.g, color.b, color.a );
+        SDL_RenderDrawRect(sdl_renderer, &sdl_rectangle);   
     }
+
     else
     {
-        filledTrigonRGBA( sdl_renderer, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, color.r, color.g, color.b, color.a );
+        SDL_RenderFillRect(sdl_renderer, &sdl_rectangle);
     }
 }
 
-void PrimitiveRenderer::drawRectangle( Vec2i p1, Vec2i p2, Color color, bool fill ) 
+void PrimitiveRenderer::naively_draw_line(int x0, int y0, int x1, int y1)
 {
-    if( fill )
+    float m = (float)(y1 - y0) / (float)(x1 - x0);
+
+    if (abs(m) <= 1)
     {
-        rectangleRGBA( sdl_renderer, p1.x, p1.y, p2.x, p2.y, color.r, color.g, color.b, color.a );
+        float yi = y0;
+
+        for (unsigned xi = x0; xi < x1; ++xi)
+        {
+            draw_point(xi, yi + 0.5);
+            yi += m;
+        }
     }
+
     else
     {
-        boxRGBA( sdl_renderer, p1.x, p1.y, p2.x, p2.y, color.r, color.g, color.b, color.a );
-    }
-}
+        m = (float)(x1 - x0) / (float)(y1 - y0);
+        float xi = x0;
 
-void PrimitiveRenderer::drawRectangle( Vec2i p, int w, int h, Color color, bool fill ) 
-{
-    if( fill )
-    {
-        rectangleRGBA( sdl_renderer, p.x, p.y, p.x + w, p.y + h, color.r, color.g, color.b, color.a );
+        for (unsigned yi = y0; yi < y1; ++yi)
+        {
+            draw_point(xi + 0.5, yi);
+            xi += m;
+        }
     }
-    else
-    {
-        boxRGBA( sdl_renderer, p.x, p.y, p.x + w, p.y + h, color.r, color.g, color.b, color.a );
-    }
-}
-
-void PrimitiveRenderer::drawSquare( Vec2i p, int a, Color color, bool fill ) 
-{
-    if( fill )
-    {
-        rectangleRGBA( sdl_renderer, p.x, p.y, p.x + a, p.y + a, color.r, color.g, color.b, color.a );
-    }
-    else
-    {
-        boxRGBA( sdl_renderer, p.x, p.y, p.x + a, p.y + a, color.r, color.g, color.b, color.a );
-    }
-}
-
-void PrimitiveRenderer::drawCircle(Vec2i p, int r, Color color, bool fill) 
-{
-    circleRGBA( sdl_renderer, p.x, p.y, r, color.r, color.g, color.b, color.a );
 }
