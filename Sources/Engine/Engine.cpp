@@ -181,6 +181,10 @@ void Engine::draw()
 			primitive_renderer->draw_circle(256, 256, 64);
 		break;
 
+		case ELLIPSE_PRIMITIVE_TYPE:
+			primitive_renderer->draw_ellipse(256, 256, 64, 32);
+			break;
+
 		case MULTILINE_OPEN_PRIMITIVE_TYPE:
 			primitive_renderer->draw_multiline_open( multiline_example_points, DrawAlgorithmType::SDL );
 		break;

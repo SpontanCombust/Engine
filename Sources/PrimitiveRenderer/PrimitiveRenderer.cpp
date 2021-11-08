@@ -83,6 +83,17 @@ void PrimitiveRenderer::draw_circle(int x0, int y0, int R)
     }
 }
 
+void PrimitiveRenderer::draw_ellipse(int x0, int y0, int Rx, int Ry)
+{
+    float step = 1.0f / Rx;
+
+    for (float a = 0.0f; a < M_PI * 2; a += step)
+    {
+        float x = x0 + Rx * cosf(a);
+        float y = y0 + Ry * sinf(a);
+        PrimitiveRenderer::draw_point(x, y);
+    }
+}
 
 void PrimitiveRenderer::draw_multiline_open(const std::vector<Point2D>& points, DrawAlgorithmType algorithm_type) 
 {
