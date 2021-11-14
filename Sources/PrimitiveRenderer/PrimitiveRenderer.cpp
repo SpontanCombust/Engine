@@ -1,5 +1,7 @@
 #include "PrimitiveRenderer.hpp"
 
+#include <cmath>
+
 SDL_Renderer * PrimitiveRenderer::sdl_renderer = nullptr;
 int PrimitiveRenderer::w = 0;
 int PrimitiveRenderer::h = 0;
