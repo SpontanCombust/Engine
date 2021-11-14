@@ -87,6 +87,24 @@ void Engine::process_events()
 					break;
 				}
 				break;
+
+			case SDL_MOUSEBUTTONUP:
+				switch (event.button.button)
+				{
+					case SDL_BUTTON_LEFT:
+					{
+						uint32_t pixel = 0;
+						SDL_Rect  sdl_rect = { event.button.x, event.button.y, 1, 1 };
+						SDL_RenderReadPixels(PrimitiveRenderer::sdl_renderer, &sdl_rect, SDL_PIXELFORMAT_RGBA8888, &pixel, 4);
+						PrimitiveRenderer::flood_fill(event.button.x, event.button.y, ~pixel + 255, pixel);
+					break;
+					}
+
+					case SDL_BUTTON_RIGHT:
+						
+					break;
+				}
+				break;
 		}
 	}
 }
@@ -105,19 +123,19 @@ void Engine::draw()
 		break;
 
 		case RED_BACKGROUND_COLOR:
-			SDL_SetRenderDrawColor(sdl_renderer, 128, 0, 0, 255);
+			SDL_SetRenderDrawColor(sdl_renderer, 255, 0, 0, 255);
 		break;
 
 		case GREEN_BACKGROUND_COLOR:
-			SDL_SetRenderDrawColor(sdl_renderer, 0, 128, 0, 255);
+			SDL_SetRenderDrawColor(sdl_renderer, 0, 255, 0, 255);
 		break;
 
 		case BLUE_BACKGROUND_COLOR:
-			SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 128, 255);
+			SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 255, 255);
 		break;
 
 		case WHITE_BACKGROUND_COLOR:
-			SDL_SetRenderDrawColor(sdl_renderer, 128, 128, 128, 255);
+			SDL_SetRenderDrawColor(sdl_renderer, 255, 255, 255, 255);
 		break;
 	}
 
@@ -126,19 +144,19 @@ void Engine::draw()
 	switch (background_color)
 	{
 		case BLACK_BACKGROUND_COLOR:
-			SDL_SetRenderDrawColor(sdl_renderer, 128, 128, 128, 255);
+			SDL_SetRenderDrawColor(sdl_renderer, 255, 255, 255, 255);
 		break;
 
 		case RED_BACKGROUND_COLOR:
-			SDL_SetRenderDrawColor(sdl_renderer, 0, 128, 128, 255);
+			SDL_SetRenderDrawColor(sdl_renderer, 0, 255, 255, 255);
 		break;
 
 		case GREEN_BACKGROUND_COLOR:
-			SDL_SetRenderDrawColor(sdl_renderer, 128, 0, 128, 255);
+			SDL_SetRenderDrawColor(sdl_renderer, 255, 0, 255, 255);
 		break;
 
 		case BLUE_BACKGROUND_COLOR:
-			SDL_SetRenderDrawColor(sdl_renderer, 128, 128, 0, 255);
+			SDL_SetRenderDrawColor(sdl_renderer, 255, 255, 0, 255);
 		break;
 
 		case WHITE_BACKGROUND_COLOR:
@@ -192,6 +210,12 @@ void Engine::draw()
 		case MULTILINE_CLOSED_PRIMITIVE_TYPE:
 			primitive_renderer->draw_multiline_closed( multiline_example_points, DrawAlgorithmType::SDL );
 		break;
+		
+		//case FLOOD_TEST:
+		//	primitive_renderer->draw_rectangle(true, 1, 1, 64, 64);
+		//	SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
+		//	primitive_renderer->draw_rectangle(false, 0, 0, 66, 66);
+		//break;
 	}
 
 	SDL_RenderPresent(sdl_renderer);

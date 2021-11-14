@@ -6,6 +6,7 @@
 #include <SDL.h>
 
 #include <vector>
+#include <stack>
 
 class PrimitiveRenderer
 {
@@ -23,8 +24,11 @@ public:
     static void draw_multiline_open( const std::vector<Point2D>& points, DrawAlgorithmType algorithm_type );
     static void draw_multiline_closed( const std::vector<Point2D>& points, DrawAlgorithmType algorithm_type );
 
-private:
+    static void flood_fill(int x, int y, uint32_t fill_color, uint32_t boundary_color);
+
+public:
     static SDL_Renderer * sdl_renderer;
+private:
     static int w;
     static int h;
 };

@@ -14,6 +14,7 @@ PrimitiveRenderer::PrimitiveRenderer(SDL_Renderer * sdl_renderer, int w, int h)
 void PrimitiveRenderer::draw_point(int x, int y)
 {
     SDL_RenderDrawPoint(sdl_renderer, x, y);
+    SDL_RenderPresent(sdl_renderer);
 }
 
 void PrimitiveRenderer::draw_line(int x0, int y0, int x1, int y1)
@@ -141,5 +142,47 @@ void PrimitiveRenderer::draw_multiline_closed(const std::vector<Point2D>& points
 
         // draw a line going from the first to last point, successfully closing the shape
         line_drawing_func( points[0].get_x(), points[0].get_y(), points[points.size() - 1].get_x(), points[points.size() - 1].get_y() );
+    }
+}
+
+void PrimitiveRenderer::flood_fill(int x, int y, uint32_t fill_color, uint32_t boundary_color)
+{
+    std::stack<Point2D> stack;
+    stack.push(Point2D(x, y));
+    while (!stack.empty())
+    {
+        Point2D point2D = stack.top();
+        stack.pop();
+        if (point2D.get_x() >= 512)
+        {
+            continue;
+        }
+        if (point2D.get_y() >= 512)
+        {
+            continue;
+        }
+        SDL_Rect  sdl_rect = { point2D.get_x(), point2D.get_y(), 1, 1 };
+        uint32_t pixel;
+        SDL_RenderReadPixels(PrimitiveRenderer::sdl_renderer, &sdl_rect, SDL_PIXELFORMAT_RGBA8888, &pixel, 4);
+        if (pixel == fill_color)
+        {
+            continue;
+        }
+
+        else if (pixel != boundary_color)
+        {
+            continue;
+        }
+
+        else
+        {
+            SDL_SetRenderDrawColor(PrimitiveRenderer::sdl_renderer, fill_color >> 24 & 0xFF, fill_color >> 16 & 0xFF, fill_color >> 8 & 0xFF, fill_color & 0xFF);
+            draw_point(point2D.get_x(), point2D.get_y());
+        }
+
+        stack.push(Point2D(point2D.get_x(), point2D.get_y() + 1));
+        stack.push(Point2D(point2D.get_x(), point2D.get_y() - 1));
+        stack.push(Point2D(point2D.get_x() - 1, point2D.get_y()));
+        stack.push(Point2D(point2D.get_x() + 1, point2D.get_y()));
     }
 }
