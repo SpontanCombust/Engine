@@ -2,6 +2,7 @@
 
 #include "Point2D/Point2D.hpp"
 #include "LineSegment/LineSegment.hpp"
+#include "Utility/Color.hpp"
 
 #include <SDL.h>
 
@@ -24,11 +25,11 @@ public:
     static void draw_multiline_open( const std::vector<Point2D>& points, DrawAlgorithmType algorithm_type );
     static void draw_multiline_closed( const std::vector<Point2D>& points, DrawAlgorithmType algorithm_type );
 
-    static void flood_fill(int x, int y, uint32_t fill_color, uint32_t boundary_color);
+    static void flood_fill(int x, int y, ColorRGB fill_color, ColorRGB boundary_color);
 
 public:
     static SDL_Renderer * sdl_renderer;
 private:
-    static int w;
-    static int h;
+    static int window_w;
+    static int window_h;
 };
