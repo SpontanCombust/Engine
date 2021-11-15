@@ -7,6 +7,7 @@ add_executable(${PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/PrimitiveRenderer/PrimitiveRenderer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Point2D/Point2D.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/LineSegment/LineSegment.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Utility/Color.cpp
 )
 
 add_subdirectory(Dependencies/SDL)
