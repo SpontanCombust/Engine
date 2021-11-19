@@ -1,14 +1,17 @@
 #include "PrimitiveRenderer.hpp"
 
+#include <cmath>
+#include <cstring>
+
 SDL_Renderer * PrimitiveRenderer::sdl_renderer = nullptr;
-int PrimitiveRenderer::w = 0;
-int PrimitiveRenderer::h = 0;
+int PrimitiveRenderer::window_w = 0;
+int PrimitiveRenderer::window_h = 0;
 
 PrimitiveRenderer::PrimitiveRenderer(SDL_Renderer * sdl_renderer, int w, int h)
 {
     this->sdl_renderer = sdl_renderer;
-    this->w = w;
-    this->h = h;
+    this->window_w = w;
+    this->window_h = h;
 }
 
 void PrimitiveRenderer::draw_point(int x, int y)
@@ -74,15 +77,26 @@ void PrimitiveRenderer::draw_circle(int x0, int y0, int R)
         float y = y0 + R * sinf(a) + 0.5f;
         PrimitiveRenderer::draw_point((unsigned)x, (unsigned)y);
         PrimitiveRenderer::draw_point((unsigned)x, (unsigned)512 - y);
-        PrimitiveRenderer::draw_point((unsigned)w - x, (unsigned)y);
-        PrimitiveRenderer::draw_point((unsigned)w - x, (unsigned)h - y);
+        PrimitiveRenderer::draw_point((unsigned)window_w - x, (unsigned)y);
+        PrimitiveRenderer::draw_point((unsigned)window_w - x, (unsigned)window_h - y);
         PrimitiveRenderer::draw_point((unsigned)y, (unsigned)x);
-        PrimitiveRenderer::draw_point((unsigned)y, (unsigned)w - x);
-        PrimitiveRenderer::draw_point((unsigned)h - y, (unsigned)x);
-        PrimitiveRenderer::draw_point((unsigned)h - y, (unsigned)w - x);
+        PrimitiveRenderer::draw_point((unsigned)y, (unsigned)window_w - x);
+        PrimitiveRenderer::draw_point((unsigned)window_h - y, (unsigned)x);
+        PrimitiveRenderer::draw_point((unsigned)window_h - y, (unsigned)window_w - x);
     }
 }
 
+void PrimitiveRenderer::draw_ellipse(int x0, int y0, int Rx, int Ry)
+{
+    float step = 1.0f / Rx;
+
+    for (float a = 0.0f; a < M_PI * 2; a += step)
+    {
+        float x = x0 + Rx * cosf(a);
+        float y = y0 + Ry * sinf(a);
+        PrimitiveRenderer::draw_point(x, y);
+    }
+}
 
 void PrimitiveRenderer::draw_multiline_open(const std::vector<Point2D>& points, DrawAlgorithmType algorithm_type) 
 {
@@ -131,4 +145,62 @@ void PrimitiveRenderer::draw_multiline_closed(const std::vector<Point2D>& points
         // draw a line going from the first to last point, successfully closing the shape
         line_drawing_func( points[0].get_x(), points[0].get_y(), points[points.size() - 1].get_x(), points[points.size() - 1].get_y() );
     }
+}
+
+void PrimitiveRenderer::flood_fill(int x, int y, ColorRGB fill_color, ColorRGB boundary_color)
+{
+    SDL_PixelFormat *pixel_format = SDL_AllocFormat( SDL_PIXELFORMAT_RGBA32 );
+    uint32_t mapped_fill_color = SDL_MapRGB( pixel_format, fill_color.r, fill_color.g, fill_color.b );
+    uint32_t mapped_boundary_color = SDL_MapRGB( pixel_format, boundary_color.r, boundary_color.g, boundary_color.b );
+    SDL_FreeFormat( pixel_format );
+
+    std::stack<Point2D> stack;
+    stack.push(Point2D(x, y));
+
+    uint32_t *window_pixels;
+    window_pixels = new uint32_t[ window_w * window_h ];
+    SDL_Rect rect { 0, 0, window_w, window_h };
+    SDL_RenderReadPixels(sdl_renderer, &rect, SDL_PIXELFORMAT_RGBA32, window_pixels, window_w * sizeof(uint32_t) );
+
+    while (!stack.empty())
+    {
+        Point2D point2D = stack.top();
+        stack.pop();
+
+        if (point2D.get_x() < 0 || point2D.get_x() >= window_w)
+        {
+            continue;
+        }
+        if (point2D.get_y() < 0 || point2D.get_y() >= window_h)
+        {
+            continue;
+        }
+
+        uint32_t *pixel = &window_pixels[ point2D.get_y() * window_w + point2D.get_x() ];
+        if (*pixel == mapped_fill_color)
+        {
+            continue;
+        }
+        else if (*pixel != mapped_boundary_color)
+        {
+            *pixel = mapped_fill_color;
+
+            stack.push(Point2D(point2D.get_x(), point2D.get_y() + 1));
+            stack.push(Point2D(point2D.get_x(), point2D.get_y() - 1));
+            stack.push(Point2D(point2D.get_x() - 1, point2D.get_y()));
+            stack.push(Point2D(point2D.get_x() + 1, point2D.get_y()));
+        }       
+    }
+
+    SDL_Texture *color_buffer = SDL_CreateTexture( sdl_renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, window_w, window_h );
+    uint32_t *color_buffer_pixels;
+    int pitch;
+    SDL_LockTexture( color_buffer, NULL, (void **)&color_buffer_pixels, &pitch );
+    memcpy( color_buffer_pixels, window_pixels, window_w * window_h * sizeof(uint32_t) );
+    SDL_UnlockTexture( color_buffer );
+
+    SDL_RenderCopy( sdl_renderer, color_buffer, NULL, NULL );
+
+    delete window_pixels;
+    SDL_DestroyTexture( color_buffer );
 }

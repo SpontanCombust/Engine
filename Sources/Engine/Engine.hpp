@@ -4,6 +4,7 @@
 
 #include "Utility/Log.hpp"
 #include "PrimitiveRenderer/PrimitiveRenderer.hpp"
+#include "Utility/Color.hpp"
 
 enum WindowMode
 {
@@ -31,8 +32,10 @@ enum PrimitiveType
 	FILLED_RECTANGLE_PRIMITIVE_TYPE,
 	NAIVE_LINE_PRIMITIVE_TYPE,
 	CIRCLE_PRIMITIVE_TYPE,
+	ELLIPSE_PRIMITIVE_TYPE,
 	MULTILINE_OPEN_PRIMITIVE_TYPE,
 	MULTILINE_CLOSED_PRIMITIVE_TYPE,
+	CANVAS_PRIMITIVE_TYPE,
 	PRIMITIVE_TYPE_COUNT
 };
 
@@ -59,8 +62,13 @@ private:
 	uint32_t latency_time;
 	uint32_t target_time;
 
-	SDL_Event event;
-
 	unsigned background_color;
+	ColorRGB background_color_rgb;
+	unsigned int draw_color;
+	ColorRGB draw_color_rgb;
 	unsigned primitive_type;
+
+	SDL_Texture *canvas;
+	bool is_brush_held;
+	int brush_x, brush_y;
 };
