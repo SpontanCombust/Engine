@@ -5,6 +5,9 @@
 #include "Utility/Log.hpp"
 #include "PrimitiveRenderer/PrimitiveRenderer.hpp"
 #include "Utility/Color.hpp"
+#include "GameObjects/GameObject.hpp"
+
+#include <vector>
 
 enum WindowMode
 {
@@ -49,6 +52,9 @@ public:
 	void process_events();
 	void update();
 	void draw();
+
+	// Takes ownership over the pointer and adds it to engine's game object pool
+	void add_game_object( GameObject *go );
 	
 private:
 	Engine(const char * title, int x, int y, int w, int h, WindowMode window_mode, unsigned frame_rate);
@@ -71,4 +77,8 @@ private:
 	SDL_Texture *canvas;
 	bool is_brush_held;
 	int brush_x, brush_y;
+
+
+	std::vector< GameObject * > vec_game_objects;
+	void remove_dead_game_objects();
 };
