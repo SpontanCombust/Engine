@@ -50,11 +50,10 @@ Engine::~Engine()
 {
 	remove_dead_game_objects();
 
-	SDL_DestroyTexture( canvas );
-
-	SDL_DestroyWindow(sdl_window);
-	SDL_DestroyRenderer(sdl_renderer);
 	delete primitive_renderer;
+	SDL_DestroyTexture( canvas );
+	SDL_DestroyRenderer(sdl_renderer);
+	SDL_DestroyWindow(sdl_window);
 
 	
 	SDL_Quit();
