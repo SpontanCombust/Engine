@@ -8,7 +8,10 @@ add_executable(${PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Point2D/Point2D.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/LineSegment/LineSegment.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Utility/Color.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/BitmapRenderer/BitmapRenderer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/GameObject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/BitmapObject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/ModelObject.cpp
 )
 
 add_subdirectory(Dependencies/SDL)
