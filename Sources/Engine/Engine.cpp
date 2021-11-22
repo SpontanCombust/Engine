@@ -48,7 +48,11 @@ Engine::Engine(const char * title, int x, int y, int w, int h, WindowMode window
 
 Engine::~Engine()
 {
-	remove_dead_game_objects();
+	for( GameObject *go : vec_game_objects )
+	{
+		delete go;
+	}
+	vec_game_objects.clear();
 
 	delete primitive_renderer;
 	SDL_DestroyTexture( canvas );
