@@ -35,15 +35,7 @@ Engine::Engine(const char * title, int x, int y, int w, int h, WindowMode window
 	latency_time = 0;
 	target_time = 1000 / frame_rate;
 
-	background_color = BLACK_BACKGROUND_COLOR;
-	draw_color = WHITE_BACKGROUND_COLOR;
-
-	primitive_type = NO_PRIMITIVE_TYPE;
-
 	is_running = true;
-
-	canvas = SDL_CreateTexture( sdl_renderer, SDL_PIXELFORMAT_ABGR32, SDL_TEXTUREACCESS_TARGET, w, h );
-	is_brush_held = false;
 }
 
 Engine::~Engine()
@@ -55,12 +47,21 @@ Engine::~Engine()
 	vec_game_objects.clear();
 
 	delete primitive_renderer;
-	SDL_DestroyTexture( canvas );
 	SDL_DestroyRenderer(sdl_renderer);
 	SDL_DestroyWindow(sdl_window);
 
 	
 	SDL_Quit();
+}
+
+Engine * Engine::get_instance() 
+{
+	if(!engine)
+	{
+		engine = new Engine("", 0, 0, 800, 600, WindowMode::WINDOWED_MODE, 60);
+	}
+
+	return engine;
 }
 
 Engine * Engine::get_instance(const char * title, int x, int y, int w, int h, WindowMode window_mode, unsigned frame_rate)
@@ -100,111 +101,9 @@ void Engine::process_events()
 			}
 		}
 
-		switch (event.type)
+		if( event.type == SDL_QUIT )
 		{
-			case SDL_WINDOWEVENT:
-				switch (event.window.event)
-				{
-					case SDL_WINDOWEVENT_CLOSE:
-						is_running = false;
-					break;
-				}
-			break;
-
-			case SDL_KEYUP:
-				switch (event.key.keysym.sym)
-				{
-					case SDLK_b:
-						background_color = (background_color + 1) % BACKGROUND_COLOR_COUNT;
-
-						switch (background_color)
-						{
-							case BLACK_BACKGROUND_COLOR:
-								background_color_rgb = { 0, 0, 0 };
-							break;
-
-							case RED_BACKGROUND_COLOR:
-								background_color_rgb = { 255, 0, 0 };
-							break;
-
-							case GREEN_BACKGROUND_COLOR:
-								background_color_rgb = { 0, 255, 0 };
-							break;
-
-							case BLUE_BACKGROUND_COLOR:
-								background_color_rgb = { 0, 0, 255 };
-							break;
-
-							case WHITE_BACKGROUND_COLOR:
-								background_color_rgb = { 255, 255, 255 };
-							break;
-						}
-					break;
-
-					case SDLK_f:
-						draw_color = (draw_color + 1) % BACKGROUND_COLOR_COUNT;
-
-						switch (draw_color)
-						{
-							case BLACK_BACKGROUND_COLOR:
-								draw_color_rgb = { 0, 0, 0 };
-							break;
-
-							case RED_BACKGROUND_COLOR:
-								draw_color_rgb = { 255, 0, 0 };
-							break;
-
-							case GREEN_BACKGROUND_COLOR:
-								draw_color_rgb = { 0, 255, 0 };
-							break;
-
-							case BLUE_BACKGROUND_COLOR:
-								draw_color_rgb = { 0, 0, 255 };
-							break;
-
-							case WHITE_BACKGROUND_COLOR:
-								draw_color_rgb = { 255, 255, 255 };
-							break;
-						}
-					break;
-
-					case SDLK_p:
-						primitive_type = (primitive_type + 1) % PRIMITIVE_TYPE_COUNT;
-					break;
-				}
-				{
-					std::string title = "Draw[F]: " + draw_color_rgb.to_string() + "\t" + "Background/Fill[B]: " + background_color_rgb.to_string();
-					SDL_SetWindowTitle( sdl_window, title.c_str() );
-				}
-			break;
-
-			case SDL_MOUSEBUTTONDOWN:
-				if( event.button.button == SDL_BUTTON_LEFT )
-				{
-					is_brush_held = true;
-					brush_x = event.button.x;
-					brush_y = event.button.y;
-				}
-				else if( event.button.button == SDL_BUTTON_RIGHT )
-				{
-					SDL_SetRenderTarget( sdl_renderer, canvas );
-					SDL_SetRenderDrawColor( sdl_renderer, background_color_rgb.r, background_color_rgb.g, background_color_rgb.b, 255 );
-					PrimitiveRenderer::flood_fill(event.button.x, event.button.y, background_color_rgb, draw_color_rgb ); 
-					SDL_SetRenderTarget( sdl_renderer, NULL );
-				}
-			break;
-
-			case SDL_MOUSEBUTTONUP:
-				if( event.button.button == SDL_BUTTON_LEFT )
-				{
-					is_brush_held = false;
-				}
-			break;
-
-			case SDL_MOUSEMOTION:
-				brush_x = event.motion.x;
-				brush_y = event.motion.y;
-			break;
+			is_running = false;
 		}
 	}
 }
@@ -231,69 +130,6 @@ void Engine::draw()
 		{
 			dob->draw();
 		}
-	}
-
-	SDL_SetRenderDrawColor( sdl_renderer, background_color_rgb.r, background_color_rgb.g, background_color_rgb.b, 255 );
-	SDL_RenderClear(sdl_renderer);
-	SDL_SetRenderDrawColor( sdl_renderer, draw_color_rgb.r, draw_color_rgb.g, draw_color_rgb.b, 255 );
-
-	std::vector<Point2D> multiline_example_points;
-	multiline_example_points.push_back( Point2D{ 150, 400 } );
-	multiline_example_points.push_back( Point2D{ 150, 200 } );
-	multiline_example_points.push_back( Point2D{ 200, 300 } );
-	multiline_example_points.push_back( Point2D{ 250, 200 } );
-	multiline_example_points.push_back( Point2D{ 300, 300 } );
-	multiline_example_points.push_back( Point2D{ 350, 200 } );
-	multiline_example_points.push_back( Point2D{ 350, 400 } );
-
-	switch (primitive_type)
-	{
-		case POINT_PRIMITIVE_TYPE:
-			primitive_renderer->draw_point(256, 256);
-		break;
-
-		case LINE_PRIMITIVE_TYPE:
-			primitive_renderer->draw_line(0, 0, 511, 511);
-		break;
-
-		case RECTANGLE_PRIMITIVE_TYPE:
-			primitive_renderer->draw_rectangle(false, 0, 0, 256, 256);
-		break;
-
-		case FILLED_RECTANGLE_PRIMITIVE_TYPE:
-			primitive_renderer->draw_rectangle(true, 0, 0, 256, 256);
-		break;
-
-		case NAIVE_LINE_PRIMITIVE_TYPE:
-			primitive_renderer->naively_draw_line(0, 0, 511, 511);
-		break;
-
-		case CIRCLE_PRIMITIVE_TYPE:
-			primitive_renderer->draw_circle(256, 256, 64);
-		break;
-
-		case ELLIPSE_PRIMITIVE_TYPE:
-			primitive_renderer->draw_ellipse(256, 256, 64, 32);
-		break;
-
-		case MULTILINE_OPEN_PRIMITIVE_TYPE:
-			primitive_renderer->draw_multiline_open( multiline_example_points, DrawAlgorithmType::SDL );
-		break;
-
-		case MULTILINE_CLOSED_PRIMITIVE_TYPE:
-			primitive_renderer->draw_multiline_closed( multiline_example_points, DrawAlgorithmType::SDL );
-		break;
-
-		case CANVAS_PRIMITIVE_TYPE:
-			if( is_brush_held )
-			{
-				SDL_SetRenderTarget( sdl_renderer, canvas );
-				PrimitiveRenderer::draw_rectangle( true, brush_x, brush_y, 5, 5 );
-				SDL_SetRenderTarget( sdl_renderer, NULL );
-			}
-
-			SDL_RenderCopy( sdl_renderer, canvas, NULL, NULL );
-		break;
 	}
 
 	SDL_RenderPresent(sdl_renderer);
