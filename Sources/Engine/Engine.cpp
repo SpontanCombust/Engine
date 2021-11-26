@@ -5,6 +5,7 @@
 #include "BitmapRenderer/BitmapRenderer.hpp"
 
 #include <SDL_ttf.h>
+#include "GameObjects/AnimatedObject.hpp"
 
 Engine * Engine::engine = nullptr;
 
@@ -123,6 +124,10 @@ void Engine::update()
 		{
 			updatable->update( target_time );
 		}
+		if( updatable = dynamic_cast<AnimatedObject *>(go) )
+		{
+			updatable->update( target_time );
+		}
 	}
 }
 
@@ -155,20 +160,20 @@ void Engine::add_game_object( GameObject *go )
 
 void Engine::remove_game_object( GameObject *go ) 
 {
-	if( go )
-	{
-		for( auto it = vec_game_objects.begin(); it != vec_game_objects.end(); )
-		{
-			if( *it == go )
-			{
-				it = vec_game_objects.erase( it );
-			}
-			else
-			{
-				++it;
-			}
-		}
-	}
+    if( go )
+    {
+        for( auto it = vec_game_objects.begin(); it != vec_game_objects.end(); )
+        {
+            if( *it == go )
+            {
+                it = vec_game_objects.erase( it );
+            }
+            else
+            {
+                ++it;
+            }
+        }
+    }
 }
 
 void Engine::remove_dead_game_objects() 
