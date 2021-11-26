@@ -7,12 +7,7 @@ Engine * Engine::engine = nullptr;
 
 Engine::Engine(const char * title, int x, int y, int w, int h, WindowMode window_mode, unsigned frame_rate)
 {
-	if (SDL_Init(SDL_INIT_EVERYTHING))
-	{
-		LOG("Unable to initialize SDL.");
-		LOG(SDL_GetError());
-		exit(EXIT_FAILURE);
-	}
+	SDL_Init(SDL_INIT_EVERYTHING);
 
 	sdl_window = SDL_CreateWindow(title, x, y, w, h, window_mode);
 	if (!sdl_window)
