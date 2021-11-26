@@ -11,6 +11,8 @@ public:
     float scale_x, scale_y;
     float rotation_deg;
 
+    ModelObject();
+
     void translate( float tx, float ty );
     void scale( float sx, float sy );
     void rotate( float angle_deg );
