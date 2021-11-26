@@ -37,8 +37,8 @@ if (NOT sdl2_ttf_POPULATED)
     add_subdirectory(${sdl2_ttf_SOURCE_DIR} ${sdl2_ttf_BINARY_DIR})
 endif ()
 
-add_executable(${PROJECT_NAME}
-    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Main.cpp
+add_library(${PROJECT_NAME}
+    # ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Engine/Engine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/PrimitiveRenderer/PrimitiveRenderer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Point2D/Point2D.cpp
@@ -51,6 +51,11 @@ add_executable(${PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Testing/TestingGameObject.cpp
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Sources)
+target_include_directories(${PROJECT_NAME} PUBLIC 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sources
+    ${sdl2_SOURCE_DIR}
+    ${sdl2_image_SOURCE_DIR}
+    ${sdl2_ttf_SOURCE_DIR}
+)
 
 target_link_libraries(${PROJECT_NAME} SDL2 SDL2_image SDL2_ttf)
