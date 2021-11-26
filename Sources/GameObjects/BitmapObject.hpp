@@ -8,11 +8,10 @@
 
 class BitmapObject : virtual public ModelObject, virtual public DrawableObject
 {
-private:
-    int tex_w, tex_h;
-
 public:
+    int tex_w, tex_h;
     SDL_Texture *bitmap;
+    
     void set_bitmap( SDL_Texture *bitmap );
 
     void draw() override;
