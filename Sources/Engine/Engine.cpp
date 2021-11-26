@@ -1,4 +1,7 @@
 #include "Engine.hpp"
+#include "GameObjects/EventListeningObject.hpp"
+#include "GameObjects/UpdatableObject.hpp"
+#include "GameObjects/DrawableObject.hpp"
 
 Engine * Engine::engine = nullptr;
 
@@ -43,6 +46,23 @@ Engine::Engine(const char * title, int x, int y, int w, int h, WindowMode window
 	is_brush_held = false;
 }
 
+Engine::~Engine()
+{
+	for( GameObject *go : vec_game_objects )
+	{
+		delete go;
+	}
+	vec_game_objects.clear();
+
+	delete primitive_renderer;
+	SDL_DestroyTexture( canvas );
+	SDL_DestroyRenderer(sdl_renderer);
+	SDL_DestroyWindow(sdl_window);
+
+	
+	SDL_Quit();
+}
+
 Engine * Engine::get_instance(const char * title, int x, int y, int w, int h, WindowMode window_mode, unsigned frame_rate)
 {
 	if (!engine)
@@ -59,6 +79,7 @@ void Engine::schedule()
 
 	while (latency_time >= target_time)
 	{
+		remove_dead_game_objects();
 		update();
 		latency_time -= target_time;
 	}
@@ -67,9 +88,18 @@ void Engine::schedule()
 void Engine::process_events()
 {
 	SDL_Event event;
+	EventListeningObject *elo;
 
 	while (SDL_PollEvent(&event))
 	{
+		for( GameObject *go : vec_game_objects )
+		{
+			if( elo = dynamic_cast<EventListeningObject *>(go) )
+			{
+				elo->handle_event(event);
+			}
+		}
+
 		switch (event.type)
 		{
 			case SDL_WINDOWEVENT:
@@ -181,11 +211,28 @@ void Engine::process_events()
 
 void Engine::update()
 {
+	UpdatableObject *updatable;
 
+	for( GameObject *go : vec_game_objects )
+	{
+		if( updatable = dynamic_cast<UpdatableObject *>(go) )
+		{
+			updatable->update( target_time );
+		}
+	}
 }
 
 void Engine::draw()
 {
+	DrawableObject *dob;
+	for( GameObject *go : vec_game_objects )
+	{
+		if( dob = dynamic_cast<DrawableObject *>(go) )
+		{
+			dob->draw();
+		}
+	}
+
 	SDL_SetRenderDrawColor( sdl_renderer, background_color_rgb.r, background_color_rgb.g, background_color_rgb.b, 255 );
 	SDL_RenderClear(sdl_renderer);
 	SDL_SetRenderDrawColor( sdl_renderer, draw_color_rgb.r, draw_color_rgb.g, draw_color_rgb.b, 255 );
@@ -252,14 +299,31 @@ void Engine::draw()
 	SDL_RenderPresent(sdl_renderer);
 }
 
-Engine::~Engine()
+void Engine::add_game_object( GameObject *go ) 
 {
-	SDL_DestroyTexture( canvas );
+	if( go )
+	{
+		vec_game_objects.push_back( go );
+	}
+}
 
-	SDL_DestroyWindow(sdl_window);
-	SDL_DestroyRenderer(sdl_renderer);
-	delete primitive_renderer;
-
-	
-	SDL_Quit();
+void Engine::remove_dead_game_objects() 
+{
+	auto it = vec_game_objects.begin();
+	while( it != vec_game_objects.end() )
+	{
+		if( !(*it)->is_alive )
+		{
+			delete *it;
+			// erase moves all subsequent elements towards the beginning of the vector 
+			// and returns an iterator to the element after the erased one
+			// by assigning that returned interator to `it` we iterate onto the next element
+			it = vec_game_objects.erase(it);
+		}
+		else
+		{
+			// if we don't erase we simply increment the iterator
+			++it;
+		}
+	}
 }
