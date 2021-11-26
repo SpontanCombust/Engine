@@ -29,8 +29,13 @@ public:
 	void update();
 	void draw();
 
-	// Takes ownership over the pointer and adds it to engine's game object pool
+	// Shares ownership over the pointer with the called
+	// Adds object to engine's game object pool
+	// If object won't be removed with remove_game_object, it'll be automatically deleted on engine deletion
 	void add_game_object( GameObject *go );
+	// Removes object from engine's game object pool
+	// Caller is then fully responsible for freeing the pointer afterwards
+	void remove_game_object( GameObject *go );
 	
 public:
 	SDL_Window * sdl_window;

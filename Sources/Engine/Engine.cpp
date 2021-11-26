@@ -143,6 +143,20 @@ void Engine::add_game_object( GameObject *go )
 	}
 }
 
+void Engine::remove_game_object( GameObject *go ) 
+{
+	if( go )
+	{
+		for( auto it = vec_game_objects.begin(); it != vec_game_objects.end(); ++it )
+		{
+			if( *it == go )
+			{
+				vec_game_objects.erase( it );
+			}
+		}
+	}
+}
+
 void Engine::remove_dead_game_objects() 
 {
 	auto it = vec_game_objects.begin();
