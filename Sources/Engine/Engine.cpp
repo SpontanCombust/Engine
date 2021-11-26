@@ -2,12 +2,17 @@
 #include "GameObjects/EventListeningObject.hpp"
 #include "GameObjects/UpdatableObject.hpp"
 #include "GameObjects/DrawableObject.hpp"
+#include "BitmapRenderer/BitmapRenderer.hpp"
+
+#include <SDL_ttf.h>
 
 Engine * Engine::engine = nullptr;
 
 Engine::Engine(const char * title, int x, int y, int w, int h, WindowMode window_mode, unsigned frame_rate)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
+
+	TTF_Init();
 
 	sdl_window = SDL_CreateWindow(title, x, y, w, h, window_mode);
 	if (!sdl_window)
@@ -26,6 +31,7 @@ Engine::Engine(const char * title, int x, int y, int w, int h, WindowMode window
 	}
 
 	primitive_renderer = new PrimitiveRenderer(sdl_renderer, w, h);
+	BitmapRenderer::setup( sdl_renderer );
 
 	latency_time = 0;
 	target_time = 1000 / frame_rate;
@@ -88,8 +94,10 @@ void Engine::process_events()
 
 	while (SDL_PollEvent(&event))
 	{
-		for( GameObject *go : vec_game_objects )
+		for( int i = 0; i < vec_game_objects.size(); i++ )
 		{
+			GameObject *go = vec_game_objects[i];
+
 			if( elo = dynamic_cast<EventListeningObject *>(go) )
 			{
 				elo->handle_event(event);
@@ -107,8 +115,10 @@ void Engine::update()
 {
 	UpdatableObject *updatable;
 
-	for( GameObject *go : vec_game_objects )
+	for( int i = 0; i < vec_game_objects.size(); i++ )
 	{
+		GameObject *go = vec_game_objects[i];
+
 		if( updatable = dynamic_cast<UpdatableObject *>(go) )
 		{
 			updatable->update( target_time );
@@ -118,9 +128,14 @@ void Engine::update()
 
 void Engine::draw()
 {
+	SDL_RenderClear( sdl_renderer );
+
 	DrawableObject *dob;
-	for( GameObject *go : vec_game_objects )
+
+	for( int i = 0; i < vec_game_objects.size(); i++ )
 	{
+		GameObject *go = vec_game_objects[i];
+
 		if( dob = dynamic_cast<DrawableObject *>(go) )
 		{
 			dob->draw();
@@ -142,11 +157,15 @@ void Engine::remove_game_object( GameObject *go )
 {
 	if( go )
 	{
-		for( auto it = vec_game_objects.begin(); it != vec_game_objects.end(); ++it )
+		for( auto it = vec_game_objects.begin(); it != vec_game_objects.end(); )
 		{
 			if( *it == go )
 			{
-				vec_game_objects.erase( it );
+				it = vec_game_objects.erase( it );
+			}
+			else
+			{
+				++it;
 			}
 		}
 	}
