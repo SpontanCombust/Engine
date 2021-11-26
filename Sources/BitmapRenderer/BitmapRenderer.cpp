@@ -1,5 +1,7 @@
 #include "BitmapRenderer.hpp"
 
+#include <iostream>
+
 SDL_Renderer *BitmapRenderer::sdl_renderer = nullptr;
 
 void BitmapRenderer::setup(SDL_Renderer *renderer) 

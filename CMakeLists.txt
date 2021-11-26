@@ -49,6 +49,7 @@ add_executable(${PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/BitmapObject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/ModelObject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Testing/TestingGameObject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/AnimatedObject.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Sources)
