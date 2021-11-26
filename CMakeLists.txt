@@ -38,7 +38,6 @@ if (NOT sdl2_ttf_POPULATED)
 endif ()
 
 add_library(${PROJECT_NAME}
-    # ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Engine/Engine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/PrimitiveRenderer/PrimitiveRenderer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Point2D/Point2D.cpp
@@ -60,3 +59,12 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 )
 
 target_link_libraries(${PROJECT_NAME} SDL2 SDL2_image SDL2_ttf)
+
+
+
+
+add_executable(${PROJECT_NAME}_TEST 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Main.cpp
+)
+
+target_link_libraries(${PROJECT_NAME}_TEST ${PROJECT_NAME})
