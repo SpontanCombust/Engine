@@ -31,11 +31,8 @@ public:
 
 	// Shares ownership over the pointer with the called
 	// Adds object to engine's game object pool
-	// If object won't be removed with remove_game_object, it'll be automatically deleted on engine deletion
+	// If you want the engine to let go of ther pointer, set is_alive to false in the object
 	void add_game_object( GameObject *go );
-	// Removes object from engine's game object pool
-	// Caller is then fully responsible for freeing the pointer afterwards
-	void remove_game_object( GameObject *go );
 	
 public:
 	SDL_Window * sdl_window;
@@ -49,7 +46,6 @@ private:
 	PrimitiveRenderer * primitive_renderer;
 
 	uint32_t previous_time;
-	uint32_t latency_time;
 	uint32_t target_time;
 	
 	std::vector< GameObject * > vec_game_objects;

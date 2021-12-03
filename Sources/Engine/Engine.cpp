@@ -4,6 +4,7 @@
 #include "GameObjects/DrawableObject.hpp"
 #include "BitmapRenderer/BitmapRenderer.hpp"
 
+#include <SDL_image.h>
 #include <SDL_ttf.h>
 #include "GameObjects/AnimatedObject.hpp"
 
@@ -12,6 +13,8 @@ Engine * Engine::engine = nullptr;
 Engine::Engine(const char * title, int x, int y, int w, int h, WindowMode window_mode, unsigned frame_rate)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
+
+	IMG_Init( IMG_INIT_JPG | IMG_INIT_PNG );
 
 	TTF_Init();
 
@@ -34,7 +37,7 @@ Engine::Engine(const char * title, int x, int y, int w, int h, WindowMode window
 	primitive_renderer = new PrimitiveRenderer(sdl_renderer, w, h);
 	BitmapRenderer::setup( sdl_renderer );
 
-	latency_time = 0;
+	previous_time = 0;
 	target_time = 1000 / frame_rate;
 
 	is_running = true;
@@ -78,14 +81,26 @@ Engine * Engine::get_instance(const char * title, int x, int y, int w, int h, Wi
 
 void Engine::schedule()
 {
-	latency_time += SDL_GetTicks() - previous_time;
+	uint32_t current_time = SDL_GetTicks();
+	uint32_t elapsed_time = current_time - previous_time;
+	uint32_t updates_to_make = elapsed_time / target_time + 1;
 
-	while (latency_time >= target_time)
+	bool should_sleep = (updates_to_make == 1);
+
+	while( updates_to_make > 0 )
 	{
 		remove_dead_game_objects();
 		update();
-		latency_time -= target_time;
+
+		updates_to_make--;
 	}
+
+	if( should_sleep )
+	{
+		SDL_Delay( target_time - elapsed_time );
+	}
+
+	previous_time = current_time;
 }
 
 void Engine::process_events()
@@ -124,10 +139,6 @@ void Engine::update()
 		{
 			updatable->update( target_time );
 		}
-		if( updatable = dynamic_cast<AnimatedObject *>(go) )
-		{
-			updatable->update( target_time );
-		}
 	}
 }
 
@@ -158,24 +169,6 @@ void Engine::add_game_object( GameObject *go )
 	}
 }
 
-void Engine::remove_game_object( GameObject *go ) 
-{
-    if( go )
-    {
-        for( auto it = vec_game_objects.begin(); it != vec_game_objects.end(); )
-        {
-            if( *it == go )
-            {
-                it = vec_game_objects.erase( it );
-            }
-            else
-            {
-                ++it;
-            }
-        }
-    }
-}
-
 void Engine::remove_dead_game_objects() 
 {
 	auto it = vec_game_objects.begin();
@@ -183,7 +176,7 @@ void Engine::remove_dead_game_objects()
 	{
 		if( !(*it)->is_alive )
 		{
-			delete *it;
+			//TODO use shared_ptr for passing game objects around to work around ownership issue
 			// erase moves all subsequent elements towards the beginning of the vector 
 			// and returns an iterator to the element after the erased one
 			// by assigning that returned interator to `it` we iterate onto the next element
