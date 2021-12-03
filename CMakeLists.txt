@@ -9,33 +9,19 @@ FetchContent_Declare(
     GIT_REPOSITORY "https://github.com/libsdl-org/SDL"
     GIT_TAG main
 )
-FetchContent_GetProperties(SDL2)
-if (NOT sdl2_POPULATED)
-    FetchContent_Populate(SDL2)
-    add_subdirectory(${sdl2_SOURCE_DIR} ${sdl2_BINARY_DIR})
-endif ()
-
 FetchContent_Declare(
     SDL2_image
     GIT_REPOSITORY "https://github.com/libsdl-org/SDL_image"
     GIT_TAG main
 )
-FetchContent_GetProperties(SDL2_image)
-if (NOT sdl2_image_POPULATED)
-    FetchContent_Populate(SDL2_image)
-    add_subdirectory(${sdl2_image_SOURCE_DIR} ${sdl2_image_BINARY_DIR})
-endif ()
-
 FetchContent_Declare(
     SDL2_ttf
     GIT_REPOSITORY "https://github.com/libsdl-org/SDL_ttf"
     GIT_TAG main
 )
-FetchContent_GetProperties(SDL2_ttf)
-if (NOT sdl2_ttf_POPULATED)
-    FetchContent_Populate(SDL2_ttf)
-    add_subdirectory(${sdl2_ttf_SOURCE_DIR} ${sdl2_ttf_BINARY_DIR})
-endif ()
+
+FetchContent_MakeAvailable( SDL2 SDL2_image SDL2_ttf )
+
 
 add_library(${PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Engine/Engine.cpp
