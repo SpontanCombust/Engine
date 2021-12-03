@@ -4,7 +4,7 @@
 #include "TransformableObject.hpp"
 
 // A class that stores its transformation information
-class ModelObject
+class ModelObject : public TransformableObject
 {
 public:
     float transl_x, transl_y;
@@ -13,9 +13,9 @@ public:
 
     ModelObject();
 
-    void translate( float tx, float ty );
-    void scale( float sx, float sy );
-    void rotate( float angle_deg );
+    void translate( float tx, float ty ) override;
+    void scale( float sx, float sy ) override;
+    void rotate( float angle_deg ) override;
 };
 
 #endif // __MODELOBJECT_H__
