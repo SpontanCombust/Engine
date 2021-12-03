@@ -2,13 +2,44 @@
 
 #include "Engine/Engine.hpp"
 
+ColorRGB enumColorToRGB( unsigned int bgc )
+{
+    switch (bgc)
+    {
+        case BLACK_BACKGROUND_COLOR:
+            return { 0, 0, 0 };
+        break;
+
+        case RED_BACKGROUND_COLOR:
+            return { 255, 0, 0 };
+        break;
+
+        case GREEN_BACKGROUND_COLOR:
+            return { 0, 255, 0 };
+        break;
+
+        case BLUE_BACKGROUND_COLOR:
+            return { 0, 0, 255 };
+        break;
+
+        case WHITE_BACKGROUND_COLOR:
+            return { 255, 255, 255 };
+        break;
+
+        default:
+            return { 255, 255, 255 };
+    }
+}
+
 TestingGameObject::TestingGameObject() 
 {
     sdl_window = Engine::get_instance()->sdl_window;
     sdl_renderer = Engine::get_instance()->sdl_renderer;
 
     background_color = BLACK_BACKGROUND_COLOR;
+    background_color_rgb = enumColorToRGB( background_color );
 	draw_color = WHITE_BACKGROUND_COLOR;
+    draw_color_rgb = enumColorToRGB( draw_color );
     primitive_type = NO_PRIMITIVE_TYPE;
 
     int w, h;
@@ -97,56 +128,12 @@ void TestingGameObject::handle_event(const SDL_Event& e)
             {
                 case SDLK_b:
                     background_color = (background_color + 1) % BACKGROUND_COLOR_COUNT;
-
-                    switch (background_color)
-                    {
-                        case BLACK_BACKGROUND_COLOR:
-                            background_color_rgb = { 0, 0, 0 };
-                        break;
-
-                        case RED_BACKGROUND_COLOR:
-                            background_color_rgb = { 255, 0, 0 };
-                        break;
-
-                        case GREEN_BACKGROUND_COLOR:
-                            background_color_rgb = { 0, 255, 0 };
-                        break;
-
-                        case BLUE_BACKGROUND_COLOR:
-                            background_color_rgb = { 0, 0, 255 };
-                        break;
-
-                        case WHITE_BACKGROUND_COLOR:
-                            background_color_rgb = { 255, 255, 255 };
-                        break;
-                    }
+                    background_color_rgb = enumColorToRGB( background_color ); 
                 break;
 
                 case SDLK_f:
                     draw_color = (draw_color + 1) % BACKGROUND_COLOR_COUNT;
-
-                    switch (draw_color)
-                    {
-                        case BLACK_BACKGROUND_COLOR:
-                            draw_color_rgb = { 0, 0, 0 };
-                        break;
-
-                        case RED_BACKGROUND_COLOR:
-                            draw_color_rgb = { 255, 0, 0 };
-                        break;
-
-                        case GREEN_BACKGROUND_COLOR:
-                            draw_color_rgb = { 0, 255, 0 };
-                        break;
-
-                        case BLUE_BACKGROUND_COLOR:
-                            draw_color_rgb = { 0, 0, 255 };
-                        break;
-
-                        case WHITE_BACKGROUND_COLOR:
-                            draw_color_rgb = { 255, 255, 255 };
-                        break;
-                    }
+                    draw_color_rgb = enumColorToRGB( draw_color );
                 break;
 
                 case SDLK_p:
