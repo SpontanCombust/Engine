@@ -13,8 +13,6 @@
 
 int main()
 {
-
-	IMG_Init(IMG_INIT_PNG);
 	Engine * engine = Engine::get_instance("Tech Demo", 64, 64, 512, 512, WINDOWED_MODE, 60);
 	
 #ifdef CHECK_SINGLETON
@@ -22,22 +20,13 @@ int main()
 #endif
 
 #ifdef ENGINE_TEST
-	engine->add_game_object( new TestingGameObject() );
+	// engine->add_game_object( new TestingGameObject() );
+	
+	auto obj = new AnimatedObject( "../test/assets/Vulture_walk.png", Size2D( 48, 48 ), 4, 500 );
+	obj->scale_x = obj->scale_y = 2.f;
+	obj->transl_x = obj->transl_y = 200.f;
+	engine->add_game_object( obj );
 #endif 
-
-	AnimatedObject vulture(4, 0, 4);
-	const char paths[4][128] = { "1.png", "2.png", "3.png", "4.png" };
-	for (unsigned index = 0; index < 4; ++index)
-	{
-		SDL_Texture *texture = NULL;
-    	SDL_Surface *surface = IMG_Load(paths[index]);
-		if (surface) {
-			texture = SDL_CreateTextureFromSurface(engine->sdl_renderer, surface);
-			SDL_FreeSurface(surface);
-		}
-		vulture.bitmaps[index] = texture;
-	}
-	engine->add_game_object(&vulture);
 
 	while (engine->is_running)
 	{
