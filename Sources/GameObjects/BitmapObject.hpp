@@ -13,8 +13,11 @@ public:
     SDL_Texture *bitmap;
     SDL_Rect clip_rect;
     
+    BitmapObject();
     BitmapObject( SDL_Texture *bitmap );
     BitmapObject( const char *bitmap_file_path );
+
+    void set_bitmap( SDL_Texture *bitmap );
 
     ~BitmapObject();
 

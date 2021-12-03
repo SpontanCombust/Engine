@@ -3,16 +3,25 @@
 #include "ResourceManager/ResourceManager.hpp"
 #include "BitmapRenderer/BitmapRenderer.hpp"
 
+BitmapObject::BitmapObject() 
+{
+    this->bitmap = nullptr;
+    clip_rect = { 0, 0, 0, 0 };
+}
+
 BitmapObject::BitmapObject(SDL_Texture *bitmap) 
 {
-    this->bitmap = bitmap;
-    SDL_QueryTexture( bitmap, NULL, NULL, &this->tex_w, &this->tex_h );
-    clip_rect = { 0, 0, tex_w, tex_h };
+    set_bitmap( bitmap );
 }
 
 BitmapObject::BitmapObject( const char *bitmap_file_path ) 
 {
-    this->bitmap = ResourceManager::load_bitmap( bitmap_file_path );
+    set_bitmap( ResourceManager::load_bitmap( bitmap_file_path ) );
+}
+
+void BitmapObject::set_bitmap( SDL_Texture *bitmap ) 
+{
+    this->bitmap = bitmap;
     SDL_QueryTexture( bitmap, NULL, NULL, &this->tex_w, &this->tex_h );
     clip_rect = { 0, 0, tex_w, tex_h };
 }
