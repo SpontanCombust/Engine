@@ -1,10 +1,10 @@
 #include "BitmapObject.hpp"
 
+#include "ResourceManager/ResourceManager.hpp"
 #include "BitmapRenderer/BitmapRenderer.hpp"
 
 BitmapObject::BitmapObject(SDL_Texture *bitmap) 
 {
-    this->is_bitmap_owner = false;
     this->bitmap = bitmap;
     SDL_QueryTexture( bitmap, NULL, NULL, &this->tex_w, &this->tex_h );
     clip_rect = { 0, 0, tex_w, tex_h };
@@ -12,8 +12,7 @@ BitmapObject::BitmapObject(SDL_Texture *bitmap)
 
 BitmapObject::BitmapObject( const char *bitmap_file_path ) 
 {
-    this->is_bitmap_owner = true;
-    this->bitmap = BitmapRenderer::load_bitmap_from_file( bitmap_file_path );
+    this->bitmap = ResourceManager::load_bitmap( bitmap_file_path );
     SDL_QueryTexture( bitmap, NULL, NULL, &this->tex_w, &this->tex_h );
     clip_rect = { 0, 0, tex_w, tex_h };
 }
@@ -27,8 +26,5 @@ void BitmapObject::draw()
 
 BitmapObject::~BitmapObject() 
 {
-    if( is_bitmap_owner )
-    {
-        SDL_DestroyTexture( bitmap );
-    }
+    
 }

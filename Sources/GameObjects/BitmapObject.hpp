@@ -9,7 +9,6 @@
 class BitmapObject : virtual public ModelObject, virtual public DrawableObject
 {
 public:
-    bool is_bitmap_owner;
     int tex_w, tex_h;
     SDL_Texture *bitmap;
     SDL_Rect clip_rect;

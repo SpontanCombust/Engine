@@ -9,20 +9,6 @@ void BitmapRenderer::setup(SDL_Renderer *renderer)
     sdl_renderer = renderer;
 }
 
-SDL_Texture* BitmapRenderer::load_bitmap_from_file(const char *file_path) 
-{
-    SDL_Surface *surf = IMG_Load( file_path );
-
-    if( surf )
-    {
-        SDL_Texture *tex = SDL_CreateTextureFromSurface( sdl_renderer, surf );
-        SDL_FreeSurface( surf );
-        return tex;
-    }
-
-    return nullptr;
-}
-
 void BitmapRenderer::draw_bitmap(SDL_Texture *bitmap, int pos_x, int pos_y, int size_x, int size_y, float rot) 
 {
     SDL_Rect rect;
