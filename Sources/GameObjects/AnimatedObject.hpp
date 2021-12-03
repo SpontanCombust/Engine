@@ -3,22 +3,22 @@
 
 #include "BitmapObject.hpp"
 #include "UpdatableObject.hpp"
-#include "Point2D/Point2D.hpp"
+#include "Animation/Animation.hpp"
+
+#include <unordered_map>
 
 class AnimatedObject : virtual public BitmapObject, virtual public UpdatableObject
 {
 private:
-    uint32_t frame_count;
-    uint32_t frame_length;
-    Size2D frame_size;
-
-    uint32_t anim_timer;
-    uint32_t frame_index;
+    std::unordered_map<std::string, Animation *> map_anim_name_to_animations;
+    Animation *curr_anim;
 
 public:
-    AnimatedObject( SDL_Texture *bitmap, Size2D frame_size, uint32_t frame_count, uint32_t frame_length);
-    AnimatedObject( const char *bitmap_file_path, Size2D frame_size, uint32_t frame_count, uint32_t frame_length);
-    ~AnimatedObject();
+    AnimatedObject();
+    ~AnimatedObject() override;
+
+    void add_animation( const Animation& anim, const char *anim_name );
+    void play_animation( const char *anim_name );
 
     void update(uint32_t dt) override;
 };
