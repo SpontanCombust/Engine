@@ -4,6 +4,9 @@
 
 #include <SDL_image.h>
 
+
+std::unordered_map< std::string, SDL_Texture * > ResourceManager::map_path_to_bitmap;
+
 SDL_Texture* ResourceManager::load_bitmap(const char* path) 
 {
     auto it = map_path_to_bitmap.find( path );
