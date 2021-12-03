@@ -8,28 +8,28 @@ Point2D::Point2D()
     this->y = 0;
 }
 
-Point2D::Point2D( unsigned int x, unsigned int y ) 
+Point2D::Point2D( int x, int y ) 
 {
     this->x = x;
     this->y = y;
 }
 
-unsigned Point2D::get_x() const
+int Point2D::get_x() const
 {
     return x;
 }
 
-unsigned Point2D::get_y() const
+int Point2D::get_y() const
 {
     return y;
 }
 
-void Point2D::set_x(unsigned x)
+void Point2D::set_x(int x)
 {
     this->x = x;
 }
 
-void Point2D::set_y(unsigned y)
+void Point2D::set_y(int y)
 {
     this->y = y;
 }
