@@ -1,15 +1,11 @@
 #define ENGINE_TEST
 
-#include <cstdlib>
-
 #include "Engine/Engine.hpp"
 #include "Testing/TestingGameObject.hpp"
 
 #include "GameObjects/AnimatedObject.hpp"
 
 #include <SDL_image.h>
-
-#undef main
 
 int main()
 {
@@ -20,11 +16,11 @@ int main()
 #endif
 
 #ifdef ENGINE_TEST
-	// engine->add_game_object( new TestingGameObject() );
+	engine->add_game_object( new TestingGameObject() );
 	
-	auto obj = new AnimatedObject( "../test/assets/Vulture_walk.png", Size2D( 48, 48 ), 4, 500 );
+	auto obj = new AnimatedObject( "../test_assets/Vulture_walk.png", Size2D( 48, 48 ), 4, 500 );
 	obj->scale_x = obj->scale_y = 2.f;
-	obj->transl_x = obj->transl_y = 200.f;
+	obj->transl_x = obj->transl_y = 300.f;
 	engine->add_game_object( obj );
 #endif 
 

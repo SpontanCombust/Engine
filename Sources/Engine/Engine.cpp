@@ -45,10 +45,6 @@ Engine::Engine(const char * title, int x, int y, int w, int h, WindowMode window
 
 Engine::~Engine()
 {
-	for( GameObject *go : vec_game_objects )
-	{
-		delete go;
-	}
 	vec_game_objects.clear();
 
 	delete primitive_renderer;
@@ -57,6 +53,8 @@ Engine::~Engine()
 
 	
 	SDL_Quit();
+	IMG_Quit();
+	TTF_Quit();
 }
 
 Engine * Engine::get_instance() 
@@ -112,7 +110,7 @@ void Engine::process_events()
 	{
 		for( int i = 0; i < vec_game_objects.size(); i++ )
 		{
-			GameObject *go = vec_game_objects[i];
+			GameObject *go = vec_game_objects[i].get();
 
 			if( elo = dynamic_cast<EventListeningObject *>(go) )
 			{
@@ -133,7 +131,7 @@ void Engine::update()
 
 	for( int i = 0; i < vec_game_objects.size(); i++ )
 	{
-		GameObject *go = vec_game_objects[i];
+		GameObject *go = vec_game_objects[i].get();
 
 		if( updatable = dynamic_cast<UpdatableObject *>(go) )
 		{
@@ -150,7 +148,7 @@ void Engine::draw()
 
 	for( int i = 0; i < vec_game_objects.size(); i++ )
 	{
-		GameObject *go = vec_game_objects[i];
+		GameObject *go = vec_game_objects[i].get();
 
 		if( dob = dynamic_cast<DrawableObject *>(go) )
 		{
@@ -161,11 +159,27 @@ void Engine::draw()
 	SDL_RenderPresent(sdl_renderer);
 }
 
-void Engine::add_game_object( GameObject *go ) 
+void Engine::add_game_object( std::shared_ptr<GameObject> go ) 
 {
 	if( go )
 	{
 		vec_game_objects.push_back( go );
+	}
+}
+
+void Engine::add_game_object( GameObject *go, bool renounce_ownership ) 
+{
+	if( go )
+	{
+		if( renounce_ownership )
+		{
+			vec_game_objects.push_back( std::shared_ptr<GameObject>( go ) );
+		}
+		else
+		{
+			// add a shared_ptr with an empty deletor so the object won't actually get deleted when it'll get removed
+			vec_game_objects.push_back( std::shared_ptr<GameObject>( go, []( GameObject *go ){} ) );
+		}
 	}
 }
 

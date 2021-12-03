@@ -7,6 +7,7 @@
 #include "Utility/Color.hpp"
 #include "GameObjects/GameObject.hpp"
 
+#include <memory>
 #include <vector>
 
 enum WindowMode
@@ -29,10 +30,14 @@ public:
 	void update();
 	void draw();
 
-	// Shares ownership over the pointer with the called
 	// Adds object to engine's game object pool
 	// If you want the engine to let go of ther pointer, set is_alive to false in the object
-	void add_game_object( GameObject *go );
+	// Shares ownership over the pointer with the called
+	void add_game_object( std::shared_ptr<GameObject> go );
+	// Adds object to engine's game object pool
+	// If you want the engine to let go of ther pointer, set is_alive to false in the object
+	// Depending on renounce_ownership value, takes the ownership or only weakly references the pointer
+	void add_game_object( GameObject *go, bool renounce_ownership = true );
 	
 public:
 	SDL_Window * sdl_window;
@@ -48,6 +53,6 @@ private:
 	uint32_t previous_time;
 	uint32_t target_time;
 	
-	std::vector< GameObject * > vec_game_objects;
+	std::vector< std::shared_ptr<GameObject> > vec_game_objects;
 	void remove_dead_game_objects();
 };
