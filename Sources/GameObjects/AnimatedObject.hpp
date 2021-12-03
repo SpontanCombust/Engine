@@ -3,17 +3,24 @@
 
 #include "BitmapObject.hpp"
 #include "UpdatableObject.hpp"
+#include "Point2D/Point2D.hpp"
 
 class AnimatedObject : virtual public BitmapObject, virtual public UpdatableObject
 {
+private:
+    uint32_t frame_count;
+    uint32_t frame_length;
+    Size2D frame_size;
+
+    uint32_t anim_timer;
+    uint32_t frame_index;
+
 public:
-    void update(uint32_t dt) override;
-    uint32_t frame_count = 1;
-    uint32_t frame_index = 0;
-    uint32_t frame_length = 1;
-    SDL_Texture **bitmaps;
-    AnimatedObject(uint32_t frame_count, uint32_t frame_index, uint32_t frame_length);
+    AnimatedObject( SDL_Texture *bitmap, Size2D frame_size, uint32_t frame_count, uint32_t frame_length);
+    AnimatedObject( const char *bitmap_file_path, Size2D frame_size, uint32_t frame_count, uint32_t frame_length);
     ~AnimatedObject();
+
+    void update(uint32_t dt) override;
 };
 
 #endif // __ANIMATEDOBJECT_H__
