@@ -111,8 +111,8 @@ void Engine::process_events()
 		for( int i = 0; i < vec_game_objects.size(); i++ )
 		{
 			GameObject *go = vec_game_objects[i].get();
-
-			if( elo = dynamic_cast<EventListeningObject *>(go) )
+			elo = dynamic_cast<EventListeningObject *>(go);
+			if( go->is_alive && elo )
 			{
 				elo->handle_event(event);
 			}
@@ -132,8 +132,8 @@ void Engine::update()
 	for( int i = 0; i < vec_game_objects.size(); i++ )
 	{
 		GameObject *go = vec_game_objects[i].get();
-
-		if( updatable = dynamic_cast<UpdatableObject *>(go) )
+		updatable = dynamic_cast<UpdatableObject *>(go);
+		if( go->is_alive && updatable )
 		{
 			updatable->update( target_time );
 		}
@@ -149,8 +149,8 @@ void Engine::draw()
 	for( int i = 0; i < vec_game_objects.size(); i++ )
 	{
 		GameObject *go = vec_game_objects[i].get();
-
-		if( dob = dynamic_cast<DrawableObject *>(go) )
+		dob = dynamic_cast<DrawableObject *>(go);
+		if( go->is_alive && dob )
 		{
 			dob->draw();
 		}
