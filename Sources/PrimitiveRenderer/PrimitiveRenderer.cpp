@@ -40,9 +40,9 @@ void PrimitiveRenderer::naively_draw_line(int x0, int y0, int x1, int y1)
     {
         float yi = (float)y0;
 
-        for (unsigned xi = x0; xi < (unsigned)x1; ++xi)
+        for (int xi = x0; xi < x1; ++xi)
         {
-            draw_point((unsigned)xi, (unsigned)((float)yi + 0.5f));
+            draw_point(xi, (float)yi + 0.5f);
             yi += m;
         }
     }
@@ -52,7 +52,7 @@ void PrimitiveRenderer::naively_draw_line(int x0, int y0, int x1, int y1)
         m = (float)(x1 - x0) / (float)(y1 - y0);
         float xi = (float)x0;
 
-        for (unsigned yi = y0; yi < (unsigned)y1; ++yi)
+        for (int yi = y0; yi < y1; ++yi)
         {
             draw_point(xi + 0.5f, yi);
             xi += m;
@@ -71,14 +71,14 @@ void PrimitiveRenderer::draw_circle(int x0, int y0, int R)
     {
         float x = x0 + R * cosf(a) + 0.5f;
         float y = y0 + R * sinf(a) + 0.5f;
-        PrimitiveRenderer::draw_point((unsigned)x, (unsigned)y);
-        PrimitiveRenderer::draw_point((unsigned)x, (unsigned)512 - y);
-        PrimitiveRenderer::draw_point((unsigned)window_w - x, (unsigned)y);
-        PrimitiveRenderer::draw_point((unsigned)window_w - x, (unsigned)window_h - y);
-        PrimitiveRenderer::draw_point((unsigned)y, (unsigned)x);
-        PrimitiveRenderer::draw_point((unsigned)y, (unsigned)window_w - x);
-        PrimitiveRenderer::draw_point((unsigned)window_h - y, (unsigned)x);
-        PrimitiveRenderer::draw_point((unsigned)window_h - y, (unsigned)window_w - x);
+        PrimitiveRenderer::draw_point(x, y);
+        PrimitiveRenderer::draw_point(x, window_h - y);
+        PrimitiveRenderer::draw_point(window_w - x, y);
+        PrimitiveRenderer::draw_point(window_w - x, window_h - y);
+        PrimitiveRenderer::draw_point(y, x);
+        PrimitiveRenderer::draw_point(y, window_w - x);
+        PrimitiveRenderer::draw_point(window_h - y, x);
+        PrimitiveRenderer::draw_point(window_h - y, window_w - x);
     }
 }
 
