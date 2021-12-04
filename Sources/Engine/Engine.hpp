@@ -3,8 +3,6 @@
 #include <SDL.h>
 
 #include "Utility/Log.hpp"
-#include "PrimitiveRenderer/PrimitiveRenderer.hpp"
-#include "Utility/Color.hpp"
 #include "GameObjects/GameObject.hpp"
 
 #include <memory>
@@ -47,8 +45,6 @@ public:
 private:
 	Engine(const char * title, int x, int y, int w, int h, WindowMode window_mode, unsigned frame_rate);
 	static Engine * engine;
-
-	PrimitiveRenderer * primitive_renderer;
 
 	uint32_t previous_time;
 	uint32_t target_time;

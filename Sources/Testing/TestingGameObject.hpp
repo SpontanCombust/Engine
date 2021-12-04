@@ -45,9 +45,6 @@ private:
 	bool is_brush_held;
 	int brush_x, brush_y;
 
-    SDL_Window *sdl_window;
-    SDL_Renderer *sdl_renderer;
-
 public:
     TestingGameObject();
     ~TestingGameObject();

@@ -1,27 +1,20 @@
 #include "PrimitiveRenderer.hpp"
 
+#include "Engine/Engine.hpp"
+
 #include <cmath>
 #include <cstring>
-
-SDL_Renderer * PrimitiveRenderer::sdl_renderer = nullptr;
-int PrimitiveRenderer::window_w = 0;
-int PrimitiveRenderer::window_h = 0;
-
-PrimitiveRenderer::PrimitiveRenderer(SDL_Renderer * sdl_renderer, int w, int h)
-{
-    this->sdl_renderer = sdl_renderer;
-    this->window_w = w;
-    this->window_h = h;
-}
+#include <stack>
+#include <vector>
 
 void PrimitiveRenderer::draw_point(int x, int y)
 {
-    SDL_RenderDrawPoint(sdl_renderer, x, y);
+    SDL_RenderDrawPoint( Engine::get_instance()->sdl_renderer, x, y);
 }
 
 void PrimitiveRenderer::draw_line(int x0, int y0, int x1, int y1)
 {
-    SDL_RenderDrawLine(sdl_renderer, x0, y0, x1, y1);
+    SDL_RenderDrawLine( Engine::get_instance()->sdl_renderer, x0, y0, x1, y1);
 }
 
 void PrimitiveRenderer::draw_rectangle(bool filled, int x, int y, int w, int h)
@@ -30,12 +23,12 @@ void PrimitiveRenderer::draw_rectangle(bool filled, int x, int y, int w, int h)
 
     if (!filled)
     {
-        SDL_RenderDrawRect(sdl_renderer, &sdl_rectangle);   
+        SDL_RenderDrawRect( Engine::get_instance()->sdl_renderer, &sdl_rectangle);   
     }
 
     else
     {
-        SDL_RenderFillRect(sdl_renderer, &sdl_rectangle);
+        SDL_RenderFillRect( Engine::get_instance()->sdl_renderer, &sdl_rectangle);
     }
 }
 //FIXME fails to draw in all possible scenarios
@@ -70,6 +63,9 @@ void PrimitiveRenderer::naively_draw_line(int x0, int y0, int x1, int y1)
 void PrimitiveRenderer::draw_circle(int x0, int y0, int R)
 {
     float step = 1.0f / R;
+
+    int window_w, window_h;
+    SDL_GetWindowSize( Engine::get_instance()->sdl_window, &window_w, &window_h );
 
     for (float a = 0.0f; a < M_PI / 4.0f; a += step)
     {
@@ -149,6 +145,9 @@ void PrimitiveRenderer::draw_multiline_closed(const std::vector<Point2D>& points
 
 void PrimitiveRenderer::flood_fill(int x, int y, ColorRGB fill_color, ColorRGB boundary_color)
 {
+    int window_w, window_h;
+    SDL_GetWindowSize( Engine::get_instance()->sdl_window, &window_w, &window_h );
+    
     SDL_PixelFormat *pixel_format = SDL_AllocFormat( SDL_PIXELFORMAT_RGBA32 );
     uint32_t mapped_fill_color = SDL_MapRGB( pixel_format, fill_color.r, fill_color.g, fill_color.b );
     uint32_t mapped_boundary_color = SDL_MapRGB( pixel_format, boundary_color.r, boundary_color.g, boundary_color.b );
@@ -160,7 +159,7 @@ void PrimitiveRenderer::flood_fill(int x, int y, ColorRGB fill_color, ColorRGB b
     uint32_t *window_pixels;
     window_pixels = new uint32_t[ window_w * window_h ];
     SDL_Rect rect { 0, 0, window_w, window_h };
-    SDL_RenderReadPixels(sdl_renderer, &rect, SDL_PIXELFORMAT_RGBA32, window_pixels, window_w * sizeof(uint32_t) );
+    SDL_RenderReadPixels(Engine::get_instance()->sdl_renderer, &rect, SDL_PIXELFORMAT_RGBA32, window_pixels, window_w * sizeof(uint32_t) );
 
     while (!stack.empty())
     {
@@ -192,14 +191,14 @@ void PrimitiveRenderer::flood_fill(int x, int y, ColorRGB fill_color, ColorRGB b
         }       
     }
 
-    SDL_Texture *color_buffer = SDL_CreateTexture( sdl_renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, window_w, window_h );
+    SDL_Texture *color_buffer = SDL_CreateTexture( Engine::get_instance()->sdl_renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, window_w, window_h );
     uint32_t *color_buffer_pixels;
     int pitch;
     SDL_LockTexture( color_buffer, NULL, (void **)&color_buffer_pixels, &pitch );
     memcpy( color_buffer_pixels, window_pixels, window_w * window_h * sizeof(uint32_t) );
     SDL_UnlockTexture( color_buffer );
 
-    SDL_RenderCopy( sdl_renderer, color_buffer, NULL, NULL );
+    SDL_RenderCopy( Engine::get_instance()->sdl_renderer, color_buffer, NULL, NULL );
 
     delete window_pixels;
     SDL_DestroyTexture( color_buffer );

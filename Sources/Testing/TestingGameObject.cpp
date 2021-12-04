@@ -1,5 +1,7 @@
 #include "TestingGameObject.hpp"
 
+#include "Point2D/Point2D.hpp"
+#include "PrimitiveRenderer/PrimitiveRenderer.hpp"
 #include "Engine/Engine.hpp"
 
 ColorRGB enumColorToRGB( unsigned int bgc )
@@ -33,9 +35,6 @@ ColorRGB enumColorToRGB( unsigned int bgc )
 
 TestingGameObject::TestingGameObject() 
 {
-    sdl_window = Engine::get_instance()->sdl_window;
-    sdl_renderer = Engine::get_instance()->sdl_renderer;
-
     background_color = BLACK_BACKGROUND_COLOR;
     background_color_rgb = enumColorToRGB( background_color );
 	draw_color = WHITE_BACKGROUND_COLOR;
@@ -43,8 +42,8 @@ TestingGameObject::TestingGameObject()
     primitive_type = NO_PRIMITIVE_TYPE;
 
     int w, h;
-    SDL_GetWindowSize( sdl_window, &w, &h );
-    canvas = SDL_CreateTexture( sdl_renderer, SDL_PIXELFORMAT_ABGR32, SDL_TEXTUREACCESS_TARGET, w, h );
+    SDL_GetWindowSize( Engine::get_instance()->sdl_window, &w, &h );
+    canvas = SDL_CreateTexture( Engine::get_instance()->sdl_renderer, SDL_PIXELFORMAT_ABGR32, SDL_TEXTUREACCESS_TARGET, w, h );
 	is_brush_held = false;
 }
 
@@ -55,9 +54,9 @@ TestingGameObject::~TestingGameObject()
 
 void TestingGameObject::draw() 
 {
-    SDL_SetRenderDrawColor( sdl_renderer, background_color_rgb.r, background_color_rgb.g, background_color_rgb.b, 255 );
-	SDL_RenderClear(sdl_renderer);
-	SDL_SetRenderDrawColor( sdl_renderer, draw_color_rgb.r, draw_color_rgb.g, draw_color_rgb.b, 255 );
+    SDL_SetRenderDrawColor( Engine::get_instance()->sdl_renderer, background_color_rgb.r, background_color_rgb.g, background_color_rgb.b, 255 );
+	SDL_RenderClear(Engine::get_instance()->sdl_renderer);
+	SDL_SetRenderDrawColor( Engine::get_instance()->sdl_renderer, draw_color_rgb.r, draw_color_rgb.g, draw_color_rgb.b, 255 );
 
 	std::vector<Point2D> multiline_example_points;
 	multiline_example_points.push_back( Point2D{ 150, 400 } );
@@ -109,12 +108,12 @@ void TestingGameObject::draw()
 		case CANVAS_PRIMITIVE_TYPE:
 			if( is_brush_held )
 			{
-				SDL_SetRenderTarget( sdl_renderer, canvas );
+				SDL_SetRenderTarget( Engine::get_instance()->sdl_renderer, canvas );
 				PrimitiveRenderer::draw_rectangle( true, brush_x, brush_y, 5, 5 );
-				SDL_SetRenderTarget( sdl_renderer, NULL );
+				SDL_SetRenderTarget( Engine::get_instance()->sdl_renderer, NULL );
 			}
 
-			SDL_RenderCopy( sdl_renderer, canvas, NULL, NULL );
+			SDL_RenderCopy( Engine::get_instance()->sdl_renderer, canvas, NULL, NULL );
 		break;
 	}
 }
@@ -142,7 +141,7 @@ void TestingGameObject::handle_event(const SDL_Event& e)
             }
             {
                 std::string title = "Draw[F]: " + draw_color_rgb.to_string() + "\t" + "Background/Fill[B]: " + background_color_rgb.to_string();
-                SDL_SetWindowTitle( sdl_window, title.c_str() );
+                SDL_SetWindowTitle( Engine::get_instance()->sdl_window, title.c_str() );
             }
 		break;
 
@@ -155,10 +154,10 @@ void TestingGameObject::handle_event(const SDL_Event& e)
             }
             else if( e.button.button == SDL_BUTTON_RIGHT )
             {
-                SDL_SetRenderTarget( sdl_renderer, canvas );
-                SDL_SetRenderDrawColor( sdl_renderer, background_color_rgb.r, background_color_rgb.g, background_color_rgb.b, 255 );
+                SDL_SetRenderTarget( Engine::get_instance()->sdl_renderer, canvas );
+                SDL_SetRenderDrawColor( Engine::get_instance()->sdl_renderer, background_color_rgb.r, background_color_rgb.g, background_color_rgb.b, 255 );
                 PrimitiveRenderer::flood_fill(e.button.x, e.button.y, background_color_rgb, draw_color_rgb ); 
-                SDL_SetRenderTarget( sdl_renderer, NULL );
+                SDL_SetRenderTarget( Engine::get_instance()->sdl_renderer, NULL );
             }
         break;
 

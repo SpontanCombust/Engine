@@ -34,9 +34,6 @@ Engine::Engine(const char * title, int x, int y, int w, int h, WindowMode window
 		exit(EXIT_FAILURE);
 	}
 
-	primitive_renderer = new PrimitiveRenderer(sdl_renderer, w, h);
-	BitmapRenderer::setup( sdl_renderer );
-
 	previous_time = 0;
 	target_time = 1000 / frame_rate;
 
@@ -47,11 +44,9 @@ Engine::~Engine()
 {
 	vec_game_objects.clear();
 
-	delete primitive_renderer;
 	SDL_DestroyRenderer(sdl_renderer);
 	SDL_DestroyWindow(sdl_window);
 
-	
 	SDL_Quit();
 	IMG_Quit();
 	TTF_Quit();
@@ -190,7 +185,6 @@ void Engine::remove_dead_game_objects()
 	{
 		if( !(*it)->is_alive )
 		{
-			//TODO use shared_ptr for passing game objects around to work around ownership issue
 			// erase moves all subsequent elements towards the beginning of the vector 
 			// and returns an iterator to the element after the erased one
 			// by assigning that returned interator to `it` we iterate onto the next element
