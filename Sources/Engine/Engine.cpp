@@ -2,6 +2,7 @@
 #include "GameObjects/EventListeningObject.hpp"
 #include "GameObjects/UpdatableObject.hpp"
 #include "GameObjects/DrawableObject.hpp"
+#include "GameObjects/CollidableObject.hpp"
 #include "BitmapRenderer/BitmapRenderer.hpp"
 
 #include <SDL_image.h>
@@ -84,6 +85,7 @@ void Engine::schedule()
 	{
 		remove_dead_game_objects();
 		update();
+		do_collisions();
 
 		updates_to_make--;
 	}
@@ -194,6 +196,31 @@ void Engine::remove_dead_game_objects()
 		{
 			// if we don't erase we simply increment the iterator
 			++it;
+		}
+	}
+}
+
+void Engine::do_collisions() 
+{
+	static std::vector< CollidableObject * > vec_colliders; // gonna make this static so the memory gets allocated only once
+	vec_colliders.clear();
+	
+	for( int i = 0; i < vec_game_objects.size(); i++ )
+	{
+		GameObject *go = vec_game_objects[i].get();
+		CollidableObject *collidable = dynamic_cast<CollidableObject *>(go);
+		if( go->is_alive && collidable )
+		{
+			vec_colliders.push_back( collidable );
+		}
+	}
+
+	for( int i = 0; i < vec_colliders.size(); i++ )
+	{
+		// i+1 so an object doesn't try to resolve itself
+		for( int j = i + 1; j < vec_colliders.size(); j++ )
+		{
+			vec_colliders[i]->resolve_collision( *vec_colliders[j] );
 		}
 	}
 }

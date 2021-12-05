@@ -51,4 +51,6 @@ private:
 	
 	std::vector< std::shared_ptr<GameObject> > vec_game_objects;
 	void remove_dead_game_objects();
+
+	void do_collisions();
 };
