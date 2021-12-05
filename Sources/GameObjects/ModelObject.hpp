@@ -4,7 +4,7 @@
 #include "TransformableObject.hpp"
 
 // A class that stores its transformation information
-class ModelObject : public TransformableObject
+class ModelObject : virtual public TransformableObject
 {
 public:
     float transl_x, transl_y;
