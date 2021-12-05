@@ -1,7 +1,8 @@
 #include "Animation.hpp"
 
-Animation::Animation( SDL_Texture *bitmap, Point2D start_point, Size2D frame_size, uint32_t frame_count, uint32_t anim_duration ) 
+Animation::Animation( const char *name, SDL_Texture *bitmap, Point2D start_point, Size2D frame_size, uint32_t frame_count, uint32_t anim_duration ) 
 {
+    this->name = name;
     this->used_bitmap = bitmap;
     this->frame_start_rect = { start_point.get_x(), start_point.get_y(), frame_size.get_x(), frame_size.get_y() };
     this->frame_count = frame_count;
@@ -20,6 +21,11 @@ void Animation::set_anim_duration( uint32_t anianim_durationm_time )
 SDL_Texture* Animation::get_used_bitmap() const
 {
     return used_bitmap;
+}
+
+const std::string& Animation::get_name() const
+{
+    return name;
 }
 
 SDL_Rect Animation::get_curr_clipping_rect() const

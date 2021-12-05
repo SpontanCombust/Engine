@@ -5,12 +5,12 @@ AnimatedObject::AnimatedObject()
     curr_anim = nullptr;
 }
 
-void AnimatedObject::add_animation(const Animation& anim, const char *anim_name) 
+void AnimatedObject::add_animation( const Animation& anim ) 
 {
-    Animation *already_stored = map_anim_name_to_animations[ anim_name ];
+    Animation *already_stored = map_anim_name_to_animations[ anim.get_name() ];
     if( !already_stored )
     {
-        map_anim_name_to_animations[ anim_name ] = new Animation( anim );
+        map_anim_name_to_animations[ anim.get_name() ] = new Animation( anim );
     }
 }
 
@@ -33,6 +33,16 @@ bool AnimatedObject::has_animation_finished() const
     }
 
     return false;
+}
+
+std::string AnimatedObject::get_animation_name() const
+{
+    if( !curr_anim )
+    {
+        return "";
+    }
+    
+    return curr_anim->get_name();
 }
 
 void AnimatedObject::update(uint32_t dt)

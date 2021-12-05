@@ -17,10 +17,11 @@ public:
     AnimatedObject();
     ~AnimatedObject() override;
 
-    void add_animation( const Animation& anim, const char *anim_name );
+    void add_animation( const Animation& anim );
     /** @param iterations how many times the animation should be played, negative number for infinite times */
     void play_animation( const char *anim_name, int iterations = -1 );
     bool has_animation_finished() const;
+    std::string get_animation_name() const;
 
     void update(uint32_t dt) override;
 };
