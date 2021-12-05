@@ -16,6 +16,7 @@ private:
     uint32_t anim_duration;
 
     uint32_t anim_timer;
+    int iterations_left;
     SDL_Rect curr_clipping_rect;
 
 
@@ -38,8 +39,12 @@ public:
 
     SDL_Rect get_curr_clipping_rect() const;
 
-    void reset();
+    /** @param num_of_iterations how many time the animation should be played; negative number for infinite times
+    */
+    void reset( int num_of_iterations = -1 );
     void advance( uint32_t delta_time );
+
+    bool has_finished() const;
 };
 
 #endif // __ANIMATION_H__

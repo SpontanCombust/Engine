@@ -18,7 +18,9 @@ public:
     ~AnimatedObject() override;
 
     void add_animation( const Animation& anim, const char *anim_name );
-    void play_animation( const char *anim_name );
+    /** @param iterations how many times the animation should be played, negative number for infinite times */
+    void play_animation( const char *anim_name, int iterations = -1 );
+    bool has_animation_finished() const;
 
     void update(uint32_t dt) override;
 };

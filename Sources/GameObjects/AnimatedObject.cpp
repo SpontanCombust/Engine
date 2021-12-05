@@ -14,15 +14,25 @@ void AnimatedObject::add_animation(const Animation& anim, const char *anim_name)
     }
 }
 
-void AnimatedObject::play_animation(const char *anim_name) 
+void AnimatedObject::play_animation(const char *anim_name, int iterations) 
 {
     Animation *anim = map_anim_name_to_animations[ anim_name ];
     if( anim )
     {
         curr_anim = anim;
-        curr_anim->reset();
+        curr_anim->reset( iterations );
         bitmap = anim->get_used_bitmap();
     }
+}
+
+bool AnimatedObject::has_animation_finished() const
+{
+    if( curr_anim )
+    {
+        return curr_anim->has_finished();
+    }
+
+    return false;
 }
 
 void AnimatedObject::update(uint32_t dt)

@@ -23,7 +23,7 @@ int main()
 	obj->scale_x = obj->scale_y = 2.f;
 	obj->transl_x = obj->transl_y = 300.f;
 	obj->add_animation( Animation( ResourceManager::load_bitmap("../test_assets/Vulture_walk.png"), Point2D(0,0), Size2D(48,48), 4, 1500 ), "walk" );
-	obj->play_animation( "walk" );
+	obj->play_animation( "walk", 5 );
 	engine->add_game_object( obj );
 #endif 
 
