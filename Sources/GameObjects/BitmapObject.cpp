@@ -26,6 +26,16 @@ void BitmapObject::set_bitmap( SDL_Texture *bitmap )
     clip_rect = { 0, 0, tex_w, tex_h };
 }
 
+void BitmapObject::scale_to_size( float size_x, float size_y ) 
+{
+    scale_x = size_x / (float)tex_w;
+    scale_y = size_y / (float)tex_h;
+
+    // preserve aspect ratio
+    float scale_min = std::min( scale_x, scale_y );
+    scale_x = scale_y = scale_min;
+}
+
 void BitmapObject::draw() 
 {
     int size_x = (int)( (float)clip_rect.w * scale_x );

@@ -23,3 +23,9 @@ void ModelObject::rotate( float angle_deg )
 {
     rotation_deg += angle_deg;
 }
+
+void ModelObject::scale_to_size( float size_x, float size_y ) 
+{
+    scale_x = size_x;
+    scale_y = size_y;
+}
