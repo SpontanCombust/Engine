@@ -1,15 +1,23 @@
 #include "Engine.hpp"
+#include "GameObjects/EventListeningObject.hpp"
+#include "GameObjects/UpdatableObject.hpp"
+#include "GameObjects/DrawableObject.hpp"
+#include "GameObjects/CollidableObject.hpp"
+#include "BitmapRenderer/BitmapRenderer.hpp"
+
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include "GameObjects/AnimatedObject.hpp"
 
 Engine * Engine::engine = nullptr;
 
 Engine::Engine(const char * title, int x, int y, int w, int h, WindowMode window_mode, unsigned frame_rate)
 {
-	if (SDL_Init(SDL_INIT_EVERYTHING))
-	{
-		LOG("Unable to initialize SDL.");
-		LOG(SDL_GetError());
-		exit(EXIT_FAILURE);
-	}
+	SDL_Init(SDL_INIT_EVERYTHING);
+
+	IMG_Init( IMG_INIT_JPG | IMG_INIT_PNG );
+
+	TTF_Init();
 
 	sdl_window = SDL_CreateWindow(title, x, y, w, h, window_mode);
 	if (!sdl_window)
@@ -27,20 +35,32 @@ Engine::Engine(const char * title, int x, int y, int w, int h, WindowMode window
 		exit(EXIT_FAILURE);
 	}
 
-	primitive_renderer = new PrimitiveRenderer(sdl_renderer, w, h);
-
-	latency_time = 0;
+	previous_time = 0;
 	target_time = 1000 / frame_rate;
 
-	background_color = BLACK_BACKGROUND_COLOR;
-	draw_color = WHITE_BACKGROUND_COLOR;
-
-	primitive_type = NO_PRIMITIVE_TYPE;
-
 	is_running = true;
+}
 
-	canvas = SDL_CreateTexture( sdl_renderer, SDL_PIXELFORMAT_ABGR32, SDL_TEXTUREACCESS_TARGET, w, h );
-	is_brush_held = false;
+Engine::~Engine()
+{
+	vec_game_objects.clear();
+
+	SDL_DestroyRenderer(sdl_renderer);
+	SDL_DestroyWindow(sdl_window);
+
+	TTF_Quit();
+	IMG_Quit();
+	SDL_Quit();
+}
+
+Engine * Engine::get_instance() 
+{
+	if(!engine)
+	{
+		engine = new Engine("", 0, 0, 800, 600, WindowMode::WINDOWED_MODE, 60);
+	}
+
+	return engine;
 }
 
 Engine * Engine::get_instance(const char * title, int x, int y, int w, int h, WindowMode window_mode, unsigned frame_rate)
@@ -55,211 +75,152 @@ Engine * Engine::get_instance(const char * title, int x, int y, int w, int h, Wi
 
 void Engine::schedule()
 {
-	latency_time += SDL_GetTicks() - previous_time;
+	uint32_t current_time = SDL_GetTicks();
+	uint32_t elapsed_time = current_time - previous_time;
+	uint32_t updates_to_make = elapsed_time / target_time + 1;
 
-	while (latency_time >= target_time)
+	bool should_sleep = (updates_to_make == 1);
+
+	while( updates_to_make > 0 )
 	{
+		remove_dead_game_objects();
 		update();
-		latency_time -= target_time;
+		do_collisions();
+
+		updates_to_make--;
 	}
+
+	if( should_sleep )
+	{
+		SDL_Delay( target_time - elapsed_time );
+	}
+
+	previous_time = current_time;
 }
 
 void Engine::process_events()
 {
 	SDL_Event event;
+	EventListeningObject *elo;
 
 	while (SDL_PollEvent(&event))
 	{
-		switch (event.type)
+		for( int i = 0; i < vec_game_objects.size(); i++ )
 		{
-			case SDL_WINDOWEVENT:
-				switch (event.window.event)
-				{
-					case SDL_WINDOWEVENT_CLOSE:
-						is_running = false;
-					break;
-				}
-			break;
+			GameObject *go = vec_game_objects[i].get();
+			elo = dynamic_cast<EventListeningObject *>(go);
+			if( go->is_alive && elo )
+			{
+				elo->handle_event(event);
+			}
+		}
 
-			case SDL_KEYUP:
-				switch (event.key.keysym.sym)
-				{
-					case SDLK_b:
-						background_color = (background_color + 1) % BACKGROUND_COLOR_COUNT;
-
-						switch (background_color)
-						{
-							case BLACK_BACKGROUND_COLOR:
-								background_color_rgb = { 0, 0, 0 };
-							break;
-
-							case RED_BACKGROUND_COLOR:
-								background_color_rgb = { 255, 0, 0 };
-							break;
-
-							case GREEN_BACKGROUND_COLOR:
-								background_color_rgb = { 0, 255, 0 };
-							break;
-
-							case BLUE_BACKGROUND_COLOR:
-								background_color_rgb = { 0, 0, 255 };
-							break;
-
-							case WHITE_BACKGROUND_COLOR:
-								background_color_rgb = { 255, 255, 255 };
-							break;
-						}
-					break;
-
-					case SDLK_f:
-						draw_color = (draw_color + 1) % BACKGROUND_COLOR_COUNT;
-
-						switch (draw_color)
-						{
-							case BLACK_BACKGROUND_COLOR:
-								draw_color_rgb = { 0, 0, 0 };
-							break;
-
-							case RED_BACKGROUND_COLOR:
-								draw_color_rgb = { 255, 0, 0 };
-							break;
-
-							case GREEN_BACKGROUND_COLOR:
-								draw_color_rgb = { 0, 255, 0 };
-							break;
-
-							case BLUE_BACKGROUND_COLOR:
-								draw_color_rgb = { 0, 0, 255 };
-							break;
-
-							case WHITE_BACKGROUND_COLOR:
-								draw_color_rgb = { 255, 255, 255 };
-							break;
-						}
-					break;
-
-					case SDLK_p:
-						primitive_type = (primitive_type + 1) % PRIMITIVE_TYPE_COUNT;
-					break;
-				}
-				{
-					std::string title = "Draw[F]: " + draw_color_rgb.to_string() + "\t" + "Background/Fill[B]: " + background_color_rgb.to_string();
-					SDL_SetWindowTitle( sdl_window, title.c_str() );
-				}
-			break;
-
-			case SDL_MOUSEBUTTONDOWN:
-				if( event.button.button == SDL_BUTTON_LEFT )
-				{
-					is_brush_held = true;
-					brush_x = event.button.x;
-					brush_y = event.button.y;
-				}
-				else if( event.button.button == SDL_BUTTON_RIGHT )
-				{
-					SDL_SetRenderTarget( sdl_renderer, canvas );
-					SDL_SetRenderDrawColor( sdl_renderer, background_color_rgb.r, background_color_rgb.g, background_color_rgb.b, 255 );
-					PrimitiveRenderer::flood_fill(event.button.x, event.button.y, background_color_rgb, draw_color_rgb ); 
-					SDL_SetRenderTarget( sdl_renderer, NULL );
-				}
-			break;
-
-			case SDL_MOUSEBUTTONUP:
-				if( event.button.button == SDL_BUTTON_LEFT )
-				{
-					is_brush_held = false;
-				}
-			break;
-
-			case SDL_MOUSEMOTION:
-				brush_x = event.motion.x;
-				brush_y = event.motion.y;
-			break;
+		if( event.type == SDL_QUIT )
+		{
+			is_running = false;
 		}
 	}
 }
 
 void Engine::update()
 {
+	UpdatableObject *updatable;
 
+	for( int i = 0; i < vec_game_objects.size(); i++ )
+	{
+		GameObject *go = vec_game_objects[i].get();
+		updatable = dynamic_cast<UpdatableObject *>(go);
+		if( go->is_alive && updatable )
+		{
+			updatable->update( target_time );
+		}
+	}
 }
 
 void Engine::draw()
 {
-	SDL_SetRenderDrawColor( sdl_renderer, background_color_rgb.r, background_color_rgb.g, background_color_rgb.b, 255 );
-	SDL_RenderClear(sdl_renderer);
-	SDL_SetRenderDrawColor( sdl_renderer, draw_color_rgb.r, draw_color_rgb.g, draw_color_rgb.b, 255 );
+	SDL_RenderClear( sdl_renderer );
 
-	std::vector<Point2D> multiline_example_points;
-	multiline_example_points.push_back( Point2D{ 150, 400 } );
-	multiline_example_points.push_back( Point2D{ 150, 200 } );
-	multiline_example_points.push_back( Point2D{ 200, 300 } );
-	multiline_example_points.push_back( Point2D{ 250, 200 } );
-	multiline_example_points.push_back( Point2D{ 300, 300 } );
-	multiline_example_points.push_back( Point2D{ 350, 200 } );
-	multiline_example_points.push_back( Point2D{ 350, 400 } );
+	DrawableObject *dob;
 
-	switch (primitive_type)
+	for( int i = 0; i < vec_game_objects.size(); i++ )
 	{
-		case POINT_PRIMITIVE_TYPE:
-			primitive_renderer->draw_point(256, 256);
-		break;
-
-		case LINE_PRIMITIVE_TYPE:
-			primitive_renderer->draw_line(0, 0, 511, 511);
-		break;
-
-		case RECTANGLE_PRIMITIVE_TYPE:
-			primitive_renderer->draw_rectangle(false, 0, 0, 256, 256);
-		break;
-
-		case FILLED_RECTANGLE_PRIMITIVE_TYPE:
-			primitive_renderer->draw_rectangle(true, 0, 0, 256, 256);
-		break;
-
-		case NAIVE_LINE_PRIMITIVE_TYPE:
-			primitive_renderer->naively_draw_line(0, 0, 511, 511);
-		break;
-
-		case CIRCLE_PRIMITIVE_TYPE:
-			primitive_renderer->draw_circle(256, 256, 64);
-		break;
-
-		case ELLIPSE_PRIMITIVE_TYPE:
-			primitive_renderer->draw_ellipse(256, 256, 64, 32);
-		break;
-
-		case MULTILINE_OPEN_PRIMITIVE_TYPE:
-			primitive_renderer->draw_multiline_open( multiline_example_points, DrawAlgorithmType::SDL );
-		break;
-
-		case MULTILINE_CLOSED_PRIMITIVE_TYPE:
-			primitive_renderer->draw_multiline_closed( multiline_example_points, DrawAlgorithmType::SDL );
-		break;
-
-		case CANVAS_PRIMITIVE_TYPE:
-			if( is_brush_held )
-			{
-				SDL_SetRenderTarget( sdl_renderer, canvas );
-				PrimitiveRenderer::draw_rectangle( true, brush_x, brush_y, 5, 5 );
-				SDL_SetRenderTarget( sdl_renderer, NULL );
-			}
-
-			SDL_RenderCopy( sdl_renderer, canvas, NULL, NULL );
-		break;
+		GameObject *go = vec_game_objects[i].get();
+		dob = dynamic_cast<DrawableObject *>(go);
+		if( go->is_alive && dob )
+		{
+			dob->draw();
+		}
 	}
 
 	SDL_RenderPresent(sdl_renderer);
 }
 
-Engine::~Engine()
+void Engine::add_game_object( std::shared_ptr<GameObject> go ) 
 {
-	SDL_DestroyTexture( canvas );
+	if( go )
+	{
+		vec_game_objects.push_back( go );
+	}
+}
 
-	SDL_DestroyWindow(sdl_window);
-	SDL_DestroyRenderer(sdl_renderer);
-	delete primitive_renderer;
+void Engine::add_game_object( GameObject *go, bool renounce_ownership ) 
+{
+	if( go )
+	{
+		if( renounce_ownership )
+		{
+			vec_game_objects.push_back( std::shared_ptr<GameObject>( go ) );
+		}
+		else
+		{
+			// add a shared_ptr with an empty deletor so the object won't actually get deleted when it'll get removed
+			vec_game_objects.push_back( std::shared_ptr<GameObject>( go, []( GameObject *go ){} ) );
+		}
+	}
+}
 
+void Engine::remove_dead_game_objects() 
+{
+	auto it = vec_game_objects.begin();
+	while( it != vec_game_objects.end() )
+	{
+		if( !(*it)->is_alive )
+		{
+			// erase moves all subsequent elements towards the beginning of the vector 
+			// and returns an iterator to the element after the erased one
+			// by assigning that returned interator to `it` we iterate onto the next element
+			it = vec_game_objects.erase(it);
+		}
+		else
+		{
+			// if we don't erase we simply increment the iterator
+			++it;
+		}
+	}
+}
+
+void Engine::do_collisions() 
+{
+	static std::vector< CollidableObject * > vec_colliders; // gonna make this static so the memory gets allocated only once
+	vec_colliders.clear();
 	
-	SDL_Quit();
+	for( int i = 0; i < vec_game_objects.size(); i++ )
+	{
+		GameObject *go = vec_game_objects[i].get();
+		CollidableObject *collidable = dynamic_cast<CollidableObject *>(go);
+		if( go->is_alive && collidable )
+		{
+			vec_colliders.push_back( collidable );
+		}
+	}
+
+	for( int i = 0; i < vec_colliders.size(); i++ )
+	{
+		// i+1 so an object doesn't try to resolve itself
+		for( int j = i + 1; j < vec_colliders.size(); j++ )
+		{
+			vec_colliders[i]->resolve_collision( *vec_colliders[j] );
+		}
+	}
 }
