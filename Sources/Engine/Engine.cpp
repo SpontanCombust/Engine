@@ -48,9 +48,9 @@ Engine::~Engine()
 	SDL_DestroyRenderer(sdl_renderer);
 	SDL_DestroyWindow(sdl_window);
 
-	SDL_Quit();
-	IMG_Quit();
 	TTF_Quit();
+	IMG_Quit();
+	SDL_Quit();
 }
 
 Engine * Engine::get_instance() 
