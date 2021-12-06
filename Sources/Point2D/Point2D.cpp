@@ -44,20 +44,28 @@ void Point2D::draw()
 
 void Point2D::translate( float transl_x, float transl_y ) 
 {
-    x += (int)transl_x;
-    y += (int)transl_y;
+    x = (int)( (float)x + transl_x );
+    y = (int)( (float)y + transl_y );
 }
 
 void Point2D::scale( float scale_x, float scale_y ) 
 {
-    x *= (int)scale_x;
-    y *= (int)scale_y;
+    x = (int)( (float)x * scale_x );
+    y = (int)( (float)y * scale_y );
+}
+
+inline float deg_to_rand( float angle_deg )
+{
+    return angle_deg * M_PI / 180.f;
 }
 
 void Point2D::rotate( float angle_deg ) 
 {
-    int x1 = x;
+    float x1 = (float)x;
 
-    x = x1 * std::cos( angle_deg ) - y * std::sin( angle_deg );
-    y = x1 * std::sin( angle_deg ) + y * std::cos( angle_deg );
+    float _cos = std::cos( deg_to_rand( angle_deg ) );
+    float _sin = std::sin( deg_to_rand( angle_deg ) );
+
+    x = (int)( x1 * _cos - (float)y * _sin );
+    y = (int)( x1 * _sin + (float)y * _cos );
 }
