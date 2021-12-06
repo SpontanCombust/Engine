@@ -16,7 +16,7 @@ enum CollisionPolicy
 class CollidableObject : virtual public ModelObject
 {
 public:
-    CollisionPolicy collision_policy;
+    int collision_policy; // a logic sum of CollisionPolicy flags
     float collider_width, collider_height;
 
     CollidableObject();

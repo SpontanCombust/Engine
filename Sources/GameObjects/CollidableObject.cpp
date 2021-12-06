@@ -11,22 +11,22 @@ CollidableObject::CollidableObject()
 }
 
 
-inline bool can_affect( CollisionPolicy policyFlags )
+inline bool can_affect( int policyFlags )
 {
     return ( policyFlags & COLLISION_POLICY_AFFECTING ) > 0;
 }
 
-inline bool can_be_affected( CollisionPolicy policyFlags )
+inline bool can_be_affected( int policyFlags )
 {
     return ( policyFlags & COLLISION_POLICY_AFFECTED ) > 0;
 }
 
-inline bool can_affect_or_be_affected( CollisionPolicy policyFlags )
+inline bool can_affect_or_be_affected( int policyFlags )
 {
     return ( policyFlags & ( COLLISION_POLICY_AFFECTING | COLLISION_POLICY_AFFECTED ) ) > 0;
 }
 
-inline bool can_affect_and_be_affected( CollisionPolicy policyFlags )
+inline bool can_affect_and_be_affected( int policyFlags )
 {
     return ( policyFlags & ( COLLISION_POLICY_AFFECTING | COLLISION_POLICY_AFFECTED ) ) == ( COLLISION_POLICY_AFFECTING | COLLISION_POLICY_AFFECTED );
 }
