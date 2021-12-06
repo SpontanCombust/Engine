@@ -13,6 +13,7 @@ class Animation
 private:
     std::string name;
     SDL_Texture *used_bitmap;
+    SDL_RendererFlip flip_modifier;
     SDL_Rect frame_start_rect;
     uint32_t frame_count;
     uint32_t anim_duration;
@@ -32,11 +33,12 @@ public:
      * @param frame_count how many individual frames there are in the animation
      * @param anim_duration how long the animation should last in milliseconds
      */
-    Animation( const char *name, SDL_Texture *bitmap, Point2D start_point, Size2D frame_size, uint32_t frame_count, uint32_t anim_duration );
+    Animation( const char *name, SDL_Texture *bitmap, SDL_RendererFlip flip_modifier, Point2D start_point, Size2D frame_size, uint32_t frame_count, uint32_t anim_duration );
 
     // Set the duration of a whole animation in ms
     void set_anim_duration( uint32_t anim_duration );
     SDL_Texture *get_used_bitmap() const;
+    SDL_RendererFlip get_flip_modifier() const;
     const std::string& get_name() const;
 
     SDL_Rect get_curr_clipping_rect() const;
