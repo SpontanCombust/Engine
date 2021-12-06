@@ -5,8 +5,10 @@
 
 BitmapObject::BitmapObject() 
 {
+    tex_w = tex_h = 0;
     this->bitmap = nullptr;
     clip_rect = { 0, 0, 0, 0 };
+    flip = SDL_RendererFlip::SDL_FLIP_NONE;
 }
 
 BitmapObject::BitmapObject(SDL_Texture *bitmap) 
@@ -40,7 +42,7 @@ void BitmapObject::draw()
 {
     int size_x = (int)( (float)clip_rect.w * scale_x );
     int size_y = (int)( (float)clip_rect.h * scale_y );
-    BitmapRenderer::draw_bitmap( this->bitmap, clip_rect, (int)this->transl_x, (int)this->transl_y, size_x, size_y, this->rotation_deg );
+    BitmapRenderer::draw_bitmap( this->bitmap, clip_rect, (int)this->transl_x, (int)this->transl_y, size_x, size_y, this->rotation_deg, flip );
 }
 
 BitmapObject::~BitmapObject() 

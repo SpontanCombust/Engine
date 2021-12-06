@@ -12,6 +12,7 @@ public:
     int tex_w, tex_h;
     SDL_Texture *bitmap;
     SDL_Rect clip_rect;
+    SDL_RendererFlip flip;
     
     BitmapObject();
     BitmapObject( SDL_Texture *bitmap );
