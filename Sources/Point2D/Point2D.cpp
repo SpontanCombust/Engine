@@ -2,6 +2,9 @@
 
 #include "PrimitiveRenderer/PrimitiveRenderer.hpp"
 
+#include <cmath>
+
+
 Point2D::Point2D() 
 {
     this->x = 0;
@@ -34,7 +37,27 @@ void Point2D::set_y(int y)
     this->y = y;
 }
 
-void Point2D::draw() const
+void Point2D::draw()
 {
     PrimitiveRenderer::draw_point(this->x, this->y);
+}
+
+void Point2D::translate( float transl_x, float transl_y ) 
+{
+    x += (int)transl_x;
+    y += (int)transl_y;
+}
+
+void Point2D::scale( float scale_x, float scale_y ) 
+{
+    x *= (int)scale_x;
+    y *= (int)scale_y;
+}
+
+void Point2D::rotate( float angle_deg ) 
+{
+    int x1 = x;
+
+    x = x1 * std::cos( angle_deg ) - y * std::sin( angle_deg );
+    y = x1 * std::sin( angle_deg ) + y * std::cos( angle_deg );
 }
