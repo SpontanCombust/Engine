@@ -45,8 +45,8 @@ bool CollidableObject::resolve_collision( CollidableObject& other_obj )
 
     // vector coming from the center of other AABB to this AABB 
     vec2f this_center_to_other_center { 
-        other_obj.transl_x + other_obj.collider_offset_x + other_half_extents.x - (transl_x + collider_offset_x + this_half_extents.x),
-        other_obj.transl_y + other_obj.collider_offset_y + other_half_extents.y - (transl_y + collider_offset_y + this_half_extents.y)
+        other_obj.transl_x + other_obj.collider_offset_x * other_obj.scale_x + other_half_extents.x - (transl_x + collider_offset_x * scale_x + this_half_extents.x),
+        other_obj.transl_y + other_obj.collider_offset_y * other_obj.scale_y + other_half_extents.y - (transl_y + collider_offset_y * scale_y + this_half_extents.y)
     };
 
     if( std::abs( this_center_to_other_center.x ) <= ( this_half_extents.x + other_half_extents.x ) && std::abs( this_center_to_other_center.y ) <= ( this_half_extents.y + other_half_extents.y ) )
