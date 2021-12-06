@@ -17,6 +17,7 @@ class CollidableObject : virtual public ModelObject
 {
 public:
     int collision_policy; // a logic sum of CollisionPolicy flags
+    float collider_offset_x, collider_offset_y;
     float collider_width, collider_height;
 
     CollidableObject();

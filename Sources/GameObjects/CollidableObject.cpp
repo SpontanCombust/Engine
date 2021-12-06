@@ -7,6 +7,7 @@
 CollidableObject::CollidableObject() 
 {
     collision_policy = COLLISION_POLICY_NONE;
+    collider_offset_x = collider_offset_y = 0.f;
     collider_width = collider_height = 0.f;
 }
 
@@ -44,8 +45,8 @@ bool CollidableObject::resolve_collision( CollidableObject& other_obj )
 
     // vector coming from the center of other AABB to this AABB 
     vec2f this_center_to_other_center { 
-        other_obj.transl_x + other_half_extents.x - (transl_x + this_half_extents.x),
-        other_obj.transl_y + other_half_extents.y - (transl_y + this_half_extents.y)
+        other_obj.transl_x + other_obj.collider_offset_x + other_half_extents.x - (transl_x + collider_offset_x + this_half_extents.x),
+        other_obj.transl_y + other_obj.collider_offset_y + other_half_extents.y - (transl_y + collider_offset_y + this_half_extents.y)
     };
 
     if( std::abs( this_center_to_other_center.x ) <= ( this_half_extents.x + other_half_extents.x ) && std::abs( this_center_to_other_center.y ) <= ( this_half_extents.y + other_half_extents.y ) )
@@ -83,7 +84,7 @@ bool CollidableObject::resolve_collision( CollidableObject& other_obj )
             }
             
 
-            if( can_affect_and_be_affected( collision_policy ) && can_affect_and_be_affected( collision_policy ) )
+            if( can_affect_and_be_affected( collision_policy ) && can_affect_and_be_affected( other_obj.collision_policy ) )
             {
                 transl_x += displacement.x / 2.f;
                 transl_y += displacement.y / 2.f;
