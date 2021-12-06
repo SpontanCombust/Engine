@@ -3,6 +3,7 @@
 #include "Point2D/Point2D.hpp"
 #include "PrimitiveRenderer/PrimitiveRenderer.hpp"
 #include "Engine/Engine.hpp"
+#include "GameObjects/MultilineObject.hpp"
 
 ColorRGB enumColorToRGB( unsigned int bgc )
 {
@@ -66,6 +67,7 @@ void TestingGameObject::draw()
 	multiline_example_points.push_back( Point2D{ 300, 300 } );
 	multiline_example_points.push_back( Point2D{ 350, 200 } );
 	multiline_example_points.push_back( Point2D{ 350, 400 } );
+    MultilineObject *multiline_obj = new MultilineObject( multiline_example_points );
 
 	switch (primitive_type)
 	{
@@ -104,6 +106,13 @@ void TestingGameObject::draw()
 		case MULTILINE_CLOSED_PRIMITIVE_TYPE:
 			PrimitiveRenderer::draw_multiline_closed( multiline_example_points, DrawAlgorithmType::SDL );
 		break;
+
+        case MULTILINE_OBJECT_PRIMITIVE_TYPE:
+            multiline_obj->translate(500.f, 50.f);
+            multiline_obj->scale( 0.5f, 0.5f );
+            multiline_obj->rotate(45.f);
+            multiline_obj->draw();
+        break;
 
 		case CANVAS_PRIMITIVE_TYPE:
 			if( is_brush_held )
