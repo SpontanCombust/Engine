@@ -19,8 +19,13 @@ FetchContent_Declare(
     GIT_REPOSITORY "https://github.com/libsdl-org/SDL_ttf"
     GIT_TAG main
 )
+FetchContent_Declare(
+    SDL2_mixer
+    GIT_REPOSITORY "https://github.com/libsdl-org/SDL_mixer"
+    GIT_TAG master
+)
 
-FetchContent_MakeAvailable( SDL2 SDL2_image SDL2_ttf )
+FetchContent_MakeAvailable(SDL2 SDL2_image SDL2_ttf SDL2_mixer)
 
 
 add_library(${PROJECT_NAME}
@@ -47,9 +52,10 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${sdl2_SOURCE_DIR}
     ${sdl2_image_SOURCE_DIR}
     ${sdl2_ttf_SOURCE_DIR}
+    ${sdl2_mixer_SOURCE_DIR}
 )
 
-target_link_libraries(${PROJECT_NAME} SDL2 SDL2_image SDL2_ttf)
+target_link_libraries(${PROJECT_NAME} SDL2 SDL2_image SDL2_ttf SDL2_mixer)
 
 
 
