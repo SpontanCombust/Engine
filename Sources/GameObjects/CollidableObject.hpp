@@ -2,6 +2,8 @@
 
 #include "ModelObject.hpp"
 
+#include <glm/glm.hpp>
+
 enum CollisionPolicy
 {
     // do nothing about the collision
@@ -17,8 +19,8 @@ class CollidableObject : virtual public ModelObject
 {
 public:
     int collision_policy; // a logic sum of CollisionPolicy flags
-    float collider_offset_x, collider_offset_y;
-    float collider_width, collider_height;
+    glm::vec2 collider_offset;
+    glm::vec2 collider_size;
 
     CollidableObject();
 

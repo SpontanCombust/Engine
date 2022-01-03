@@ -3,12 +3,14 @@
 
 #include "TransformableObject.hpp"
 
+#include <glm/glm.hpp>
+
 // A class that stores its transformation information
 class ModelObject : virtual public TransformableObject
 {
 public:
-    float transl_x, transl_y;
-    float scale_x, scale_y;
+    glm::vec2 translv;
+    glm::vec2 scalev;
     float rotation_deg;
 
     ModelObject();

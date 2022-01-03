@@ -30,19 +30,18 @@ void BitmapObject::set_bitmap( SDL_Texture *bitmap )
 
 void BitmapObject::scale_to_size( float size_x, float size_y ) 
 {
-    scale_x = size_x / (float)tex_w;
-    scale_y = size_y / (float)tex_h;
+    scalev = { size_x / (float)tex_w, size_y / (float)tex_h };
 
     // preserve aspect ratio
-    float scale_min = std::min( scale_x, scale_y );
-    scale_x = scale_y = scale_min;
+    float scale_min = std::min( scalev.x, scalev.y );
+    scalev = glm::vec2( scale_min );
 }
 
 void BitmapObject::draw() 
 {
-    int size_x = (int)( (float)clip_rect.w * scale_x );
-    int size_y = (int)( (float)clip_rect.h * scale_y );
-    BitmapRenderer::draw_bitmap( this->bitmap, clip_rect, (int)this->transl_x, (int)this->transl_y, size_x, size_y, this->rotation_deg, flip );
+    int size_x = (int)( (float)clip_rect.w * scalev.x );
+    int size_y = (int)( (float)clip_rect.h * scalev.y );
+    BitmapRenderer::draw_bitmap( this->bitmap, clip_rect, (int)this->translv.x, (int)this->translv.y, size_x, size_y, this->rotation_deg, flip );
 }
 
 BitmapObject::~BitmapObject() 
