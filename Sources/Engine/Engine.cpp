@@ -225,3 +225,29 @@ void Engine::do_collisions()
 		}
 	}
 }
+
+std::vector< std::shared_ptr<ModelObject> > Engine::find_game_objects_in_range( glm::vec2 target, float range ) const
+{
+	std::vector< std::shared_ptr<ModelObject> > objs;
+	std::shared_ptr<ModelObject> model;
+
+	for( const auto& o : vec_game_objects )
+	{
+		model = std::dynamic_pointer_cast<ModelObject>(o);
+
+		if( model )
+		{
+			if( glm::distance( target, model->translv ) <= range )
+			{
+				objs.push_back( model );
+			}
+		}
+	}
+
+	return objs;
+}
+
+Camera& Engine::get_camera() 
+{
+	return camera;
+}

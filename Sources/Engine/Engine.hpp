@@ -1,9 +1,12 @@
 #pragma once
 
 #include <SDL.h>
+#include <glm/glm.hpp>
 
 #include "Utility/Log.hpp"
 #include "GameObjects/GameObject.hpp"
+#include "GameObjects/ModelObject.hpp"
+#include "Camera/Camera.hpp"
 
 #include <memory>
 #include <vector>
@@ -36,6 +39,12 @@ public:
 	// If you want the engine to let go of ther pointer, set is_alive to false in the object
 	// Depending on renounce_ownership value, takes the ownership or only weakly references the pointer
 	void add_game_object( GameObject *go, bool renounce_ownership = true );
+
+	// Negative range to search through all objects
+	std::vector< std::shared_ptr<ModelObject> > find_game_objects_in_range( glm::vec2 target, float range ) const;
+
+	Camera& get_camera();
+
 	
 public:
 	SDL_Window * sdl_window;
@@ -53,4 +62,6 @@ private:
 	void remove_dead_game_objects();
 
 	void do_collisions();
+
+	Camera camera;
 };

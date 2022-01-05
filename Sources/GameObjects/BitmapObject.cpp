@@ -2,6 +2,7 @@
 
 #include "ResourceManager/ResourceManager.hpp"
 #include "BitmapRenderer/BitmapRenderer.hpp"
+#include "Engine/Engine.hpp"
 
 BitmapObject::BitmapObject() 
 {
@@ -39,9 +40,23 @@ void BitmapObject::scale_to_size( float size_x, float size_y )
 
 void BitmapObject::draw() 
 {
-    int size_x = (int)( (float)clip_rect.w * scalev.x );
-    int size_y = (int)( (float)clip_rect.h * scalev.y );
-    BitmapRenderer::draw_bitmap( this->bitmap, clip_rect, (int)this->translv.x, (int)this->translv.y, size_x, size_y, this->rotation_deg, flip );
+    int size_x, size_y;
+
+    if( adjust_to_camera )
+    {
+        Camera& camera = Engine::get_instance()->get_camera();
+
+        size_x = (int)( (float)clip_rect.w * scalev.x * camera.zoom );
+        size_y = (int)( (float)clip_rect.h * scalev.y * camera.zoom );
+        BitmapRenderer::draw_bitmap( this->bitmap, clip_rect, (int)this->translv.x - camera.pos.x, (int)this->translv.y - camera.pos.y, size_x, size_y, this->rotation_deg, flip );
+    }
+    else
+    {
+        size_x = (int)( (float)clip_rect.w * scalev.x );
+        size_y = (int)( (float)clip_rect.h * scalev.y );
+        BitmapRenderer::draw_bitmap( this->bitmap, clip_rect, (int)this->translv.x, (int)this->translv.y, size_x, size_y, this->rotation_deg, flip );
+    }
+    
 }
 
 BitmapObject::~BitmapObject() 
