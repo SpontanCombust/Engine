@@ -226,18 +226,24 @@ void Engine::do_collisions()
 	}
 }
 
-std::vector< std::shared_ptr<ModelObject> > Engine::find_game_objects_in_range( glm::vec2 target, float range ) const
+std::vector< std::shared_ptr<ModelObject> > Engine::find_game_objects_in_range( const std::shared_ptr<ModelObject>& target, float range ) const
 {
 	std::vector< std::shared_ptr<ModelObject> > objs;
 	std::shared_ptr<ModelObject> model;
+
+	if( !target || !target->is_alive )
+	{
+		return objs; //return empty
+	}
 
 	for( const auto& o : vec_game_objects )
 	{
 		model = std::dynamic_pointer_cast<ModelObject>(o);
 
-		if( model )
+		// prevent object being checked against itself
+		if( model && model != target )
 		{
-			if( glm::distance( target, model->translv ) <= range )
+			if( glm::distance( target->translv, model->translv ) <= range )
 			{
 				objs.push_back( model );
 			}

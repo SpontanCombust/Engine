@@ -41,7 +41,7 @@ public:
 	void add_game_object( GameObject *go, bool renounce_ownership = true );
 
 	// Negative range to search through all objects
-	std::vector< std::shared_ptr<ModelObject> > find_game_objects_in_range( glm::vec2 target, float range ) const;
+	std::vector< std::shared_ptr<ModelObject> > find_game_objects_in_range( const std::shared_ptr<ModelObject>& target, float range ) const;
 
 	Camera& get_camera();
 
