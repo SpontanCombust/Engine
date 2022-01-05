@@ -3,21 +3,21 @@
 #include "GameObjects/UpdatableObject.hpp"
 #include "GameObjects/DrawableObject.hpp"
 #include "GameObjects/CollidableObject.hpp"
+#include "GameObjects/AnimatedObject.hpp"
 #include "BitmapRenderer/BitmapRenderer.hpp"
 
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-#include "GameObjects/AnimatedObject.hpp"
+#include <SDL_mixer.h>
 
 Engine * Engine::engine = nullptr;
 
 Engine::Engine(const char * title, int x, int y, int w, int h, WindowMode window_mode, unsigned frame_rate)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
-
 	IMG_Init( IMG_INIT_JPG | IMG_INIT_PNG );
-
 	TTF_Init();
+	Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 );
 
 	sdl_window = SDL_CreateWindow(title, x, y, w, h, window_mode);
 	if (!sdl_window)
@@ -48,6 +48,7 @@ Engine::~Engine()
 	SDL_DestroyRenderer(sdl_renderer);
 	SDL_DestroyWindow(sdl_window);
 
+	Mix_CloseAudio();
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
