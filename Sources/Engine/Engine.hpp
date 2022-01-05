@@ -42,6 +42,7 @@ public:
 
 	// Negative range to search through all objects
 	std::vector< std::shared_ptr<ModelObject> > find_game_objects_in_range( const std::shared_ptr<ModelObject>& target, float range ) const;
+	std::vector< std::shared_ptr<ModelObject> > find_game_objects_in_range( const ModelObject *target, float range ) const;
 
 	Camera& get_camera();
 

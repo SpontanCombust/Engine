@@ -226,7 +226,7 @@ void Engine::do_collisions()
 	}
 }
 
-std::vector< std::shared_ptr<ModelObject> > Engine::find_game_objects_in_range( const std::shared_ptr<ModelObject>& target, float range ) const
+std::vector< std::shared_ptr<ModelObject> > Engine::find_game_objects_in_range( const ModelObject *target, float range ) const
 {
 	std::vector< std::shared_ptr<ModelObject> > objs;
 	std::shared_ptr<ModelObject> model;
@@ -241,7 +241,7 @@ std::vector< std::shared_ptr<ModelObject> > Engine::find_game_objects_in_range( 
 		model = std::dynamic_pointer_cast<ModelObject>(o);
 
 		// prevent object being checked against itself
-		if( model && model != target )
+		if( model && model.get() != target )
 		{
 			if( glm::distance( target->translv, model->translv ) <= range )
 			{
@@ -251,6 +251,11 @@ std::vector< std::shared_ptr<ModelObject> > Engine::find_game_objects_in_range( 
 	}
 
 	return objs;
+}
+
+std::vector< std::shared_ptr<ModelObject> > Engine::find_game_objects_in_range( const std::shared_ptr<ModelObject>& target, float range ) const
+{
+	return find_game_objects_in_range( target.get(), range );
 }
 
 Camera& Engine::get_camera() 
