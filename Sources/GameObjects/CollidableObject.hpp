@@ -25,5 +25,5 @@ public:
     CollidableObject();
 
     // return true if collision happened
-    bool resolve_collision( CollidableObject& other_obj );
+    virtual bool resolve_collision( CollidableObject& other_obj );
 };
