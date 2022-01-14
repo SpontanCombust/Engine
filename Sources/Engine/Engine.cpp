@@ -257,6 +257,24 @@ std::vector< std::shared_ptr<ModelObject> > Engine::find_game_objects_in_range( 
 	return find_game_objects_in_range( target.get(), range );
 }
 
+std::vector< std::shared_ptr<TaggedObject> > Engine::find_game_objects_with_tag( const char *tag ) const
+{
+	std::vector< std::shared_ptr<TaggedObject> > objs;
+	std::shared_ptr<TaggedObject> tagged;
+
+	for( const auto& o : vec_game_objects )
+	{
+		tagged = std::dynamic_pointer_cast<TaggedObject>(o);
+
+		if( tagged )
+		{
+			objs.push_back( tagged );
+		}
+	}
+
+	return objs;
+}
+
 Camera& Engine::get_camera() 
 {
 	return camera;
