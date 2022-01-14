@@ -14,7 +14,7 @@ public:
     ModelObject();
 
     // Compute the scale to fit some arbitrary size
-    virtual glm::vec2 get_target_size();
+    virtual glm::vec2 get_target_size() const;
 };
 
 #endif // __MODELOBJECT_H__
