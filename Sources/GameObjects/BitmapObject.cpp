@@ -32,7 +32,7 @@ void BitmapObject::set_bitmap( SDL_Texture *bitmap )
 
 glm::vec2 BitmapObject::get_target_size() const 
 {
-    get_target_size( true );
+    return get_target_size( true );
 }
 
 glm::vec2 BitmapObject::get_target_size( bool keep_aspect_ratio ) const
