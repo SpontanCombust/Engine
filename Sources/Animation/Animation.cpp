@@ -1,11 +1,11 @@
 #include "Animation.hpp"
 
-Animation::Animation( const char *name, SDL_Texture *bitmap, SDL_RendererFlip flip_modifier, Point2D start_point, Size2D frame_size, uint32_t frame_count, uint32_t anim_duration ) 
+Animation::Animation( const char *name, SDL_Texture *bitmap, SDL_RendererFlip flip_modifier, glm::ivec2 start_point, glm::ivec2 frame_size, uint32_t frame_count, uint32_t anim_duration ) 
 {
     this->name = name;
     this->used_bitmap = bitmap;
     this->flip_modifier = flip_modifier;
-    this->frame_start_rect = { start_point.get_x(), start_point.get_y(), frame_size.get_x(), frame_size.get_y() };
+    this->frame_start_rect = { start_point.x, start_point.y, frame_size.x, frame_size.y };
     this->frame_count = frame_count;
     this->anim_duration = anim_duration;
 

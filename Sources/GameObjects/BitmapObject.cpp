@@ -1,7 +1,6 @@
 #include "BitmapObject.hpp"
 
 #include "ResourceManager/ResourceManager.hpp"
-#include "BitmapRenderer/BitmapRenderer.hpp"
 #include "Engine/Engine.hpp"
 
 BitmapObject::BitmapObject() 
@@ -40,23 +39,37 @@ void BitmapObject::scale_to_size( float size_x, float size_y )
 
 void BitmapObject::draw() 
 {
-    int size_x, size_y;
+    float size_x, size_y;
+    SDL_FRect dst_rect;
 
     if( adjust_to_camera )
     {
         Camera& camera = Engine::get_instance()->get_camera();
 
-        size_x = (int)( (float)clip_rect.w * scalev.x * camera.zoom );
-        size_y = (int)( (float)clip_rect.h * scalev.y * camera.zoom );
-        BitmapRenderer::draw_bitmap( this->bitmap, clip_rect, (int)this->translv.x - camera.pos.x, (int)this->translv.y - camera.pos.y, size_x, size_y, this->rotation_deg, flip );
+        size_x = (float)clip_rect.w * scalev.x * camera.zoom;
+        size_y = (float)clip_rect.h * scalev.y * camera.zoom;
+
+        dst_rect = {
+            this->translv.x - camera.pos.x, 
+            this->translv.y - camera.pos.y, 
+            size_x, 
+            size_y
+        };
     }
     else
     {
-        size_x = (int)( (float)clip_rect.w * scalev.x );
-        size_y = (int)( (float)clip_rect.h * scalev.y );
-        BitmapRenderer::draw_bitmap( this->bitmap, clip_rect, (int)this->translv.x, (int)this->translv.y, size_x, size_y, this->rotation_deg, flip );
+        size_x = (float)clip_rect.w * scalev.x;
+        size_y = (float)clip_rect.h * scalev.y;
+
+        dst_rect = {
+            this->translv.x, 
+            this->translv.y, 
+            size_x, 
+            size_y
+        };
     }
     
+    SDL_RenderCopyExF( Engine::get_instance()->sdl_renderer, this->bitmap, &this->clip_rect, &dst_rect, this->rotation_deg, NULL, this->flip );
 }
 
 BitmapObject::~BitmapObject() 

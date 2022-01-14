@@ -4,7 +4,6 @@
 #include "GameObjects/DrawableObject.hpp"
 #include "GameObjects/CollidableObject.hpp"
 #include "GameObjects/AnimatedObject.hpp"
-#include "BitmapRenderer/BitmapRenderer.hpp"
 
 #include <SDL_image.h>
 #include <SDL_ttf.h>
