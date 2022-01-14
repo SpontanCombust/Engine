@@ -32,11 +32,11 @@ inline bool can_affect_and_be_affected( int policyFlags )
 
 bool CollidableObject::resolve_collision( CollidableObject& other_obj ) 
 {
-    glm::vec2 this_half_extents = collider_size * scalev / 2.f;
-    glm::vec2 other_half_extents = other_obj.collider_size * other_obj.scalev / 2.f;
+    glm::vec2 this_half_extents = collider_size * scale / 2.f;
+    glm::vec2 other_half_extents = other_obj.collider_size * other_obj.scale / 2.f;
 
     // vector coming from the center of other AABB to this AABB 
-    glm::vec2 this_center_to_other_center = ( other_obj.translv + other_obj.collider_offset * other_obj.scalev + other_half_extents ) - ( translv + collider_offset * scalev + this_half_extents );
+    glm::vec2 this_center_to_other_center = ( other_obj.translation + other_obj.collider_offset * other_obj.scale + other_half_extents ) - ( translation + collider_offset * scale + this_half_extents );
 
     if( std::abs( this_center_to_other_center.x ) <= ( this_half_extents.x + other_half_extents.x ) && std::abs( this_center_to_other_center.y ) <= ( this_half_extents.y + other_half_extents.y ) )
     {
@@ -75,18 +75,18 @@ bool CollidableObject::resolve_collision( CollidableObject& other_obj )
 
             if( can_affect_and_be_affected( collision_policy ) && can_affect_and_be_affected( other_obj.collision_policy ) )
             {
-                translv += displacement / 2.f;
-                other_obj.translv -= displacement / 2.f;
+                translation += displacement / 2.f;
+                other_obj.translation -= displacement / 2.f;
             }
             // if only the first one is to be moved by the second one - move the 1st one away from 2nd one's way
             else if( can_be_affected( collision_policy ) && can_affect( other_obj.collision_policy ) )
             {
-                translv += displacement;
+                translation += displacement;
             }
             // if only the first one is supposed to move second object - move the 2nd one away from 1st one's way
             else if( can_affect( collision_policy ) && can_be_affected( other_obj.collision_policy ) )
             {
-                other_obj.translv -= displacement;
+                other_obj.translation -= displacement;
             }
         }
 

@@ -242,7 +242,7 @@ std::vector< std::shared_ptr<ModelObject> > Engine::find_game_objects_in_range( 
 		// prevent object being checked against itself
 		if( model && model.get() != target )
 		{
-			if( glm::distance( target->translv, model->translv ) <= range )
+			if( glm::distance( target->translation, model->translation ) <= range )
 			{
 				objs.push_back( model );
 			}

@@ -28,45 +28,25 @@ void BitmapObject::set_bitmap( SDL_Texture *bitmap )
     clip_rect = { 0, 0, tex_w, tex_h };
 }
 
-void BitmapObject::scale_to_size( float size_x, float size_y ) 
-{
-    scalev = { size_x / (float)tex_w, size_y / (float)tex_h };
-
-    // preserve aspect ratio
-    float scale_min = std::min( scalev.x, scalev.y );
-    scalev = glm::vec2( scale_min );
-}
-
 void BitmapObject::draw() 
 {
-    float size_x, size_y;
-    SDL_FRect dst_rect;
+    glm::vec2 target_scale = glm::vec2( std::min( this->scale.x, this->scale.y ) ); // to keep aspect ratio
+
+    SDL_FRect dst_rect = {
+        this->translation.x, 
+        this->translation.y,
+        this->clip_rect.w * target_scale.x,
+        this->clip_rect.h * target_scale.y
+    };
 
     if( adjust_to_camera )
     {
         Camera& camera = Engine::get_instance()->get_camera();
 
-        size_x = (float)clip_rect.w * scalev.x * camera.zoom;
-        size_y = (float)clip_rect.h * scalev.y * camera.zoom;
-
-        dst_rect = {
-            this->translv.x - camera.pos.x, 
-            this->translv.y - camera.pos.y, 
-            size_x, 
-            size_y
-        };
-    }
-    else
-    {
-        size_x = (float)clip_rect.w * scalev.x;
-        size_y = (float)clip_rect.h * scalev.y;
-
-        dst_rect = {
-            this->translv.x, 
-            this->translv.y, 
-            size_x, 
-            size_y
-        };
+        dst_rect.x -= camera.pos.x;
+        dst_rect.y -= camera.pos.y;
+        dst_rect.w *= camera.zoom;
+        dst_rect.h *= camera.zoom;
     }
     
     SDL_RenderCopyExF( Engine::get_instance()->sdl_renderer, this->bitmap, &this->clip_rect, &dst_rect, this->rotation_deg, NULL, this->flip );

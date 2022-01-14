@@ -22,10 +22,6 @@ public:
 
     void set_bitmap( SDL_Texture *bitmap );
 
-    // Scale the object based on texture size to fit the specified size
-    // The scale is set so that aspect ratio of the texture is preserved 
-    void scale_to_size( float size_x, float size_y ) override;
-
     void draw() override;
 };
 

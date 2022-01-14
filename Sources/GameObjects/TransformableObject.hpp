@@ -3,13 +3,16 @@
 
 #include "GameObject.hpp"
 
+#include <glm/glm.hpp>
+
 class TransformableObject : virtual public GameObject
 {
 public:
-    virtual void translate( float tx, float ty ) = 0;
-    virtual void scale( float sx, float sy ) = 0;
-    virtual void rotate( float angle_deg ) = 0;
+    glm::vec2 translation;
+    glm::vec2 scale;
+    float rotation_deg;
 
+    TransformableObject();
     virtual ~TransformableObject() = default;
 };
 

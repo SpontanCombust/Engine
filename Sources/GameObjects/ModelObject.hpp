@@ -9,18 +9,12 @@
 class ModelObject : virtual public TransformableObject
 {
 public:
-    glm::vec2 translv;
-    glm::vec2 scalev;
-    float rotation_deg;
+    glm::vec2 base_size;
 
     ModelObject();
 
-    void translate( float tx, float ty ) override;
-    void scale( float sx, float sy ) override;
-    void rotate( float angle_deg ) override;
-
     // Compute the scale to fit some arbitrary size
-    virtual void scale_to_size( float size_x, float size_y );
+    virtual glm::vec2 get_target_size();
 };
 
 #endif // __MODELOBJECT_H__
