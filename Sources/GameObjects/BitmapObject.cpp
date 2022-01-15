@@ -41,13 +41,13 @@ glm::vec2 BitmapObject::get_target_size( bool keep_aspect_ratio ) const
 
     if( keep_aspect_ratio )
     {
-        target_size = ( clip_rect.w > clip_rect.h ) ? glm::vec2( base_size.x / clip_rect.w ) : glm::vec2( base_size.y / clip_rect.h );
+        float base_scale = ( clip_rect.w < clip_rect.h ) ? ( base_size.x / clip_rect.w ) : ( base_size.y / clip_rect.h );
+        target_size = glm::vec2( clip_rect.w, clip_rect.h ) * base_scale;
         target_size *= glm::vec2( std::min( scale.x, scale.y ) );
     }
     else
     {
-        target_size = base_size / glm::vec2( clip_rect.w, clip_rect.h );
-        target_size *= scale;
+        target_size = base_size * scale;
     }
 
     return target_size;
