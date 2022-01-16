@@ -6,7 +6,6 @@
 #include "Utility/Log.hpp"
 #include "GameObjects/GameObject.hpp"
 #include "GameObjects/ModelObject.hpp"
-#include "GameObjects/TaggedObject.hpp"
 #include "Camera/Camera.hpp"
 
 #include <memory>
@@ -44,7 +43,7 @@ public:
 	// Negative range to search through all objects
 	std::vector< std::shared_ptr<ModelObject> > find_game_objects_in_range( const std::shared_ptr<ModelObject>& target, float range ) const;
 	std::vector< std::shared_ptr<ModelObject> > find_game_objects_in_range( const ModelObject *target, float range ) const;
-	std::vector< std::shared_ptr<TaggedObject> > find_game_objects_with_tag( const char *tag ) const;
+	std::vector< std::shared_ptr<GameObject> > find_game_objects_with_tag( const char *tag ) const;
 
 	Camera& get_camera();
 

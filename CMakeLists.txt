@@ -43,7 +43,6 @@ add_library(${PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/SimpleEventListeningObject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/CollidableObject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/TransformableObject.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/TaggedObject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/ResourceManager/ResourceManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Animation/Animation.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Camera/Camera.cpp
