@@ -1,11 +1,11 @@
 #include "ModelObject.hpp"
 
-ModelObject::ModelObject() 
+void ModelObject::set_target_size( glm::vec2 size ) 
 {
-    base_size = {1.f, 1.f};
+    scale = size;
 }
 
 glm::vec2 ModelObject::get_target_size() const
 {
-    return scale * base_size;
+    return scale;
 }

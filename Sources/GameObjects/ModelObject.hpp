@@ -9,11 +9,8 @@
 class ModelObject : virtual public TransformableObject
 {
 public:
-    glm::vec2 base_size;
-
-    ModelObject();
-
     // Compute the scale to fit some arbitrary size
+    virtual void set_target_size( glm::vec2 size );
     virtual glm::vec2 get_target_size() const;
 };
 

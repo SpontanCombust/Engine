@@ -22,8 +22,9 @@ public:
 
     void set_bitmap( SDL_Texture *bitmap );
 
+    void set_target_size( glm::vec2 size ) override;
+    virtual void set_target_size( glm::vec2 size, bool keep_aspect_ratio );
     glm::vec2 get_target_size() const override;
-    virtual glm::vec2 get_target_size( bool keep_aspect_ratio ) const;
 
     void draw() override;
 };

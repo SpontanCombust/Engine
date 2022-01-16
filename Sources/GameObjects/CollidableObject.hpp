@@ -26,4 +26,7 @@ public:
 
     // return true if collision happened
     virtual bool resolve_collision( CollidableObject& other_obj );
+
+    void set_target_size( glm::vec2 size ) override;
+    glm::vec2 get_target_size() const override;
 };

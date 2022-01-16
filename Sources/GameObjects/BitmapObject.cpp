@@ -30,27 +30,26 @@ void BitmapObject::set_bitmap( SDL_Texture *bitmap )
     clip_rect = { 0, 0, tex_size.x, tex_size.y };
 }
 
-glm::vec2 BitmapObject::get_target_size() const 
+void BitmapObject::set_target_size( glm::vec2 size ) 
 {
-    return get_target_size( true );
+    set_target_size( size, true );
 }
 
-glm::vec2 BitmapObject::get_target_size( bool keep_aspect_ratio ) const
+void BitmapObject::set_target_size( glm::vec2 size, bool keep_aspect_ratio ) 
 {
-    glm::vec2 target_size;
-
     if( keep_aspect_ratio )
     {
-        float base_scale = ( clip_rect.w < clip_rect.h ) ? ( base_size.x / clip_rect.w ) : ( base_size.y / clip_rect.h );
-        target_size = glm::vec2( clip_rect.w, clip_rect.h ) * base_scale;
-        target_size *= glm::vec2( std::min( scale.x, scale.y ) );
+        this->scale = ( clip_rect.w < clip_rect.h ) ? glm::vec2( size.x / clip_rect.w ) : glm::vec2( size.y / clip_rect.h );
     }
     else
     {
-        target_size = base_size * scale;
+        this->scale = size / glm::vec2( clip_rect.w, clip_rect.h );
     }
+}
 
-    return target_size;
+glm::vec2 BitmapObject::get_target_size() const 
+{
+    return scale * glm::vec2( clip_rect.w, clip_rect.h );
 }
 
 void BitmapObject::draw() 

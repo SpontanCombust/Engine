@@ -95,3 +95,13 @@ bool CollidableObject::resolve_collision( CollidableObject& other_obj )
 
     return false;
 }
+
+void CollidableObject::set_target_size( glm::vec2 size ) 
+{
+    this->scale = size / this->collider_size;
+}
+
+glm::vec2 CollidableObject::get_target_size() const 
+{
+    return this->collider_size * this->scale;
+}
