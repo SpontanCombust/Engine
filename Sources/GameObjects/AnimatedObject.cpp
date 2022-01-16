@@ -29,8 +29,9 @@ void AnimatedObject::play_animation(const char *anim_name, int iterations)
     {
         curr_anim = anim;
         curr_anim->reset( iterations );
-        bitmap = anim->get_used_bitmap();
         flip = anim->get_flip_modifier();
+        set_bitmap( anim->get_used_bitmap() );
+        clip_rect = curr_anim->get_curr_clipping_rect();
     }
 }
 
