@@ -41,17 +41,22 @@ bool AnimatedObject::has_animation_finished() const
         return curr_anim->has_finished();
     }
 
-    return false;
+    return true;
 }
 
 std::string AnimatedObject::get_animation_name() const
 {
-    if( !curr_anim )
+    if( curr_anim )
     {
-        return "";
+        return curr_anim->get_name();
     }
     
-    return curr_anim->get_name();
+    return "";
+}
+
+bool AnimatedObject::is_animation_playing( const char *anim_name ) const
+{
+    return get_animation_name() == anim_name;
 }
 
 void AnimatedObject::update(uint32_t dt)
@@ -60,5 +65,10 @@ void AnimatedObject::update(uint32_t dt)
     {
         curr_anim->advance( dt );
         clip_rect = curr_anim->get_curr_clipping_rect();
+
+        if( curr_anim->has_finished() )
+        {
+            curr_anim = nullptr;
+        }
     }
 }
