@@ -21,6 +21,6 @@ private:
 
 public:
     void add_sound( const char *name, Mix_Chunk *sfx );
-    void play_sound( const char *name );
+    void play_sound( const char *name, int loops );
     void stop_sound( const char *name );
 };

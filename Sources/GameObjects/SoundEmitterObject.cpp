@@ -5,7 +5,7 @@ void SoundEmitterObject::add_sound( const char *name, Mix_Chunk *sfx )
     map_name_to_sound[name] = Sound{ sfx, -1 };
 }
 
-void SoundEmitterObject::play_sound( const char *name ) 
+void SoundEmitterObject::play_sound( const char *name, int loops ) 
 {
     auto it = map_name_to_sound.find( name );
     if( it != map_name_to_sound.end() )
@@ -14,11 +14,11 @@ void SoundEmitterObject::play_sound( const char *name )
         
         if( sound.channel != -1 )
         {
-            Mix_PlayChannel( sound.channel, sound.chunk, 0 );
+            Mix_PlayChannel( sound.channel, sound.chunk, loops );
         }
         else
         {
-            sound.channel = Mix_PlayChannel( -1, sound.chunk, 0 );
+            sound.channel = Mix_PlayChannel( -1, sound.chunk, loops );
         }
     }
 }
