@@ -66,11 +66,7 @@ void BitmapObject::draw()
     if( adjust_to_camera )
     {
         Camera& camera = Engine::get_instance()->get_camera();
-
-        dst_rect.x -= camera.pos.x;
-        dst_rect.y -= camera.pos.y;
-        dst_rect.w *= camera.zoom;
-        dst_rect.h *= camera.zoom;
+        camera.adjust_object_to_view( dst_rect.x, dst_rect.y, dst_rect.w, dst_rect.h );
     }
     
     SDL_RenderCopyExF( Engine::get_instance()->sdl_renderer, this->bitmap, &this->clip_rect, &dst_rect, this->rotation_deg, NULL, this->flip );
