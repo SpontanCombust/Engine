@@ -1,14 +1,12 @@
 #include "CollidableObject.hpp"
 
-#include "../Utility/Vector2.hpp"
-
 #include <cmath>
 
 CollidableObject::CollidableObject() 
 {
     collision_policy = COLLISION_POLICY_NONE;
-    collider_offset_x = collider_offset_y = 0.f;
-    collider_width = collider_height = 0.f;
+    collider_offset = glm::vec2(0.f);
+    collider_size = glm::vec2(0.f);
 }
 
 
@@ -34,26 +32,17 @@ inline bool can_affect_and_be_affected( int policyFlags )
 
 bool CollidableObject::resolve_collision( CollidableObject& other_obj ) 
 {
-    vec2f this_half_extents { 
-        collider_width * scale_x / 2.f, 
-        collider_height * scale_y / 2.f 
-    };
-    vec2f other_half_extents { 
-        other_obj.collider_width * other_obj.scale_x / 2.f, 
-        other_obj.collider_height * other_obj.scale_y / 2.f 
-    };
+    glm::vec2 this_half_extents = collider_size * scale / 2.f;
+    glm::vec2 other_half_extents = other_obj.collider_size * other_obj.scale / 2.f;
 
     // vector coming from the center of other AABB to this AABB 
-    vec2f this_center_to_other_center { 
-        other_obj.transl_x + other_obj.collider_offset_x * other_obj.scale_x + other_half_extents.x - (transl_x + collider_offset_x * scale_x + this_half_extents.x),
-        other_obj.transl_y + other_obj.collider_offset_y * other_obj.scale_y + other_half_extents.y - (transl_y + collider_offset_y * scale_y + this_half_extents.y)
-    };
+    glm::vec2 this_center_to_other_center = ( other_obj.translation + other_obj.collider_offset * other_obj.scale + other_half_extents ) - ( translation + collider_offset * scale + this_half_extents );
 
     if( std::abs( this_center_to_other_center.x ) <= ( this_half_extents.x + other_half_extents.x ) && std::abs( this_center_to_other_center.y ) <= ( this_half_extents.y + other_half_extents.y ) )
     {
         if( can_affect_or_be_affected( collision_policy ) || can_affect_or_be_affected( other_obj.collision_policy ) )
         {
-            vec2f displacement;
+            glm::vec2 displacement;
 
             if( this_center_to_other_center.x >= 0.f )
             {
@@ -86,22 +75,18 @@ bool CollidableObject::resolve_collision( CollidableObject& other_obj )
 
             if( can_affect_and_be_affected( collision_policy ) && can_affect_and_be_affected( other_obj.collision_policy ) )
             {
-                transl_x += displacement.x / 2.f;
-                transl_y += displacement.y / 2.f;
-                other_obj.transl_x -= displacement.x / 2.f;
-                other_obj.transl_y -= displacement.y / 2.f;
+                translation += displacement / 2.f;
+                other_obj.translation -= displacement / 2.f;
             }
             // if only the first one is to be moved by the second one - move the 1st one away from 2nd one's way
             else if( can_be_affected( collision_policy ) && can_affect( other_obj.collision_policy ) )
             {
-                transl_x += displacement.x;
-                transl_y += displacement.y;
+                translation += displacement;
             }
             // if only the first one is supposed to move second object - move the 2nd one away from 1st one's way
             else if( can_affect( collision_policy ) && can_be_affected( other_obj.collision_policy ) )
             {
-                other_obj.transl_x -= displacement.x;
-                other_obj.transl_y -= displacement.y;
+                other_obj.translation -= displacement;
             }
         }
 
@@ -109,4 +94,14 @@ bool CollidableObject::resolve_collision( CollidableObject& other_obj )
     }
 
     return false;
+}
+
+void CollidableObject::set_target_size( glm::vec2 size ) 
+{
+    this->scale = size / this->collider_size;
+}
+
+glm::vec2 CollidableObject::get_target_size() const 
+{
+    return this->collider_size * this->scale;
 }

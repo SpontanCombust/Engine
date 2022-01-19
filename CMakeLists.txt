@@ -19,27 +19,34 @@ FetchContent_Declare(
     GIT_REPOSITORY "https://github.com/libsdl-org/SDL_ttf"
     GIT_TAG main
 )
+FetchContent_Declare(
+    SDL2_mixer
+    GIT_REPOSITORY "https://github.com/libsdl-org/SDL_mixer"
+    GIT_TAG master
+)
+FetchContent_Declare(
+    GLM
+    GIT_REPOSITORY "https://github.com/g-truc/glm"
+    GIT_TAG master
+)
 
-FetchContent_MakeAvailable( SDL2 SDL2_image SDL2_ttf )
+FetchContent_MakeAvailable(SDL2 SDL2_image SDL2_ttf SDL2_mixer GLM)
 
 
 add_library(${PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Engine/Engine.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/PrimitiveRenderer/PrimitiveRenderer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Point2D/Point2D.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/LineSegment/LineSegment.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Utility/Color.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/BitmapRenderer/BitmapRenderer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/GameObject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/DrawableObject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/BitmapObject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/ModelObject.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Testing/TestingGameObject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/AnimatedObject.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/ResourceManager/ResourceManager.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Animation/Animation.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/SimpleEventListeningObject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/CollidableObject.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/MultilineObject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/TransformableObject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameObjects/SoundEmitterObject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/ResourceManager/ResourceManager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Animation/Animation.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Camera/Camera.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC 
@@ -47,15 +54,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${sdl2_SOURCE_DIR}
     ${sdl2_image_SOURCE_DIR}
     ${sdl2_ttf_SOURCE_DIR}
+    ${sdl2_mixer_SOURCE_DIR}
+    ${glm_SOURCE_DIR}
 )
 
-target_link_libraries(${PROJECT_NAME} SDL2 SDL2_image SDL2_ttf)
-
-
-
-
-add_executable(${PROJECT_NAME}_TEST 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Main.cpp
-)
-
-target_link_libraries(${PROJECT_NAME}_TEST ${PROJECT_NAME})
+target_link_libraries(${PROJECT_NAME} SDL2 SDL2_image SDL2_ttf SDL2_mixer)

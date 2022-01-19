@@ -9,7 +9,7 @@
 class BitmapObject : virtual public ModelObject, virtual public DrawableObject
 {
 public:
-    int tex_w, tex_h;
+    glm::ivec2 tex_size;
     SDL_Texture *bitmap;
     SDL_Rect clip_rect;
     SDL_RendererFlip flip;
@@ -22,9 +22,9 @@ public:
 
     void set_bitmap( SDL_Texture *bitmap );
 
-    // Scale the object based on texture size to fit the specified size
-    // The scale is set so that aspect ratio of the texture is preserved 
-    void scale_to_size( float size_x, float size_y ) override;
+    void set_target_size( glm::vec2 size ) override;
+    virtual void set_target_size( glm::vec2 size, bool keep_aspect_ratio );
+    glm::vec2 get_target_size() const override;
 
     void draw() override;
 };

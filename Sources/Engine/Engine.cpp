@@ -3,21 +3,20 @@
 #include "GameObjects/UpdatableObject.hpp"
 #include "GameObjects/DrawableObject.hpp"
 #include "GameObjects/CollidableObject.hpp"
-#include "BitmapRenderer/BitmapRenderer.hpp"
+#include "GameObjects/AnimatedObject.hpp"
 
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-#include "GameObjects/AnimatedObject.hpp"
+#include <SDL_mixer.h>
 
 Engine * Engine::engine = nullptr;
 
 Engine::Engine(const char * title, int x, int y, int w, int h, WindowMode window_mode, unsigned frame_rate)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
-
 	IMG_Init( IMG_INIT_JPG | IMG_INIT_PNG );
-
 	TTF_Init();
+	Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 );
 
 	sdl_window = SDL_CreateWindow(title, x, y, w, h, window_mode);
 	if (!sdl_window)
@@ -48,6 +47,7 @@ Engine::~Engine()
 	SDL_DestroyRenderer(sdl_renderer);
 	SDL_DestroyWindow(sdl_window);
 
+	Mix_CloseAudio();
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
@@ -223,4 +223,56 @@ void Engine::do_collisions()
 			vec_colliders[i]->resolve_collision( *vec_colliders[j] );
 		}
 	}
+}
+
+std::vector< std::shared_ptr<ModelObject> > Engine::find_game_objects_in_range( const ModelObject *target, float range ) const
+{
+	std::vector< std::shared_ptr<ModelObject> > objs;
+	std::shared_ptr<ModelObject> model;
+
+	if( !target || !target->is_alive )
+	{
+		return objs; //return empty
+	}
+
+	for( const auto& o : vec_game_objects )
+	{
+		model = std::dynamic_pointer_cast<ModelObject>(o);
+
+		// prevent object being checked against itself
+		if( model && model.get() != target )
+		{
+			if( glm::distance( target->translation, model->translation ) <= range )
+			{
+				objs.push_back( model );
+			}
+		}
+	}
+
+	return objs;
+}
+
+std::vector< std::shared_ptr<ModelObject> > Engine::find_game_objects_in_range( const std::shared_ptr<ModelObject>& target, float range ) const
+{
+	return find_game_objects_in_range( target.get(), range );
+}
+
+std::vector< std::shared_ptr<GameObject> > Engine::find_game_objects_with_tag( const char *tag ) const
+{
+	std::vector< std::shared_ptr<GameObject> > objs;
+
+	for( const auto& o : vec_game_objects )
+	{
+		if( o->has_tag( tag ) )
+		{
+			objs.push_back( o );
+		}
+	}
+
+	return objs;
+}
+
+Camera& Engine::get_camera() 
+{
+	return camera;
 }

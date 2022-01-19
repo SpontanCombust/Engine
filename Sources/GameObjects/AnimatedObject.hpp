@@ -22,6 +22,7 @@ public:
     void play_animation( const char *anim_name, int iterations = -1 );
     bool has_animation_finished() const;
     std::string get_animation_name() const;
+    bool is_animation_playing( const char *anim_name ) const;
 
     void update(uint32_t dt) override;
 };

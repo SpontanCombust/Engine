@@ -29,8 +29,9 @@ void AnimatedObject::play_animation(const char *anim_name, int iterations)
     {
         curr_anim = anim;
         curr_anim->reset( iterations );
-        bitmap = anim->get_used_bitmap();
         flip = anim->get_flip_modifier();
+        set_bitmap( anim->get_used_bitmap() );
+        clip_rect = curr_anim->get_curr_clipping_rect();
     }
 }
 
@@ -41,17 +42,22 @@ bool AnimatedObject::has_animation_finished() const
         return curr_anim->has_finished();
     }
 
-    return false;
+    return true;
 }
 
 std::string AnimatedObject::get_animation_name() const
 {
-    if( !curr_anim )
+    if( curr_anim )
     {
-        return "";
+        return curr_anim->get_name();
     }
     
-    return curr_anim->get_name();
+    return "";
+}
+
+bool AnimatedObject::is_animation_playing( const char *anim_name ) const
+{
+    return get_animation_name() == anim_name;
 }
 
 void AnimatedObject::update(uint32_t dt)
@@ -60,5 +66,10 @@ void AnimatedObject::update(uint32_t dt)
     {
         curr_anim->advance( dt );
         clip_rect = curr_anim->get_curr_clipping_rect();
+
+        if( curr_anim->has_finished() )
+        {
+            curr_anim = nullptr;
+        }
     }
 }
