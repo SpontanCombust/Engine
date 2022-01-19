@@ -47,6 +47,8 @@ public:
 
 	Camera& get_camera();
 
+	glm::ivec2 get_window_size() const;
+
 	
 public:
 	SDL_Window * sdl_window;

@@ -276,3 +276,10 @@ Camera& Engine::get_camera()
 {
 	return camera;
 }
+
+glm::ivec2 Engine::get_window_size() const
+{
+	glm::ivec2 v;
+	SDL_GetWindowSize( sdl_window, &v.x, &v.y );
+	return v;
+}
