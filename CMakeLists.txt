@@ -30,6 +30,9 @@ FetchContent_Declare(
     GIT_TAG master
 )
 
+set(SUPPORT_WAV ON)
+set(SUPPORT_FLAC ON)
+set(SUPPORT_OGG ON)
 FetchContent_MakeAvailable(SDL2 SDL2_image SDL2_ttf SDL2_mixer GLM)
 
 
