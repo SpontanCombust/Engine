@@ -2,12 +2,12 @@
 #define __GAMEOBJECT_H__
 
 #include <string>
-#include <vector>
+#include <unordered_set>
 
 class GameObject
 {
 private:
-    std::vector< std::string > tags;
+    std::unordered_set< std::string > tags;
 
 public:
     bool is_alive;
