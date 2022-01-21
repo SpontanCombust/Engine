@@ -11,6 +11,7 @@ class BitmapObject : virtual public ModelObject, virtual public DrawableObject
 public:
     glm::ivec2 tex_size;
     SDL_Texture *bitmap;
+    glm::i8vec3 bitmap_tint;
     SDL_Rect clip_rect;
     SDL_RendererFlip flip;
     

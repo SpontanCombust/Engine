@@ -9,18 +9,21 @@ BitmapObject::BitmapObject()
     this->bitmap = nullptr;
     clip_rect = { 0, 0, 0, 0 };
     flip = SDL_RendererFlip::SDL_FLIP_NONE;
+    bitmap_tint = { 255, 255, 255 };
 }
 
 BitmapObject::BitmapObject(SDL_Texture *bitmap) 
 {
     set_bitmap( bitmap );
     flip = SDL_RendererFlip::SDL_FLIP_NONE;
+    bitmap_tint = { 255, 255, 255 };
 }
 
 BitmapObject::BitmapObject( const char *bitmap_file_path ) 
 {
     set_bitmap( ResourceManager::load_bitmap( bitmap_file_path ) );
     flip = SDL_RendererFlip::SDL_FLIP_NONE;
+    bitmap_tint = { 255, 255, 255 };
 }
 
 void BitmapObject::set_bitmap( SDL_Texture *bitmap ) 
@@ -69,6 +72,7 @@ void BitmapObject::draw()
         camera.adjust_object_to_view( dst_rect.x, dst_rect.y, dst_rect.w, dst_rect.h );
     }
     
+    SDL_SetTextureColorMod( this->bitmap, this->bitmap_tint.r, this->bitmap_tint.g, this->bitmap_tint.b );
     SDL_RenderCopyExF( Engine::get_instance()->sdl_renderer, this->bitmap, &this->clip_rect, &dst_rect, this->rotation_deg, NULL, this->flip );
 }
 
