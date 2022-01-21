@@ -1,0 +1,22 @@
+\hypertarget{_event_listening_object_8hpp_source}{}\doxysection{Event\+Listening\+Object.\+hpp}
+\label{_event_listening_object_8hpp_source}\index{Sources/GameObjects/EventListeningObject.hpp@{Sources/GameObjects/EventListeningObject.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef \_\_EVENTLISTENINGOBJECT\_H\_\_}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define \_\_EVENTLISTENINGOBJECT\_H\_\_}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}GameObject.hpp"{}}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <SDL\_events.h>}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{class }\mbox{\hyperlink{class_event_listening_object}{EventListeningObject}} : \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{class_game_object}{GameObject}}}
+\DoxyCodeLine{9 \{}
+\DoxyCodeLine{10 \textcolor{keyword}{public}:}
+\DoxyCodeLine{11     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} handle\_event( \textcolor{keyword}{const} SDL\_Event\& e ) = 0;}
+\DoxyCodeLine{12     }
+\DoxyCodeLine{13     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_event_listening_object}{\string~EventListeningObject}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{14 \};}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// \_\_EVENTLISTENINGOBJECT\_H\_\_}}
+
+\end{DoxyCode}

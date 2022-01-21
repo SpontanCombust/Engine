@@ -4,29 +4,70 @@
 
 #include <glm/glm.hpp>
 
+/**
+ * @brief Zestaw flag określających działanie kolizji.
+ * 
+ */
 enum CollisionPolicy
 {
-    // do nothing about the collision
+    /**
+    * @brief Nie nie rob z kolizja.
+    * */
     COLLISION_POLICY_NONE        = 0,
-    // if object's position can be affected by the other collider
-    // if an object should be static all the time this flag shouldn't be set
+    /**
+    * @brief Kolizja dziala na obiekt.
+    * */
     COLLISION_POLICY_AFFECTED    = 1,
-    // if the object in question can affect other colliders' position
+        /**
+    * @brief Obiekt jest oddziałujący.
+    * */
     COLLISION_POLICY_AFFECTING   = 2
 };
 
+/**
+ * @brief Obiekty obsługujące kolizje.
+ * 
+ */
 class CollidableObject : virtual public ModelObject
 {
 public:
+
+/**
+ * @brief Rodzaj działania dla kolizji.
+ * 
+ */
     int collision_policy; // a logic sum of CollisionPolicy flags
+
+    /**
+ * @brief Przesunięcie bryły kolizji.
+ * 
+ */
     glm::vec2 collider_offset;
+    
+        /**
+ * @brief Rozmiar bryły kolizji.
+ * 
+ */
     glm::vec2 collider_size;
 
     CollidableObject();
 
-    // return true if collision happened
+            /**
+ * @brief Zwraca true jesli kolizja się wydarza.
+ * @param other_obj Drugi obiekt z którym kolidujemy.
+ */
     virtual bool resolve_collision( CollidableObject& other_obj );
 
+/**
+ * @brief Ustaw docelowy rozmiar.
+ * @param size  docelowy rozmiar.
+ * 
+ */
     void set_target_size( glm::vec2 size ) override;
+
+    /**
+ * @brief Uzyskaj docelowy rozmiar.
+ * 
+ */
     glm::vec2 get_target_size() const override;
 };

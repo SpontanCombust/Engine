@@ -1,0 +1,58 @@
+\hypertarget{class_animated_object}{}\doxysection{Animated\+Object Class Reference}
+\label{class_animated_object}\index{AnimatedObject@{AnimatedObject}}
+Inheritance diagram for Animated\+Object\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_animated_object}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_animated_object_a6272cfa23d3a60f8801be566e4e09175}\label{class_animated_object_a6272cfa23d3a60f8801be566e4e09175}} 
+void {\bfseries add\+\_\+animation} (const \mbox{\hyperlink{class_animation}{Animation}} \&anim)
+\item 
+void \mbox{\hyperlink{class_animated_object_a9225188f071509156b926254dd2b55c8}{play\+\_\+animation}} (const char $\ast$anim\+\_\+name, int iterations=-\/1)
+\item 
+\mbox{\Hypertarget{class_animated_object_a5dcb3769c5a0423ef25f53f9d7577bec}\label{class_animated_object_a5dcb3769c5a0423ef25f53f9d7577bec}} 
+bool {\bfseries has\+\_\+animation\+\_\+finished} () const
+\item 
+\mbox{\Hypertarget{class_animated_object_ab3e45e7c828700b0879d76d21f74a70c}\label{class_animated_object_ab3e45e7c828700b0879d76d21f74a70c}} 
+std\+::string {\bfseries get\+\_\+animation\+\_\+name} () const
+\item 
+\mbox{\Hypertarget{class_animated_object_a2bdd2fc4f57add629437211d8de2f986}\label{class_animated_object_a2bdd2fc4f57add629437211d8de2f986}} 
+bool {\bfseries is\+\_\+animation\+\_\+playing} (const char $\ast$anim\+\_\+name) const
+\item 
+void \mbox{\hyperlink{class_animated_object_ace0e27f3f98cd0b1f4d79ac3d7e9c3ef}{update}} (uint32\+\_\+t dt) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_animated_object_a9225188f071509156b926254dd2b55c8}\label{class_animated_object_a9225188f071509156b926254dd2b55c8}} 
+\index{AnimatedObject@{AnimatedObject}!play\_animation@{play\_animation}}
+\index{play\_animation@{play\_animation}!AnimatedObject@{AnimatedObject}}
+\doxysubsubsection{\texorpdfstring{play\_animation()}{play\_animation()}}
+{\footnotesize\ttfamily void Animated\+Object\+::play\+\_\+animation (\begin{DoxyParamCaption}\item[{const char $\ast$}]{anim\+\_\+name,  }\item[{int}]{iterations = {\ttfamily -\/1} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em iterations} & how many times the animation should be played, negative number for infinite times \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_animated_object_ace0e27f3f98cd0b1f4d79ac3d7e9c3ef}\label{class_animated_object_ace0e27f3f98cd0b1f4d79ac3d7e9c3ef}} 
+\index{AnimatedObject@{AnimatedObject}!update@{update}}
+\index{update@{update}!AnimatedObject@{AnimatedObject}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Animated\+Object\+::update (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{dt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_updatable_object}{Updatable\+Object}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Sources/\+Game\+Objects/Animated\+Object.\+hpp\item 
+Sources/\+Game\+Objects/Animated\+Object.\+cpp\end{DoxyCompactItemize}

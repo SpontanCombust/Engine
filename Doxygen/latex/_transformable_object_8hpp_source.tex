@@ -1,0 +1,25 @@
+\hypertarget{_transformable_object_8hpp_source}{}\doxysection{Transformable\+Object.\+hpp}
+\label{_transformable_object_8hpp_source}\index{Sources/GameObjects/TransformableObject.hpp@{Sources/GameObjects/TransformableObject.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef \_\_TRANSFORMABLEOBJECT\_H\_\_}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define \_\_TRANSFORMABLEOBJECT\_H\_\_}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}GameObject.hpp"{}}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <glm/glm.hpp>}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{class }\mbox{\hyperlink{class_transformable_object}{TransformableObject}} : \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{class_game_object}{GameObject}}}
+\DoxyCodeLine{9 \{}
+\DoxyCodeLine{10 \textcolor{keyword}{public}:}
+\DoxyCodeLine{11     glm::vec2 translation;}
+\DoxyCodeLine{12     glm::vec2 scale;}
+\DoxyCodeLine{13     \textcolor{keywordtype}{float} rotation\_deg;}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15     \mbox{\hyperlink{class_transformable_object}{TransformableObject}}();}
+\DoxyCodeLine{16     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_transformable_object}{\string~TransformableObject}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{17 \};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// \_\_TRANSFORMABLEOBJECT\_H\_\_}}
+
+\end{DoxyCode}

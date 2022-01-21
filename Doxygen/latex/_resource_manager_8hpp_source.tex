@@ -1,0 +1,55 @@
+\hypertarget{_resource_manager_8hpp_source}{}\doxysection{Resource\+Manager.\+hpp}
+\label{_resource_manager_8hpp_source}\index{Sources/ResourceManager/ResourceManager.hpp@{Sources/ResourceManager/ResourceManager.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef \_\_RESOURCEMANAGER\_H\_\_}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define \_\_RESOURCEMANAGER\_H\_\_}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <SDL.h>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <SDL\_mixer.h>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <SDL\_ttf.h>}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <unordered\_map>}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{14 \textcolor{keyword}{class }\mbox{\hyperlink{class_resource_manager}{ResourceManager}}}
+\DoxyCodeLine{15 \{}
+\DoxyCodeLine{16 \textcolor{keyword}{private}:}
+\DoxyCodeLine{20     \textcolor{keyword}{static} std::unordered\_map< std::string, SDL\_Texture * > map\_path\_to\_bitmap;}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{25     \textcolor{keyword}{static} std::unordered\_map< std::string, Mix\_Chunk * > map\_path\_to\_sfx;}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{30     \textcolor{keyword}{static} std::unordered\_map< std::string, Mix\_Music * > map\_path\_to\_music;}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{35     \textcolor{keyword}{static} std::unordered\_map< std::string, TTF\_Font * > map\_path\_to\_font;}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \textcolor{keyword}{public}:}
+\DoxyCodeLine{38     \mbox{\hyperlink{class_resource_manager}{\string~ResourceManager}}();}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{comment}{// Will return nullptr if will fail to load}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{46     \textcolor{keyword}{static} SDL\_Texture *\mbox{\hyperlink{class_resource_manager_a11c6b518fa4953284bf4c7963fab9534}{load\_bitmap}}( \textcolor{keyword}{const} \textcolor{keywordtype}{char}* path );}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{52     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_resource_manager_afca9560ec948ab2454404a1be5e6c2bf}{unload\_bitmap}}( \textcolor{keyword}{const} \textcolor{keywordtype}{char} *path );}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{comment}{// Will return nullptr if will fail to load}}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{60     \textcolor{keyword}{static} Mix\_Chunk *\mbox{\hyperlink{class_resource_manager_a682a0d7d89fee12faf81f44b13b91a06}{load\_sfx}}( \textcolor{keyword}{const} \textcolor{keywordtype}{char} *path );}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{66     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_resource_manager_a699c5d7dfb8bcfa7b39501e2cbf5e2f9}{unload\_sfx}}( \textcolor{keyword}{const} \textcolor{keywordtype}{char} *path );}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68 }
+\DoxyCodeLine{73     \textcolor{comment}{// Will return nullptr if will fail to load}}
+\DoxyCodeLine{74     \textcolor{keyword}{static} Mix\_Music *\mbox{\hyperlink{class_resource_manager_a80a93e5c5a8fd379da20f70447d7c69f}{load\_music}}( \textcolor{keyword}{const} \textcolor{keywordtype}{char} *path );}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{80     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_resource_manager_acec20222afc0848985ce3d754652765c}{unload\_music}}( \textcolor{keyword}{const} \textcolor{keywordtype}{char} *path );}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82     \textcolor{comment}{// Will return nullptr if will fail to load}}
+\DoxyCodeLine{88 \textcolor{comment}{}    \textcolor{keyword}{static} TTF\_Font *\mbox{\hyperlink{class_resource_manager_a09db6f679b238697cd53728c5425f13f}{load\_font}}( \textcolor{keyword}{const} \textcolor{keywordtype}{char} *path, \textcolor{keywordtype}{int} pt\_size );}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{95     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_resource_manager_a0769ef5b5d3ce60f418b56c7d8700664}{unload\_font}}( \textcolor{keyword}{const} \textcolor{keywordtype}{char} *path, \textcolor{keywordtype}{int} pt\_size );}
+\DoxyCodeLine{96 \};}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// \_\_RESOURCEMANAGER\_H\_\_}}
+
+\end{DoxyCode}

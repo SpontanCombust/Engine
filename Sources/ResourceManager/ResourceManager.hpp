@@ -8,6 +8,9 @@
 #include <string>
 #include <unordered_map>
 
+    /**
+     * @brief Obsługa zasobów.
+     * */
 class ResourceManager
 {
 private:
@@ -19,20 +22,70 @@ private:
 public:
     ~ResourceManager();
 
+    /**
+     * @brief Ładuje bitmapę.
+     * 
+     * @param path Ścieżka do bitmapy.
+     * @return SDL_Texture* 
+     */
     // Will return nullptr if will fail to load
     static SDL_Texture *load_bitmap( const char* path );
+
+        /**
+     * @brief Wyładowuje bitmapę.
+     * 
+     * @param path Ścieżka do bitmapy.
+     */
     static void unload_bitmap( const char *path );
 
     // Will return nullptr if will fail to load
+    /**
+     * @brief Ładuje dźwięk.
+     * 
+     * @param path Ścieżka do dźwięku.
+     * @return Mix_Chunk
+     */
     static Mix_Chunk *load_sfx( const char *path );
+
+    /**
+     * @brief Wyładowuje dźwięk.
+     * 
+     * @param path Ścieżka do dźwięku.
+     */
     static void unload_sfx( const char *path );
 
     // Will return nullptr if will fail to load
+    // Will return nullptr if will fail to load
+    /**
+     * @brief Ładuje muzykę.
+     * 
+     * @param path Ścieżka do muzyki.
+     * @return Mix_Music
+     */
     static Mix_Music *load_music( const char *path );
+
+    /**
+     * @brief Wyładowuje muzykę.
+     * 
+     * @param path Ścieżka do muzyki.
+     */
     static void unload_music( const char *path );
 
     // Will return nullptr if will fail to load
+
+    /**
+     * @brief Ładuje font.
+     * 
+     * @param path Ścieżka do fontu.
+     * @return TTF_Font
+     */
     static TTF_Font *load_font( const char *path, int pt_size );
+
+        /**
+     * @brief Wyładowuje font.
+     * 
+     * @param path Ścieżka do fontu.
+     */
     static void unload_font( const char *path, int pt_size );
 };
 

@@ -5,6 +5,9 @@
 
 #include <glm/glm.hpp>
 
+    /**
+     * @brief Obiekt na którym można wykonywać transformacje.
+     * */
 class TransformableObject : virtual public GameObject
 {
 public:

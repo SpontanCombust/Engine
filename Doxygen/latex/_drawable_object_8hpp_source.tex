@@ -1,0 +1,25 @@
+\hypertarget{_drawable_object_8hpp_source}{}\doxysection{Drawable\+Object.\+hpp}
+\label{_drawable_object_8hpp_source}\index{Sources/GameObjects/DrawableObject.hpp@{Sources/GameObjects/DrawableObject.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef \_\_DRAWABLEOBJECT\_H\_\_}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define \_\_DRAWABLEOBJECT\_H\_\_}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}GameObject.hpp"{}}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keyword}{class }\mbox{\hyperlink{class_drawable_object}{DrawableObject}} : \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{class_game_object}{GameObject}}}
+\DoxyCodeLine{7 \{}
+\DoxyCodeLine{8 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{9     \textcolor{keywordtype}{bool} adjust\_to\_camera;}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{public}:}
+\DoxyCodeLine{12     \mbox{\hyperlink{class_drawable_object}{DrawableObject}}();}
+\DoxyCodeLine{13     }
+\DoxyCodeLine{14     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} draw() = 0;}
+\DoxyCodeLine{15     }
+\DoxyCodeLine{16     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_drawable_object}{\string~DrawableObject}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{17 \};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// \_\_DRAWABLEOBJECT\_H\_\_}}
+
+\end{DoxyCode}

@@ -1,0 +1,35 @@
+\hypertarget{_animated_object_8hpp_source}{}\doxysection{Animated\+Object.\+hpp}
+\label{_animated_object_8hpp_source}\index{Sources/GameObjects/AnimatedObject.hpp@{Sources/GameObjects/AnimatedObject.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef \_\_ANIMATEDOBJECT\_H\_\_}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define \_\_ANIMATEDOBJECT\_H\_\_}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}BitmapObject.hpp"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}UpdatableObject.hpp"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}Animation/Animation.hpp"{}}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <unordered\_map>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{class }\mbox{\hyperlink{class_animated_object}{AnimatedObject}} : \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{class_bitmap_object}{BitmapObject}}, \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{class_updatable_object}{UpdatableObject}}}
+\DoxyCodeLine{11 \{}
+\DoxyCodeLine{12 \textcolor{keyword}{private}:}
+\DoxyCodeLine{13     std::unordered\_map<std::string, Animation *> map\_anim\_name\_to\_animations;}
+\DoxyCodeLine{14     \mbox{\hyperlink{class_animation}{Animation}} *curr\_anim;}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{public}:}
+\DoxyCodeLine{17     \mbox{\hyperlink{class_animated_object}{AnimatedObject}}();}
+\DoxyCodeLine{18     \mbox{\hyperlink{class_animated_object}{\string~AnimatedObject}}() \textcolor{keyword}{override};}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     \textcolor{keywordtype}{void} add\_animation( \textcolor{keyword}{const} \mbox{\hyperlink{class_animation}{Animation}}\& anim );}
+\DoxyCodeLine{22     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_animated_object_a9225188f071509156b926254dd2b55c8}{play\_animation}}( \textcolor{keyword}{const} \textcolor{keywordtype}{char} *anim\_name, \textcolor{keywordtype}{int} iterations = -\/1 );}
+\DoxyCodeLine{23     \textcolor{keywordtype}{bool} has\_animation\_finished() \textcolor{keyword}{const};}
+\DoxyCodeLine{24     std::string get\_animation\_name() \textcolor{keyword}{const};}
+\DoxyCodeLine{25     \textcolor{keywordtype}{bool} is\_animation\_playing( \textcolor{keyword}{const} \textcolor{keywordtype}{char} *anim\_name ) \textcolor{keyword}{const};}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27     \textcolor{keywordtype}{void} update(uint32\_t dt) \textcolor{keyword}{override};}
+\DoxyCodeLine{28 \};}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// \_\_ANIMATEDOBJECT\_H\_\_}}
+
+\end{DoxyCode}

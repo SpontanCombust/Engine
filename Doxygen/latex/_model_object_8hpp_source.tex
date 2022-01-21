@@ -1,0 +1,23 @@
+\hypertarget{_model_object_8hpp_source}{}\doxysection{Model\+Object.\+hpp}
+\label{_model_object_8hpp_source}\index{Sources/GameObjects/ModelObject.hpp@{Sources/GameObjects/ModelObject.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef \_\_MODELOBJECT\_H\_\_}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define \_\_MODELOBJECT\_H\_\_}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}TransformableObject.hpp"{}}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <glm/glm.hpp>}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{comment}{// A class that stores its transformation information}}
+\DoxyCodeLine{9 \textcolor{keyword}{class }\mbox{\hyperlink{class_model_object}{ModelObject}} : \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{class_transformable_object}{TransformableObject}}}
+\DoxyCodeLine{10 \{}
+\DoxyCodeLine{11 \textcolor{keyword}{public}:}
+\DoxyCodeLine{12     \textcolor{comment}{// Compute the scale to fit some arbitrary size}}
+\DoxyCodeLine{13     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} set\_target\_size( glm::vec2 size );}
+\DoxyCodeLine{14     \textcolor{keyword}{virtual} glm::vec2 get\_target\_size() \textcolor{keyword}{const};}
+\DoxyCodeLine{15 \};}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// \_\_MODELOBJECT\_H\_\_}}
+
+\end{DoxyCode}

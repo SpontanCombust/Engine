@@ -1,0 +1,62 @@
+\hypertarget{class_engine}{}\doxysection{Engine Class Reference}
+\label{class_engine}\index{Engine@{Engine}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_engine_a5aef5077f2c3e895491fb9db6bce204d}\label{class_engine_a5aef5077f2c3e895491fb9db6bce204d}} 
+void {\bfseries schedule} ()
+\item 
+\mbox{\Hypertarget{class_engine_a14bb7469724b19d6c07742b86cf22918}\label{class_engine_a14bb7469724b19d6c07742b86cf22918}} 
+void {\bfseries process\+\_\+events} ()
+\item 
+\mbox{\Hypertarget{class_engine_ad2ff110d5a86c1cd60b541d65915ac48}\label{class_engine_ad2ff110d5a86c1cd60b541d65915ac48}} 
+void {\bfseries update} ()
+\item 
+\mbox{\Hypertarget{class_engine_a1b654dc41dfbcb5072147f33142b726e}\label{class_engine_a1b654dc41dfbcb5072147f33142b726e}} 
+void {\bfseries draw} ()
+\item 
+\mbox{\Hypertarget{class_engine_adac3c648ee7e39e1ab9ea745ad5c60da}\label{class_engine_adac3c648ee7e39e1ab9ea745ad5c60da}} 
+void {\bfseries add\+\_\+game\+\_\+object} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_game_object}{Game\+Object}} $>$ go)
+\item 
+\mbox{\Hypertarget{class_engine_ae7e79cfc2cdd022295fa366a1967b43f}\label{class_engine_ae7e79cfc2cdd022295fa366a1967b43f}} 
+void {\bfseries add\+\_\+game\+\_\+object} (\mbox{\hyperlink{class_game_object}{Game\+Object}} $\ast$go, bool renounce\+\_\+ownership=true)
+\item 
+\mbox{\Hypertarget{class_engine_a81f585b6df2a2b89a365025efced39fa}\label{class_engine_a81f585b6df2a2b89a365025efced39fa}} 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_model_object}{Model\+Object}} $>$ $>$ {\bfseries find\+\_\+game\+\_\+objects\+\_\+in\+\_\+range} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_model_object}{Model\+Object}} $>$ \&target, float range) const
+\item 
+\mbox{\Hypertarget{class_engine_a4b79232bcbff86675631838f80aa0653}\label{class_engine_a4b79232bcbff86675631838f80aa0653}} 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_model_object}{Model\+Object}} $>$ $>$ {\bfseries find\+\_\+game\+\_\+objects\+\_\+in\+\_\+range} (const \mbox{\hyperlink{class_model_object}{Model\+Object}} $\ast$target, float range) const
+\item 
+\mbox{\Hypertarget{class_engine_a845c6a6c2fc066a2608219d3926ac474}\label{class_engine_a845c6a6c2fc066a2608219d3926ac474}} 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_game_object}{Game\+Object}} $>$ $>$ {\bfseries find\+\_\+game\+\_\+objects\+\_\+with\+\_\+tag} (const char $\ast$tag) const
+\item 
+\mbox{\Hypertarget{class_engine_a4e2c27e724da8b1c98552618e490cf18}\label{class_engine_a4e2c27e724da8b1c98552618e490cf18}} 
+\mbox{\hyperlink{class_camera}{Camera}} \& {\bfseries get\+\_\+camera} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_engine_a292e2ffc09ea8a989d1ec0814b80176e}\label{class_engine_a292e2ffc09ea8a989d1ec0814b80176e}} 
+static \mbox{\hyperlink{class_engine}{Engine}} $\ast$ {\bfseries get\+\_\+instance} ()
+\item 
+\mbox{\Hypertarget{class_engine_aaabcbd48a9e8b951901bb0a3bced4142}\label{class_engine_aaabcbd48a9e8b951901bb0a3bced4142}} 
+static \mbox{\hyperlink{class_engine}{Engine}} $\ast$ {\bfseries get\+\_\+instance} (const char $\ast$title, int x, int y, int w, int h, Window\+Mode window\+\_\+mode, unsigned frame\+\_\+rate)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_engine_ad0106de4cd5aaf9e5f403b91d2a68203}\label{class_engine_ad0106de4cd5aaf9e5f403b91d2a68203}} 
+bool {\bfseries is\+\_\+running}
+\item 
+\mbox{\Hypertarget{class_engine_ad9bf048060a748dd521acf557dcffc9e}\label{class_engine_ad9bf048060a748dd521acf557dcffc9e}} 
+SDL\+\_\+\+Window $\ast$ {\bfseries sdl\+\_\+window}
+\item 
+\mbox{\Hypertarget{class_engine_ac085234c09174d4614170e629ba1b270}\label{class_engine_ac085234c09174d4614170e629ba1b270}} 
+SDL\+\_\+\+Renderer $\ast$ {\bfseries sdl\+\_\+renderer}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Sources/\+Engine/Engine.\+hpp\item 
+Sources/\+Engine/Engine.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,76 @@
+\hypertarget{class_animation}{}\doxysection{Animation Class Reference}
+\label{class_animation}\index{Animation@{Animation}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_animation_a1c70f71281d73274614caf00689d3ea6}{Animation}} (const char $\ast$name, SDL\+\_\+\+Texture $\ast$bitmap, SDL\+\_\+\+Renderer\+Flip flip\+\_\+modifier, glm\+::ivec2 start\+\_\+point, glm\+::ivec2 frame\+\_\+size, uint32\+\_\+t frame\+\_\+count, uint32\+\_\+t anim\+\_\+duration)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_animation_a2348cb93c1f4c25c8870808ee0bf3182}\label{class_animation_a2348cb93c1f4c25c8870808ee0bf3182}} 
+void {\bfseries set\+\_\+anim\+\_\+duration} (uint32\+\_\+t anim\+\_\+duration)
+\item 
+\mbox{\Hypertarget{class_animation_a93ed12fb5498a403725b3a7a713d333b}\label{class_animation_a93ed12fb5498a403725b3a7a713d333b}} 
+SDL\+\_\+\+Texture $\ast$ {\bfseries get\+\_\+used\+\_\+bitmap} () const
+\item 
+\mbox{\Hypertarget{class_animation_a694b377cb534ee5d0ae813df146d2165}\label{class_animation_a694b377cb534ee5d0ae813df146d2165}} 
+SDL\+\_\+\+Renderer\+Flip {\bfseries get\+\_\+flip\+\_\+modifier} () const
+\item 
+\mbox{\Hypertarget{class_animation_aee8f0cca14b449be03a24bf49db662fa}\label{class_animation_aee8f0cca14b449be03a24bf49db662fa}} 
+const std\+::string \& {\bfseries get\+\_\+name} () const
+\item 
+\mbox{\Hypertarget{class_animation_aa248fc84ddd870463e41afff236f2711}\label{class_animation_aa248fc84ddd870463e41afff236f2711}} 
+SDL\+\_\+\+Rect {\bfseries get\+\_\+curr\+\_\+clipping\+\_\+rect} () const
+\item 
+void \mbox{\hyperlink{class_animation_a5b86324c97ca01c4462b43be3dc07c9d}{reset}} (int num\+\_\+of\+\_\+iterations=-\/1)
+\item 
+\mbox{\Hypertarget{class_animation_a69183f7a0a2c6e754cd2ea788c4227cc}\label{class_animation_a69183f7a0a2c6e754cd2ea788c4227cc}} 
+void {\bfseries advance} (uint32\+\_\+t delta\+\_\+time)
+\item 
+\mbox{\Hypertarget{class_animation_ab60b2fc7f165fb43addf1b7d0407a6af}\label{class_animation_ab60b2fc7f165fb43addf1b7d0407a6af}} 
+bool {\bfseries has\+\_\+finished} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_animation_a1c70f71281d73274614caf00689d3ea6}\label{class_animation_a1c70f71281d73274614caf00689d3ea6}} 
+\index{Animation@{Animation}!Animation@{Animation}}
+\index{Animation@{Animation}!Animation@{Animation}}
+\doxysubsubsection{\texorpdfstring{Animation()}{Animation()}}
+{\footnotesize\ttfamily Animation\+::\+Animation (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name,  }\item[{SDL\+\_\+\+Texture $\ast$}]{bitmap,  }\item[{SDL\+\_\+\+Renderer\+Flip}]{flip\+\_\+modifier,  }\item[{glm\+::ivec2}]{start\+\_\+point,  }\item[{glm\+::ivec2}]{frame\+\_\+size,  }\item[{uint32\+\_\+t}]{frame\+\_\+count,  }\item[{uint32\+\_\+t}]{anim\+\_\+duration }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bitmap} & bitmap to be used for animation; it\textquotesingle{}s not actually actively used by the class, only stored \\
+\hline
+{\em start\+\_\+point} & point in pixels in the bitmap to start the animation from \\
+\hline
+{\em frame\+\_\+size} & size in pixels of every frame in the animation \\
+\hline
+{\em frame\+\_\+count} & how many individual frames there are in the animation \\
+\hline
+{\em anim\+\_\+duration} & how long the animation should last in milliseconds \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_animation_a5b86324c97ca01c4462b43be3dc07c9d}\label{class_animation_a5b86324c97ca01c4462b43be3dc07c9d}} 
+\index{Animation@{Animation}!reset@{reset}}
+\index{reset@{reset}!Animation@{Animation}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily void Animation\+::reset (\begin{DoxyParamCaption}\item[{int}]{num\+\_\+of\+\_\+iterations = {\ttfamily -\/1} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em num\+\_\+of\+\_\+iterations} & how many time the animation should be played; negative number for infinite times \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Sources/\+Animation/Animation.\+hpp\item 
+Sources/\+Animation/Animation.\+cpp\end{DoxyCompactItemize}

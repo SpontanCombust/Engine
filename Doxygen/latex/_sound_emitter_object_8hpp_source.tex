@@ -1,0 +1,32 @@
+\hypertarget{_sound_emitter_object_8hpp_source}{}\doxysection{Sound\+Emitter\+Object.\+hpp}
+\label{_sound_emitter_object_8hpp_source}\index{Sources/GameObjects/SoundEmitterObject.hpp@{Sources/GameObjects/SoundEmitterObject.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}GameObject.hpp"{}}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <SDL\_mixer.h>}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <unordered\_map>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{class }\mbox{\hyperlink{class_sound_emitter_object}{SoundEmitterObject}} : \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{class_game_object}{GameObject}}}
+\DoxyCodeLine{11 \{}
+\DoxyCodeLine{12 \textcolor{keyword}{private}:}
+\DoxyCodeLine{13     \textcolor{keyword}{struct }Sound}
+\DoxyCodeLine{14     \{}
+\DoxyCodeLine{15         Mix\_Chunk *chunk = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{16         \textcolor{keywordtype}{int} channel = -\/1;}
+\DoxyCodeLine{17     \};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     std::unordered\_map<std::string, Sound> map\_name\_to\_sound;}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{keyword}{public}:}
+\DoxyCodeLine{23     \textcolor{keywordtype}{void} add\_sound( \textcolor{keyword}{const} \textcolor{keywordtype}{char} *name, Mix\_Chunk *sfx );}
+\DoxyCodeLine{24     \textcolor{keywordtype}{void} play\_sound( \textcolor{keyword}{const} \textcolor{keywordtype}{char} *name, \textcolor{keywordtype}{int} loops );}
+\DoxyCodeLine{25     \textcolor{keywordtype}{void} stop\_sound( \textcolor{keyword}{const} \textcolor{keywordtype}{char} *name );}
+\DoxyCodeLine{26 \};}
+
+\end{DoxyCode}

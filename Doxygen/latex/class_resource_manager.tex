@@ -1,0 +1,166 @@
+\hypertarget{class_resource_manager}{}\doxysection{Resource\+Manager Class Reference}
+\label{class_resource_manager}\index{ResourceManager@{ResourceManager}}
+
+
+Klasa zajmująca się ładowaniem i wyładowaniem zasobów takich jak tekstura, dźwięki, muzyka, czcionki.  
+
+
+
+
+{\ttfamily \#include $<$Resource\+Manager.\+hpp$>$}
+
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static SDL\+\_\+\+Texture $\ast$ \mbox{\hyperlink{class_resource_manager_a11c6b518fa4953284bf4c7963fab9534}{load\+\_\+bitmap}} (const char $\ast$path)
+\begin{DoxyCompactList}\small\item\em Ładuje bitmapę. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_resource_manager_afca9560ec948ab2454404a1be5e6c2bf}{unload\+\_\+bitmap}} (const char $\ast$path)
+\begin{DoxyCompactList}\small\item\em Wyładowuje bitmapę. \end{DoxyCompactList}\item 
+static Mix\+\_\+\+Chunk $\ast$ \mbox{\hyperlink{class_resource_manager_a682a0d7d89fee12faf81f44b13b91a06}{load\+\_\+sfx}} (const char $\ast$path)
+\begin{DoxyCompactList}\small\item\em Ładuje dźwięk. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_resource_manager_a699c5d7dfb8bcfa7b39501e2cbf5e2f9}{unload\+\_\+sfx}} (const char $\ast$path)
+\begin{DoxyCompactList}\small\item\em Wyładowuje dźwięk. \end{DoxyCompactList}\item 
+static Mix\+\_\+\+Music $\ast$ \mbox{\hyperlink{class_resource_manager_a80a93e5c5a8fd379da20f70447d7c69f}{load\+\_\+music}} (const char $\ast$path)
+\begin{DoxyCompactList}\small\item\em Ładuje muzykę. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_resource_manager_acec20222afc0848985ce3d754652765c}{unload\+\_\+music}} (const char $\ast$path)
+\begin{DoxyCompactList}\small\item\em Wyładowuje muzykę. \end{DoxyCompactList}\item 
+static TTF\+\_\+\+Font $\ast$ \mbox{\hyperlink{class_resource_manager_a09db6f679b238697cd53728c5425f13f}{load\+\_\+font}} (const char $\ast$path, int pt\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Ładuje czcionkę. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_resource_manager_a0769ef5b5d3ce60f418b56c7d8700664}{unload\+\_\+font}} (const char $\ast$path, int pt\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Wyładowuje czcionkę. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Klasa zajmująca się ładowaniem i wyładowaniem zasobów takich jak tekstura, dźwięki, muzyka, czcionki. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_resource_manager_a11c6b518fa4953284bf4c7963fab9534}\label{class_resource_manager_a11c6b518fa4953284bf4c7963fab9534}} 
+\index{ResourceManager@{ResourceManager}!load\_bitmap@{load\_bitmap}}
+\index{load\_bitmap@{load\_bitmap}!ResourceManager@{ResourceManager}}
+\doxysubsubsection{\texorpdfstring{load\_bitmap()}{load\_bitmap()}}
+{\footnotesize\ttfamily SDL\+\_\+\+Texture $\ast$ Resource\+Manager\+::load\+\_\+bitmap (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Ładuje bitmapę. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em path} & Ciąg znaków zawierający ścieżkę. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_resource_manager_a09db6f679b238697cd53728c5425f13f}\label{class_resource_manager_a09db6f679b238697cd53728c5425f13f}} 
+\index{ResourceManager@{ResourceManager}!load\_font@{load\_font}}
+\index{load\_font@{load\_font}!ResourceManager@{ResourceManager}}
+\doxysubsubsection{\texorpdfstring{load\_font()}{load\_font()}}
+{\footnotesize\ttfamily TTF\+\_\+\+Font $\ast$ Resource\+Manager\+::load\+\_\+font (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path,  }\item[{int}]{pt\+\_\+size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Ładuje czcionkę. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em path} & Ciąg znaków zawierający ścieżkę. \\
+\hline
+\mbox{\texttt{ in}}  & {\em pt\+\_\+size} & Rozmiar czcionki. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_resource_manager_a80a93e5c5a8fd379da20f70447d7c69f}\label{class_resource_manager_a80a93e5c5a8fd379da20f70447d7c69f}} 
+\index{ResourceManager@{ResourceManager}!load\_music@{load\_music}}
+\index{load\_music@{load\_music}!ResourceManager@{ResourceManager}}
+\doxysubsubsection{\texorpdfstring{load\_music()}{load\_music()}}
+{\footnotesize\ttfamily Mix\+\_\+\+Music $\ast$ Resource\+Manager\+::load\+\_\+music (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Ładuje muzykę. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em path} & Ciąg znaków zawierający ścieżkę. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_resource_manager_a682a0d7d89fee12faf81f44b13b91a06}\label{class_resource_manager_a682a0d7d89fee12faf81f44b13b91a06}} 
+\index{ResourceManager@{ResourceManager}!load\_sfx@{load\_sfx}}
+\index{load\_sfx@{load\_sfx}!ResourceManager@{ResourceManager}}
+\doxysubsubsection{\texorpdfstring{load\_sfx()}{load\_sfx()}}
+{\footnotesize\ttfamily Mix\+\_\+\+Chunk $\ast$ Resource\+Manager\+::load\+\_\+sfx (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Ładuje dźwięk. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em path} & Ciąg znaków zawierający ścieżkę. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_resource_manager_afca9560ec948ab2454404a1be5e6c2bf}\label{class_resource_manager_afca9560ec948ab2454404a1be5e6c2bf}} 
+\index{ResourceManager@{ResourceManager}!unload\_bitmap@{unload\_bitmap}}
+\index{unload\_bitmap@{unload\_bitmap}!ResourceManager@{ResourceManager}}
+\doxysubsubsection{\texorpdfstring{unload\_bitmap()}{unload\_bitmap()}}
+{\footnotesize\ttfamily void Resource\+Manager\+::unload\+\_\+bitmap (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Wyładowuje bitmapę. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em path} & Ciąg znaków zawierający ścieżkę. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_resource_manager_a0769ef5b5d3ce60f418b56c7d8700664}\label{class_resource_manager_a0769ef5b5d3ce60f418b56c7d8700664}} 
+\index{ResourceManager@{ResourceManager}!unload\_font@{unload\_font}}
+\index{unload\_font@{unload\_font}!ResourceManager@{ResourceManager}}
+\doxysubsubsection{\texorpdfstring{unload\_font()}{unload\_font()}}
+{\footnotesize\ttfamily void Resource\+Manager\+::unload\+\_\+font (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path,  }\item[{int}]{pt\+\_\+size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Wyładowuje czcionkę. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em path} & Ciąg znaków zawierający ścieżkę. \\
+\hline
+\mbox{\texttt{ in}}  & {\em pt\+\_\+size} & Rozmiar czcionki. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_resource_manager_acec20222afc0848985ce3d754652765c}\label{class_resource_manager_acec20222afc0848985ce3d754652765c}} 
+\index{ResourceManager@{ResourceManager}!unload\_music@{unload\_music}}
+\index{unload\_music@{unload\_music}!ResourceManager@{ResourceManager}}
+\doxysubsubsection{\texorpdfstring{unload\_music()}{unload\_music()}}
+{\footnotesize\ttfamily void Resource\+Manager\+::unload\+\_\+music (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Wyładowuje muzykę. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em path} & Ciąg znaków zawierający ścieżkę. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_resource_manager_a699c5d7dfb8bcfa7b39501e2cbf5e2f9}\label{class_resource_manager_a699c5d7dfb8bcfa7b39501e2cbf5e2f9}} 
+\index{ResourceManager@{ResourceManager}!unload\_sfx@{unload\_sfx}}
+\index{unload\_sfx@{unload\_sfx}!ResourceManager@{ResourceManager}}
+\doxysubsubsection{\texorpdfstring{unload\_sfx()}{unload\_sfx()}}
+{\footnotesize\ttfamily void Resource\+Manager\+::unload\+\_\+sfx (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Wyładowuje dźwięk. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em path} & Ciąg znaków zawierający ścieżkę. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Sources/\+Resource\+Manager/Resource\+Manager.\+hpp\item 
+Sources/\+Resource\+Manager/Resource\+Manager.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,75 @@
+\hypertarget{_engine_8hpp_source}{}\doxysection{Engine.\+hpp}
+\label{_engine_8hpp_source}\index{Sources/Engine/Engine.hpp@{Sources/Engine/Engine.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <SDL.h>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <glm/glm.hpp>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}Utility/Log.hpp"{}}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}GameObjects/GameObject.hpp"{}}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}GameObjects/ModelObject.hpp"{}}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}Camera/Camera.hpp"{}}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <memory>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{enum} WindowMode}
+\DoxyCodeLine{15 \{}
+\DoxyCodeLine{16     WINDOWED\_MODE,}
+\DoxyCodeLine{17     BORDERLESS\_MODE = SDL\_WINDOW\_FULLSCREEN\_DESKTOP,}
+\DoxyCodeLine{18     FULLSCREEN\_MODE = SDL\_WINDOW\_FULLSCREEN}
+\DoxyCodeLine{19 \};}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{keyword}{class }\mbox{\hyperlink{class_engine}{Engine}}}
+\DoxyCodeLine{22 \{}
+\DoxyCodeLine{23 \textcolor{keyword}{public}:}
+\DoxyCodeLine{24     \textcolor{comment}{// returns the previously created or default instance}}
+\DoxyCodeLine{25     \textcolor{keyword}{static} \mbox{\hyperlink{class_engine}{Engine}} * get\_instance();}
+\DoxyCodeLine{26     \textcolor{keyword}{static} \mbox{\hyperlink{class_engine}{Engine}} * get\_instance(\textcolor{keyword}{const} \textcolor{keywordtype}{char} * title, \textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y, \textcolor{keywordtype}{int} w, \textcolor{keywordtype}{int} h, WindowMode window\_mode, \textcolor{keywordtype}{unsigned} frame\_rate);}
+\DoxyCodeLine{27     \mbox{\hyperlink{class_engine}{\string~Engine}}();}
+\DoxyCodeLine{28     \textcolor{keywordtype}{bool} is\_running;}
+\DoxyCodeLine{29     \textcolor{keywordtype}{void} schedule();}
+\DoxyCodeLine{30     \textcolor{keywordtype}{void} process\_events();}
+\DoxyCodeLine{31     \textcolor{keywordtype}{void} update();}
+\DoxyCodeLine{32     \textcolor{keywordtype}{void} draw();}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34     \textcolor{comment}{// Adds object to engine's game object pool}}
+\DoxyCodeLine{35     \textcolor{comment}{// If you want the engine to let go of ther pointer, set is\_alive to false in the object}}
+\DoxyCodeLine{36     \textcolor{comment}{// Shares ownership over the pointer with the called}}
+\DoxyCodeLine{37     \textcolor{keywordtype}{void} add\_game\_object( std::shared\_ptr<GameObject> go );}
+\DoxyCodeLine{38     \textcolor{comment}{// Adds object to engine's game object pool}}
+\DoxyCodeLine{39     \textcolor{comment}{// If you want the engine to let go of ther pointer, set is\_alive to false in the object}}
+\DoxyCodeLine{40     \textcolor{comment}{// Depending on renounce\_ownership value, takes the ownership or only weakly references the pointer}}
+\DoxyCodeLine{41     \textcolor{keywordtype}{void} add\_game\_object( \mbox{\hyperlink{class_game_object}{GameObject}} *go, \textcolor{keywordtype}{bool} renounce\_ownership = \textcolor{keyword}{true} );}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{comment}{// Negative range to search through all objects}}
+\DoxyCodeLine{44     std::vector< std::shared\_ptr<ModelObject> > find\_game\_objects\_in\_range( \textcolor{keyword}{const} std::shared\_ptr<ModelObject>\& target, \textcolor{keywordtype}{float} range ) \textcolor{keyword}{const};}
+\DoxyCodeLine{45     std::vector< std::shared\_ptr<ModelObject> > find\_game\_objects\_in\_range( \textcolor{keyword}{const} \mbox{\hyperlink{class_model_object}{ModelObject}} *target, \textcolor{keywordtype}{float} range ) \textcolor{keyword}{const};}
+\DoxyCodeLine{46     std::vector< std::shared\_ptr<GameObject> > find\_game\_objects\_with\_tag( \textcolor{keyword}{const} \textcolor{keywordtype}{char} *tag ) \textcolor{keyword}{const};}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \mbox{\hyperlink{class_camera}{Camera}}\& get\_camera();}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50     }
+\DoxyCodeLine{51 \textcolor{keyword}{public}:}
+\DoxyCodeLine{52     SDL\_Window * sdl\_window;}
+\DoxyCodeLine{53     SDL\_Renderer * sdl\_renderer;}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56 \textcolor{keyword}{private}:}
+\DoxyCodeLine{57     \mbox{\hyperlink{class_engine}{Engine}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} * title, \textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y, \textcolor{keywordtype}{int} w, \textcolor{keywordtype}{int} h, WindowMode window\_mode, \textcolor{keywordtype}{unsigned} frame\_rate);}
+\DoxyCodeLine{58     \textcolor{keyword}{static} \mbox{\hyperlink{class_engine}{Engine}} * engine;}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60     uint32\_t previous\_time;}
+\DoxyCodeLine{61     uint32\_t target\_time;}
+\DoxyCodeLine{62     }
+\DoxyCodeLine{63     std::vector< std::shared\_ptr<GameObject> > vec\_game\_objects;}
+\DoxyCodeLine{64     \textcolor{keywordtype}{void} remove\_dead\_game\_objects();}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \textcolor{keywordtype}{void} do\_collisions();}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68     \mbox{\hyperlink{class_camera}{Camera}} camera;}
+\DoxyCodeLine{69 \};}
+
+\end{DoxyCode}

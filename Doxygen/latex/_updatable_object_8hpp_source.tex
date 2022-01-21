@@ -1,0 +1,22 @@
+\hypertarget{_updatable_object_8hpp_source}{}\doxysection{Updatable\+Object.\+hpp}
+\label{_updatable_object_8hpp_source}\index{Sources/GameObjects/UpdatableObject.hpp@{Sources/GameObjects/UpdatableObject.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef \_\_UPDATABLEOBJECT\_H\_\_}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define \_\_UPDATABLEOBJECT\_H\_\_}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}GameObject.hpp"{}}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <cstdint>}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{class }\mbox{\hyperlink{class_updatable_object}{UpdatableObject}} : \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{class_game_object}{GameObject}}}
+\DoxyCodeLine{9 \{}
+\DoxyCodeLine{10 \textcolor{keyword}{public}:}
+\DoxyCodeLine{11     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} update( uint32\_t dt ) = 0;}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_updatable_object}{\string~UpdatableObject}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{14 \};}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// \_\_UPDATABLEOBJECT\_H\_\_}}
+
+\end{DoxyCode}

@@ -1,0 +1,38 @@
+\hypertarget{_collidable_object_8hpp_source}{}\doxysection{Collidable\+Object.\+hpp}
+\label{_collidable_object_8hpp_source}\index{Sources/GameObjects/CollidableObject.hpp@{Sources/GameObjects/CollidableObject.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}ModelObject.hpp"{}}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <glm/glm.hpp>}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{keyword}{enum} CollisionPolicy}
+\DoxyCodeLine{8 \{}
+\DoxyCodeLine{9     \textcolor{comment}{// do nothing about the collision}}
+\DoxyCodeLine{10     COLLISION\_POLICY\_NONE        = 0,}
+\DoxyCodeLine{11     \textcolor{comment}{// if object's position can be affected by the other collider}}
+\DoxyCodeLine{12     \textcolor{comment}{// if an object should be static all the time this flag shouldn't be set}}
+\DoxyCodeLine{13     COLLISION\_POLICY\_AFFECTED    = 1,}
+\DoxyCodeLine{14     \textcolor{comment}{// if the object in question can affect other colliders' position}}
+\DoxyCodeLine{15     COLLISION\_POLICY\_AFFECTING   = 2}
+\DoxyCodeLine{16 \};}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{class }\mbox{\hyperlink{class_collidable_object}{CollidableObject}} : \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{class_model_object}{ModelObject}}}
+\DoxyCodeLine{19 \{}
+\DoxyCodeLine{20 \textcolor{keyword}{public}:}
+\DoxyCodeLine{21     \textcolor{keywordtype}{int} collision\_policy; \textcolor{comment}{// a logic sum of CollisionPolicy flags}}
+\DoxyCodeLine{22     glm::vec2 collider\_offset;}
+\DoxyCodeLine{23     glm::vec2 collider\_size;}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     \mbox{\hyperlink{class_collidable_object}{CollidableObject}}();}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27     \textcolor{comment}{// return true if collision happened}}
+\DoxyCodeLine{28     \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} resolve\_collision( \mbox{\hyperlink{class_collidable_object}{CollidableObject}}\& other\_obj );}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30     \textcolor{keywordtype}{void} set\_target\_size( glm::vec2 size ) \textcolor{keyword}{override};}
+\DoxyCodeLine{31     glm::vec2 get\_target\_size() \textcolor{keyword}{const override};}
+\DoxyCodeLine{32 \};}
+
+\end{DoxyCode}

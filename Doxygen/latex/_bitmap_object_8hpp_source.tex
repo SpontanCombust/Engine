@@ -1,0 +1,38 @@
+\hypertarget{_bitmap_object_8hpp_source}{}\doxysection{Bitmap\+Object.\+hpp}
+\label{_bitmap_object_8hpp_source}\index{Sources/GameObjects/BitmapObject.hpp@{Sources/GameObjects/BitmapObject.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef \_\_BITMAPOBJECT\_H\_\_}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define \_\_BITMAPOBJECT\_H\_\_}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}ModelObject.hpp"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}DrawableObject.hpp"{}}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <SDL.h>}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{keyword}{class }\mbox{\hyperlink{class_bitmap_object}{BitmapObject}} : \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{class_model_object}{ModelObject}}, \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{class_drawable_object}{DrawableObject}}}
+\DoxyCodeLine{10 \{}
+\DoxyCodeLine{11 \textcolor{keyword}{public}:}
+\DoxyCodeLine{12     glm::ivec2 tex\_size;}
+\DoxyCodeLine{13     SDL\_Texture *bitmap;}
+\DoxyCodeLine{14     SDL\_Rect clip\_rect;}
+\DoxyCodeLine{15     SDL\_RendererFlip flip;}
+\DoxyCodeLine{16     }
+\DoxyCodeLine{17     \mbox{\hyperlink{class_bitmap_object}{BitmapObject}}();}
+\DoxyCodeLine{18     \mbox{\hyperlink{class_bitmap_object}{BitmapObject}}( SDL\_Texture *bitmap );}
+\DoxyCodeLine{19     \mbox{\hyperlink{class_bitmap_object}{BitmapObject}}( \textcolor{keyword}{const} \textcolor{keywordtype}{char} *bitmap\_file\_path );}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \mbox{\hyperlink{class_bitmap_object}{\string~BitmapObject}}();}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \textcolor{keywordtype}{void} set\_bitmap( SDL\_Texture *bitmap );}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     \textcolor{keywordtype}{void} set\_target\_size( glm::vec2 size ) \textcolor{keyword}{override};}
+\DoxyCodeLine{26     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} set\_target\_size( glm::vec2 size, \textcolor{keywordtype}{bool} keep\_aspect\_ratio );}
+\DoxyCodeLine{27     glm::vec2 get\_target\_size() \textcolor{keyword}{const override};}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29     \textcolor{keywordtype}{void} draw() \textcolor{keyword}{override};}
+\DoxyCodeLine{30 \};}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// \_\_BITMAPOBJECT\_H\_\_}}
+
+\end{DoxyCode}

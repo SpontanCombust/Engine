@@ -1,0 +1,48 @@
+\hypertarget{_animation_8hpp_source}{}\doxysection{Animation.\+hpp}
+\label{_animation_8hpp_source}\index{Sources/Animation/Animation.hpp@{Sources/Animation/Animation.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef \_\_ANIMATION\_H\_\_}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define \_\_ANIMATION\_H\_\_}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <SDL.h>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <glm/glm.hpp>}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <cstdint>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{class }\mbox{\hyperlink{class_animation}{Animation}}}
+\DoxyCodeLine{11 \{}
+\DoxyCodeLine{12 \textcolor{keyword}{private}:}
+\DoxyCodeLine{13     std::string name;}
+\DoxyCodeLine{14     SDL\_Texture *used\_bitmap;}
+\DoxyCodeLine{15     SDL\_RendererFlip flip\_modifier;}
+\DoxyCodeLine{16     SDL\_Rect frame\_start\_rect;}
+\DoxyCodeLine{17     uint32\_t frame\_count;}
+\DoxyCodeLine{18     uint32\_t anim\_duration;}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     uint32\_t anim\_timer;}
+\DoxyCodeLine{21     \textcolor{keywordtype}{int} iterations\_left;}
+\DoxyCodeLine{22     SDL\_Rect curr\_clipping\_rect;}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{keyword}{public}:}
+\DoxyCodeLine{35     \mbox{\hyperlink{class_animation_a1c70f71281d73274614caf00689d3ea6}{Animation}}( \textcolor{keyword}{const} \textcolor{keywordtype}{char} *name, SDL\_Texture *bitmap, SDL\_RendererFlip flip\_modifier, glm::ivec2 start\_point, glm::ivec2 frame\_size, uint32\_t frame\_count, uint32\_t anim\_duration );}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \textcolor{comment}{// Set the duration of a whole animation in ms}}
+\DoxyCodeLine{38     \textcolor{keywordtype}{void} set\_anim\_duration( uint32\_t anim\_duration );}
+\DoxyCodeLine{39     SDL\_Texture *get\_used\_bitmap() \textcolor{keyword}{const};}
+\DoxyCodeLine{40     SDL\_RendererFlip get\_flip\_modifier() \textcolor{keyword}{const};}
+\DoxyCodeLine{41     \textcolor{keyword}{const} std::string\& get\_name() \textcolor{keyword}{const};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     SDL\_Rect get\_curr\_clipping\_rect() \textcolor{keyword}{const};}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{47     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_animation_a5b86324c97ca01c4462b43be3dc07c9d}{reset}}( \textcolor{keywordtype}{int} num\_of\_iterations = -\/1 );}
+\DoxyCodeLine{48     \textcolor{keywordtype}{void} advance( uint32\_t delta\_time );}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50     \textcolor{keywordtype}{bool} has\_finished() \textcolor{keyword}{const};}
+\DoxyCodeLine{51 \};}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// \_\_ANIMATION\_H\_\_}}
+
+\end{DoxyCode}

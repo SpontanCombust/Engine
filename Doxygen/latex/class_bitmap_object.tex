@@ -1,0 +1,84 @@
+\hypertarget{class_bitmap_object}{}\doxysection{Bitmap\+Object Class Reference}
+\label{class_bitmap_object}\index{BitmapObject@{BitmapObject}}
+Inheritance diagram for Bitmap\+Object\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_bitmap_object}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_bitmap_object_a793108fdf606912df2a4351e1a302aea}\label{class_bitmap_object_a793108fdf606912df2a4351e1a302aea}} 
+{\bfseries Bitmap\+Object} (SDL\+\_\+\+Texture $\ast$bitmap)
+\item 
+\mbox{\Hypertarget{class_bitmap_object_acdf6938e6de122c438a70e8cddf67a5a}\label{class_bitmap_object_acdf6938e6de122c438a70e8cddf67a5a}} 
+{\bfseries Bitmap\+Object} (const char $\ast$bitmap\+\_\+file\+\_\+path)
+\item 
+\mbox{\Hypertarget{class_bitmap_object_ac2837ed963c9118d1988e173f7ce82b5}\label{class_bitmap_object_ac2837ed963c9118d1988e173f7ce82b5}} 
+void {\bfseries set\+\_\+bitmap} (SDL\+\_\+\+Texture $\ast$bitmap)
+\item 
+void \mbox{\hyperlink{class_bitmap_object_a5bb5f98f9142712d812d0716f03524ef}{set\+\_\+target\+\_\+size}} (glm\+::vec2 size) override
+\item 
+\mbox{\Hypertarget{class_bitmap_object_a64abee7991688b0df7a9f61fe49c8b9c}\label{class_bitmap_object_a64abee7991688b0df7a9f61fe49c8b9c}} 
+virtual void {\bfseries set\+\_\+target\+\_\+size} (glm\+::vec2 size, bool keep\+\_\+aspect\+\_\+ratio)
+\item 
+glm\+::vec2 \mbox{\hyperlink{class_bitmap_object_ae57c24321b7d52ab3236c5a8d7b060a5}{get\+\_\+target\+\_\+size}} () const override
+\item 
+void \mbox{\hyperlink{class_bitmap_object_a355fa024ab654930a510dba1ed588be3}{draw}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_bitmap_object_a999d8472f58db2db8fd777c216495a78}\label{class_bitmap_object_a999d8472f58db2db8fd777c216495a78}} 
+glm\+::ivec2 {\bfseries tex\+\_\+size}
+\item 
+\mbox{\Hypertarget{class_bitmap_object_a593fb178da7c736f52b12dfb97e23d65}\label{class_bitmap_object_a593fb178da7c736f52b12dfb97e23d65}} 
+SDL\+\_\+\+Texture $\ast$ {\bfseries bitmap}
+\item 
+\mbox{\Hypertarget{class_bitmap_object_a126743838cdd9fa1a27954e0cbbc3686}\label{class_bitmap_object_a126743838cdd9fa1a27954e0cbbc3686}} 
+SDL\+\_\+\+Rect {\bfseries clip\+\_\+rect}
+\item 
+\mbox{\Hypertarget{class_bitmap_object_ae91cd815e111fd8e5162cde583d1f2c4}\label{class_bitmap_object_ae91cd815e111fd8e5162cde583d1f2c4}} 
+SDL\+\_\+\+Renderer\+Flip {\bfseries flip}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_bitmap_object_a355fa024ab654930a510dba1ed588be3}\label{class_bitmap_object_a355fa024ab654930a510dba1ed588be3}} 
+\index{BitmapObject@{BitmapObject}!draw@{draw}}
+\index{draw@{draw}!BitmapObject@{BitmapObject}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Bitmap\+Object\+::draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}.
+
+\mbox{\Hypertarget{class_bitmap_object_ae57c24321b7d52ab3236c5a8d7b060a5}\label{class_bitmap_object_ae57c24321b7d52ab3236c5a8d7b060a5}} 
+\index{BitmapObject@{BitmapObject}!get\_target\_size@{get\_target\_size}}
+\index{get\_target\_size@{get\_target\_size}!BitmapObject@{BitmapObject}}
+\doxysubsubsection{\texorpdfstring{get\_target\_size()}{get\_target\_size()}}
+{\footnotesize\ttfamily glm\+::vec2 Bitmap\+Object\+::get\+\_\+target\+\_\+size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_model_object}{Model\+Object}}.
+
+\mbox{\Hypertarget{class_bitmap_object_a5bb5f98f9142712d812d0716f03524ef}\label{class_bitmap_object_a5bb5f98f9142712d812d0716f03524ef}} 
+\index{BitmapObject@{BitmapObject}!set\_target\_size@{set\_target\_size}}
+\index{set\_target\_size@{set\_target\_size}!BitmapObject@{BitmapObject}}
+\doxysubsubsection{\texorpdfstring{set\_target\_size()}{set\_target\_size()}}
+{\footnotesize\ttfamily void Bitmap\+Object\+::set\+\_\+target\+\_\+size (\begin{DoxyParamCaption}\item[{glm\+::vec2}]{size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_model_object}{Model\+Object}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Sources/\+Game\+Objects/Bitmap\+Object.\+hpp\item 
+Sources/\+Game\+Objects/Bitmap\+Object.\+cpp\end{DoxyCompactItemize}
